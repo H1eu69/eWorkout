@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/letsStartFragment"
-        android:name="com.example.eworkout.LetsStartFragment"
+        android:name="com.example.eworkout.ui.LetsStartFragment"
         android:label="fragment_lets_start"
         tools:layout="@layout/fragment_lets_start" />
 </navigation>
