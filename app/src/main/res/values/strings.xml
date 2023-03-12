@@ -5,4 +5,15 @@
     <string name="explore_the_app">Explore the App</string>
     <string name="lets_start">Lets Start</string>
     <string name="app_description">SFDFDGDSGDSGDSGDSADADASDASDDSGSDNGJFSNGFSGIHDSBFIHDSBFHDSBDSDSIDSHIDBFIHBDFHIDSHB</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="login">Login</string>
+    <string name="or_sign_up_with">Or sign up with</string>
+    <string name="sign_up">Sign up</string>
+    <string name="continue_with_google">Continue with Google</string>
+    <string name="already_have_account">Already have account?</string>
+    <string name="login_here">Login here</string>
 </resources>
