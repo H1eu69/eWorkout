@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1036376215736",
+    "project_id": "fithome-27a4d",
+    "storage_bucket": "fithome-27a4d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1036376215736:android:d0f24890b15f10c1bf244d",
+        "android_client_info": {
+          "package_name": "com.example.fithome"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1036376215736-ggcmdlq6dsljtloacv5163coh9n80sjb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDMMwjfi_NB70mXrjbY8HGKXn3DZZx-4SI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1036376215736-ggcmdlq6dsljtloacv5163coh9n80sjb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
