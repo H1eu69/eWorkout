@@ -1,14 +1,20 @@
-package com.example.eworkout.ui
+package com.example.eworkout.ui.login
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.navigation.fragment.findNavController
 import com.example.fithome.R
-
+import android.view.OnReceiveContentListener
+import android.widget.Button
+import android.widget.TextView
+import android.widget.Toast
+import androidx.navigation.findNavController
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
+import com.google.firebase.auth.FirebaseAuth
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
@@ -16,11 +22,10 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [LetsStartFragment.newInstance] factory method to
+ * Use the [LoginFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-
-class LetsStartFragment : Fragment() {
+class LoginFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -39,16 +44,40 @@ class LetsStartFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_lets_start, container, false)
+        return inflater.inflate(R.layout.fragment_login, container, false)
+
     }
 
+    private lateinit var user: FirebaseAuth
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val btnLetsStart = view.findViewById<Button>(R.id.btnLetsStart)
-        btnLetsStart.setOnClickListener(){
-            findNavController().navigate(R.id.action_letsStartFragment_to_loginFragment)
+        var email = view.findViewById<TextInputEditText>(R.id.email)
+        var password = view.findViewById<TextInputEditText>(R.id.password)
+        val btnLogin = view.findViewById<Button>(R.id.btnLogin)
+        val txtCreateAccount = view.findViewById<TextView>(R.id.textViewCreateAccount)
+
+        user = FirebaseAuth.getInstance()
+
+        btnLogin.setOnClickListener(){
+            if (email.text.toString().isNotEmpty() && password.text.toString().isNotEmpty())
+            {
+                user.signInWithEmailAndPassword(email.text.toString(),password.text.toString())
+                    .addOnCompleteListener{mTask ->
+                        if(mTask.isSuccessful)
+                        {
+                            findNavController().navigate(R.id.action_loginFragment_to_signupFragment)
+                        }
+
+                    }
+
+            }
         }
+        txtCreateAccount.setOnClickListener(){
+            findNavController().navigate(R.id.action_loginFragment_to_signupFragment)
+        }
+
     }
+
     companion object {
         /**
          * Use this factory method to create a new instance of
@@ -56,18 +85,18 @@ class LetsStartFragment : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment LetsStartFragment.
+         * @return A new instance of fragment LoginFragment.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            LetsStartFragment().apply {
+            LoginFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)
+
                 }
             }
     }
-
-
 }
+

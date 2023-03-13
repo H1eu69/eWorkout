@@ -3,16 +3,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/signupFragment">
+    app:startDestination="@id/letsStartFragment">
 
     <fragment
         android:id="@+id/letsStartFragment"
         android:name="com.example.eworkout.ui.LetsStartFragment"
         android:label="fragment_lets_start"
-        tools:layout="@layout/fragment_lets_start" />
+        tools:layout="@layout/fragment_lets_start" >
+        <action
+            android:id="@+id/action_letsStartFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
     <fragment
         android:id="@+id/signupFragment"
-        android:name="com.example.eworkout.ui.SignupFragment"
+        android:name="com.example.eworkout.ui.signup.SignupViewModel"
         android:label="fragment_signup"
         tools:layout="@layout/fragment_signup" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.eworkout.ui.login.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_signupFragment"
+            app:destination="@id/signupFragment" />
+    </fragment>
 </navigation>
