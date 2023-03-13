@@ -16,4 +16,7 @@
     <string name="continue_with_google">Continue with Google</string>
     <string name="already_have_account">Already have account?</string>
     <string name="login_here">Login here</string>
+    <string name="not_register_yet">Not register yet?</string>
+    <string name="create_account">Create Account</string>
+    <string name="forget_password">Forget Password?</string>
 </resources>
