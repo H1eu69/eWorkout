@@ -12,7 +12,7 @@
         tools:layout="@layout/fragment_lets_start" />
     <fragment
         android:id="@+id/signupFragment"
-        android:name="com.example.eworkout.ui.SignupFragment"
+        android:name="com.example.eworkout.ui.signup.SignupFragment"
         android:label="fragment_signup"
         tools:layout="@layout/fragment_signup" />
 </navigation>
