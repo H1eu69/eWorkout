@@ -1,4 +1,4 @@
-package com.example.eworkout.ui
+package com.example.eworkout.letsstart
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
