@@ -13,8 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.eworkout.signup.viewmodel.SignupViewModel
 import com.example.fithome.R
 import com.example.fithome.databinding.FragmentSignupBinding
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -84,7 +83,22 @@ class SignupFragment : Fragment() {
     private fun setOnClickListener()
     {
         binding.btnLogin.setOnClickListener {
+            _viewModel.validateText()
 
+            if(_viewModel.isValidInput())
+            {
+                lifecycleScope.launch{
+                    val signUpSuccess = async(Dispatchers.IO) {
+                        _viewModel.createUserWithEmailAndPassword()
+                    }
+                    if(signUpSuccess.await())
+                        findNavController().navigate(R.id.action_signupFragment_to_letsStartFragment)
+                    else
+                        Log.d(TAG,"signup failed")
+                }
+            }
+            else
+                Log.d(TAG,"invalid input")
         }
     }
 

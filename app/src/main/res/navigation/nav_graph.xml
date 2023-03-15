@@ -9,7 +9,11 @@
         android:id="@+id/letsStartFragment"
         android:name="com.example.eworkout.letsstart.LetsStartFragment"
         android:label="fragment_lets_start"
-        tools:layout="@layout/fragment_lets_start" />
+        tools:layout="@layout/fragment_lets_start" >
+        <action
+            android:id="@+id/action_letsStartFragment_to_signupFragment"
+            app:destination="@id/signupFragment" />
+    </fragment>
     <fragment
         android:id="@+id/signupFragment"
         android:name="com.example.eworkout.signup.view.SignupFragment"

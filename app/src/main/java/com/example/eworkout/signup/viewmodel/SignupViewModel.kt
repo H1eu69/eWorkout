@@ -39,12 +39,21 @@ class SignupViewModel : ViewModel() {
 
     suspend fun createUserWithEmailAndPassword(): Boolean {
         return try {
-            auth.createUserWithEmailAndPassword(email.toString(), password.toString())
+            auth.createUserWithEmailAndPassword(email.value.toString(), password.value.toString())
                 .await().user != null
         } catch (ex: Exception) {
             Log.d(TAG, ex.message.toString())
             false
         }
+    }
+
+    fun validateText()
+    {
+        validateFirstName()
+        validateLastName()
+        validateEmail()
+        validatePassword()
+        validateConfirmPassword()
     }
 
     fun validateFirstName() {
@@ -125,5 +134,16 @@ class SignupViewModel : ViewModel() {
             errorConfirmPassword.hasError = true
         }
         _errorMessages.value = errorMessages
+    }
+
+    fun isValidInput(): Boolean
+    {
+        if(errorFirstName.hasError ||
+            errorLastName.hasError ||
+            errorEmail.hasError ||
+            errorPassword.hasError ||
+            errorConfirmPassword.hasError)
+            return false
+        return true
     }
 }
