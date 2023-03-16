@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.example.eworkout.signup.model.SignupState
 import com.example.eworkout.signup.viewmodel.SignupViewModel
 import com.example.fithome.R
 import com.example.fithome.databinding.FragmentSignupBinding
@@ -83,9 +84,7 @@ class SignupFragment : Fragment() {
     private fun setOnClickListener()
     {
         binding.btnLogin.setOnClickListener {
-            _viewModel.validateText()
-
-            if(_viewModel.isValidInput())
+            if(_viewModel.validateText())
             {
                 lifecycleScope.launch{
                     val signUpSuccess = async(Dispatchers.IO) {
@@ -104,9 +103,61 @@ class SignupFragment : Fragment() {
 
     private fun observerViewModel()
     {
-        _viewModel._errorMessages.observe(viewLifecycleOwner)
+        _viewModel._signupState.observe(viewLifecycleOwner)
         {
-            showErrors(it)
+            handleState(it)
+        }
+    }
+
+    private fun handleState(state: SignupState) {
+        when(state.name)
+        {
+            "ERROR_FIRST_NAME_EMPTY" -> {
+                binding.textFieldFirstName.error = "First name can not be empty!"
+                binding.textFieldFirstName.isErrorEnabled = true
+            }
+            "ERROR_FIRST_NAME_LENGTH" -> {
+                binding.textFieldFirstName.error = "First name must greater than 3 characters!"
+                binding.textFieldFirstName.isErrorEnabled = true
+            }
+            "ERROR_LAST_NAME_EMPTY" -> {
+                binding.textFieldLastName.error = "Last name can not be empty!"
+                binding.textFieldLastName.isErrorEnabled = true
+            }
+            "ERROR_LAST_NAME_LENGTH" -> {
+                binding.textFieldLastName.error = "Last name must greater than 3 characters!"
+                binding.textFieldLastName.isErrorEnabled = true
+            }
+            "ERROR_EMAIL_EMPTY" -> {
+                binding.textFieldEmail.error = "Email can not be empty!"
+                binding.textFieldEmail.isErrorEnabled = true
+            }
+            "ERROR_EMAIL_FORMAT" -> {
+                binding.textFieldEmail.error = "Invalid email format!"
+                binding.textFieldEmail.isErrorEnabled = true
+            }
+            "ERROR_USED_EMAIL" -> {
+                binding.textFieldEmail.error = "Email is used by another account!"
+                binding.textFieldEmail.isErrorEnabled = true
+            }
+            "ERROR_PASSWORD_EMPTY" -> {
+                binding.textFieldPassword.error = "Password can not be empty!"
+                binding.textFieldPassword.isErrorEnabled = true
+            }
+            "ERROR_PASSWORD_LENGTH" -> {
+                binding.textFieldPassword.error = "Password must greater than 8 characters!"
+                binding.textFieldPassword.isErrorEnabled = true
+            }
+            "ERROR_CONFIRM_PASSWORD_MATCH" -> {
+                binding.textFieldConfirmPassword.error = "Confirm password does not match!"
+                binding.textFieldConfirmPassword.isErrorEnabled = true
+            }
+            //No above error
+            "NO_ERROR_FIRST_NAME" -> binding.textFieldFirstName.isErrorEnabled = false
+            "NO_ERROR_LAST_NAME" -> binding.textFieldLastName.isErrorEnabled = false
+            "NO_ERROR_EMAIL" -> binding.textFieldEmail.isErrorEnabled = false
+            "NO_ERROR_PASSWORD" -> binding.textFieldPassword.isErrorEnabled = false
+            "NO_ERROR_CONFIRM_PASSWORD" -> binding.textFieldConfirmPassword.isErrorEnabled = false
         }
     }
 
@@ -130,30 +181,6 @@ class SignupFragment : Fragment() {
             {
                 when(it.key)
                 {
-                    "first_name_empty_error" -> {
-                        binding.textFieldFirstName.error = it.value
-                        binding.textFieldFirstName.isErrorEnabled = true
-                    }
-                    "first_name_length_error"-> {
-                        binding.textFieldFirstName.error = it.value
-                        binding.textFieldFirstName.isErrorEnabled = true
-                    }
-                    "last_name_empty_error"-> {
-                        binding.textFieldLastName.error = it.value
-                        binding.textFieldLastName.isErrorEnabled = true
-                    }
-                    "last_name_length_error"-> {
-                            binding.textFieldLastName.error = it.value
-                            binding.textFieldLastName.isErrorEnabled = true
-                    }
-                    "email_empty_error"-> {
-                        binding.textFieldEmail.error = it.value
-                        binding.textFieldEmail.isErrorEnabled = true
-                    }
-                    "email_format_error"-> {
-                        binding.textFieldEmail.error = it.value
-                        binding.textFieldEmail.isErrorEnabled = true
-                    }
                     "password_empty_error"-> {
                             binding.textFieldPassword.error = it.value
                             binding.textFieldPassword.isErrorEnabled = true
