@@ -18,5 +18,6 @@
     <string name="login_here">Login here</string>
     <string name="not_register_yet">Not register yet?</string>
     <string name="create_account">Create Account</string>
-    <string name="forget_password">Forget Password?</string>
+    <string name="forget_password">Forgot Password?</string>
+    <string name="confirm">Confirm</string>
 </resources>

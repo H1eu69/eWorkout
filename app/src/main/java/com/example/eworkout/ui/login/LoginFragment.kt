@@ -53,6 +53,7 @@ class LoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         var email = view.findViewById<TextInputEditText>(R.id.email)
         var password = view.findViewById<TextInputEditText>(R.id.password)
+        val txtviewForgotPassword = view.findViewById<TextView>(R.id.textForgetPassword)
         val btnLogin = view.findViewById<Button>(R.id.btnLogin)
         val txtCreateAccount = view.findViewById<TextView>(R.id.textViewCreateAccount)
 
@@ -65,12 +66,15 @@ class LoginFragment : Fragment() {
                     .addOnCompleteListener{mTask ->
                         if(mTask.isSuccessful)
                         {
-                            findNavController().navigate(R.id.action_loginFragment_to_signupFragment)
+                            findNavController().navigate(R.id.action_loginFragment_to_trainingFragment)
                         }
 
                     }
 
             }
+        }
+        txtviewForgotPassword.setOnClickListener(){
+            findNavController().navigate(R.id.action_loginFragment_to_forgotFragment)
         }
         txtCreateAccount.setOnClickListener(){
             findNavController().navigate(R.id.action_loginFragment_to_signupFragment)
