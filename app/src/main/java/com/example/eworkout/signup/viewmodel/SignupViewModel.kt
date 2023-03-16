@@ -1,11 +1,9 @@
 package com.example.eworkout.signup.viewmodel
 
-import android.content.ContentValues.TAG
-import android.util.Log
 import android.util.Patterns
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.eworkout.signup.model.EnumError
 import com.example.eworkout.signup.model.SignupState
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -13,28 +11,18 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
 
 class SignupViewModel : ViewModel() {
-    private val _firstName: MutableLiveData<String> = MutableLiveData()
-    val firstName get() = _firstName
+    val firstName: MutableLiveData<String> = MutableLiveData()
 
-    private val _lastName: MutableLiveData<String> = MutableLiveData()
-    val lastName get() = _lastName
+    val lastName: MutableLiveData<String> = MutableLiveData()
 
-    private val _email: MutableLiveData<String> = MutableLiveData()
-    val email get() = _email
+    val email: MutableLiveData<String> = MutableLiveData()
 
-    private val _password: MutableLiveData<String> = MutableLiveData()
-    val password get() = _password
+    val password: MutableLiveData<String> = MutableLiveData()
 
-    private val _confirmPassword: MutableLiveData<String> = MutableLiveData()
-    val confirmPassword get() = _confirmPassword
+    val confirmPassword: MutableLiveData<String> = MutableLiveData()
 
-    val _signupState: MutableLiveData<SignupState> = MutableLiveData()
-
-    var errorFirstName = EnumError.FIRST_NAME
-    var errorLastName = EnumError.LAST_NAME
-    var errorEmail = EnumError.EMAIL
-    var errorPassword = EnumError.PASSWORD
-    var errorConfirmPassword = EnumError.CONFIRM_PASSWORD
+    private val _signupState: MutableLiveData<SignupState> = MutableLiveData()
+    val signupState: LiveData<SignupState> get() = _signupState
 
     private val auth: FirebaseAuth = Firebase.auth
 
@@ -67,7 +55,7 @@ class SignupViewModel : ViewModel() {
             _signupState.value = SignupState.ERROR_FIRST_NAME_EMPTY
             return false
         }
-        else if(firstName.value.toString().length <= 3)
+        else if(firstName.value.toString().length < 3)
         {
             _signupState.value = SignupState.ERROR_FIRST_NAME_LENGTH
             return false
@@ -82,7 +70,7 @@ class SignupViewModel : ViewModel() {
             _signupState.value = SignupState.ERROR_LAST_NAME_EMPTY
             return false
         }
-        else if(lastName.value.toString().length <= 3)
+        else if(lastName.value.toString().length < 3)
         {
             _signupState.value = SignupState.ERROR_LAST_NAME_LENGTH
             return false

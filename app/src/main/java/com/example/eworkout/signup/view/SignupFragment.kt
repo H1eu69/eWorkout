@@ -32,7 +32,7 @@ class SignupFragment : Fragment() {
     private var param2: String? = null
     private var _binding: FragmentSignupBinding? = null
     val binding get() = _binding!!
-    lateinit var _viewModel: SignupViewModel
+    private lateinit var _viewModel: SignupViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -103,7 +103,7 @@ class SignupFragment : Fragment() {
 
     private fun observerViewModel()
     {
-        _viewModel._signupState.observe(viewLifecycleOwner)
+        _viewModel.signupState.observe(viewLifecycleOwner)
         {
             handleState(it)
         }
@@ -161,43 +161,4 @@ class SignupFragment : Fragment() {
         }
     }
 
-    private fun showErrors(errors: MutableMap<String, String>)
-    {
-        if(errors.isEmpty())
-        {
-            if(!_viewModel.errorFirstName.hasError)
-                binding.textFieldFirstName.isErrorEnabled = false
-            if(!_viewModel.errorLastName.hasError)
-                binding.textFieldLastName.isErrorEnabled = false
-            if(!_viewModel.errorEmail.hasError)
-                binding.textFieldEmail.isErrorEnabled = false
-            if(!_viewModel.errorPassword.hasError)
-                binding.textFieldPassword.isErrorEnabled = false
-            if(!_viewModel.errorConfirmPassword.hasError)
-                binding.textFieldConfirmPassword.isErrorEnabled = false
-        }
-        else
-            errors.forEach()
-            {
-                when(it.key)
-                {
-                    "password_empty_error"-> {
-                            binding.textFieldPassword.error = it.value
-                            binding.textFieldPassword.isErrorEnabled = true
-                    }
-                    "password_length_error"-> {
-                        binding.textFieldPassword.error = it.value
-                        binding.textFieldPassword.isErrorEnabled = true
-                    }
-                    "confirm_password_empty_error"-> {
-                        binding.textFieldConfirmPassword.error = it.value
-                        binding.textFieldConfirmPassword.isErrorEnabled = true
-                    }
-                    "confirm_password_match_error"-> {
-                        binding.textFieldConfirmPassword.error = it.value
-                        binding.textFieldConfirmPassword.isErrorEnabled = true
-                    }
-                }
-            }
-    }
 }
