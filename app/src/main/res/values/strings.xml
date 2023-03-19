@@ -5,4 +5,26 @@
     <string name="explore_the_app">Explore the App</string>
     <string name="lets_start">Lets Start</string>
     <string name="app_description">SFDFDGDSGDSGDSGDSADADASDASDDSGSDNGJFSNGFSGIHDSBFIHDSBFHDSBDSDSIDSHIDBFIHBDFHIDSHB</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="login">Login</string>
+    <string name="or_sign_up_with">Or sign up with</string>
+    <string name="sign_up">Sign up</string>
+    <string name="continue_with_google">Continue with Google</string>
+    <string name="already_have_account">Already have account?</string>
+    <string name="login_here">Login here</string>
+    <string name="ERROR_FIRST_NAME_EMPTY">First name can not be empty!</string>
+    <string name="ERROR_FIRST_NAME_LENGTH">First name must greater than 3 characters!</string>
+    <string name="ERROR_LAST_NAME_EMPTY">Last name can not be empty!</string>
+    <string name="ERROR_LAST_NAME_LENGTH">Last name must greater than 3 characters!</string>
+    <string name="ERROR_EMAIL_EMPTY">Email can not be empty!</string>
+    <string name="ERROR_EMAIL_FORMAT">Invalid email format!</string>
+    <string name="ERROR_USED_EMAIL">Email is used by another account!</string>
+    <string name="ERROR_PASSWORD_EMPTY">Password can not be empty!</string>
+    <string name="ERROR_PASSWORD_LENGTH">Password must greater than 8 characters!</string>
+    <string name="ERROR_CONFIRM_PASSWORD_MATCH">Confirm password does not match!</string>
+    <string name="web_client_id">521031319461-b75llsbnimvsjjmf2crajol9vevca0p9.apps.googleusercontent.com</string>
 </resources>

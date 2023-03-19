@@ -8,5 +8,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="button1_pressed">#2E2E2E</color>
+    <color name="button2_pressed">#F1F1F1</color>
+    <color name="edit_text_1_stroke_color">#171414</color>
+    <color name="line_color">#434343</color>
 
 </resources>
