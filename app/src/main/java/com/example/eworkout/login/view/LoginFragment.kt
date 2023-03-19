@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.eworkout.login.viewmodel.LoginViewModel
+import com.example.eworkout.signup.model.SignupState
 import com.example.fithome.R
 import com.example.fithome.databinding.FragmentLoginBinding
 import kotlinx.coroutines.Dispatchers
@@ -70,9 +71,9 @@ class LoginFragment : Fragment() {
 
                 }
             }
-            else
-                findNavController().navigate(R.id.action_loginFragment_to_letsStartFragment)
-                Log.d(TAG,"signin failed")
+            else{
+                Log.d(TAG,"login failed")
+            }
         }
 
         binding.textViewCreateAccount.setOnClickListener(){
@@ -97,5 +98,15 @@ class LoginFragment : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
+    }
+
+    private fun handleState(state: SignupState) {
+        when(state.name)
+        {
+            //Sign up Success
+            "SUCCESS" -> {
+                findNavController().navigate(R.id.action_loginFragment_to_trainingFragment)
+            }
+        }
     }
 }
