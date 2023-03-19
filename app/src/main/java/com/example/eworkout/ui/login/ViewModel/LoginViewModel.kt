@@ -16,7 +16,7 @@ class LoginViewModel: ViewModel() {
     val password: MutableLiveData<String> = MutableLiveData()
 
     private val _loginState: MutableLiveData<LoginState> = MutableLiveData()
-    val loginState: LiveData<LoginState> get() = _loginState
+    //val loginState: LiveData<LoginState> get() = _loginState
 
     private val auth: FirebaseAuth = Firebase.auth
 

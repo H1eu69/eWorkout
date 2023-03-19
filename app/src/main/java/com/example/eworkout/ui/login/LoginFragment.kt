@@ -68,14 +68,14 @@ class LoginFragment : Fragment() {
     //private lateinit var user: FirebaseAuth
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val email = view.findViewById<TextInputEditText>(R.id.email)
+        setOnClickListener()
+        /*val email = view.findViewById<TextInputEditText>(R.id.email)
         val password = view.findViewById<TextInputEditText>(R.id.password)
         val txtviewForgotPassword = view.findViewById<TextView>(R.id.textForgetPassword)
         val btnLogin = view.findViewById<Button>(R.id.btnLogin)
         val txtCreateAccount = view.findViewById<TextView>(R.id.textViewCreateAccount)
 
-        setOnClickListener()
-        /*user = FirebaseAuth.getInstance()
+        user = FirebaseAuth.getInstance()
 
         btnLogin.setOnClickListener(){
             if (email.text.toString().isNotEmpty() && password.text.toString().isNotEmpty())
@@ -90,13 +90,13 @@ class LoginFragment : Fragment() {
                     }
 
             }
-        }*/
+        }
         txtviewForgotPassword.setOnClickListener(){
             findNavController().navigate(R.id.action_loginFragment_to_forgotFragment)
         }
         txtCreateAccount.setOnClickListener(){
             findNavController().navigate(R.id.action_loginFragment_to_signupFragment)
-        }
+        }*/
 
     }
     private fun setOnClickListener()
@@ -112,6 +112,12 @@ class LoginFragment : Fragment() {
                 else
                     Log.d(TAG,"signin failed")
             }*/
+        }
+        binding.textForgetPassword.setOnClickListener(){
+            findNavController().navigate(R.id.action_loginFragment_to_forgotFragment)
+        }
+        binding.textViewCreateAccount.setOnClickListener(){
+            findNavController().navigate(R.id.action_loginFragment_to_signupFragment)
         }
     }
 
