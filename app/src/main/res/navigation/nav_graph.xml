@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@id/letsStartFragment">
 
     <fragment
         android:id="@+id/letsStartFragment"
@@ -11,8 +11,8 @@
         android:label="fragment_lets_start"
         tools:layout="@layout/fragment_lets_start" >
         <action
-            android:id="@+id/action_letsStartFragment_to_signupFragment"
-            app:destination="@id/signupFragment" />
+            android:id="@+id/action_letsStartFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
     </fragment>
     <fragment
         android:id="@+id/signupFragment"
@@ -20,18 +20,26 @@
         android:label="fragment_signup"
         tools:layout="@layout/fragment_signup" >
         <action
-            android:id="@+id/action_signupFragment_to_letsStartFragment"
-            app:destination="@id/letsStartFragment" />
+            android:id="@+id/action_signupFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_signupFragment_to_trainingFragment"
+            app:destination="@id/trainingFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.eworkout.login.view.LoginFragment"
         android:label="LoginFragment" >
         <action
-            android:id="@+id/action_loginFragment_to_letsStartFragment"
-            app:destination="@id/letsStartFragment" />
-        <action
             android:id="@+id/action_loginFragment_to_signupFragment"
             app:destination="@id/signupFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_trainingFragment"
+            app:destination="@id/trainingFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/trainingFragment"
+        android:name="com.example.eworkout.training.view.TrainingFragment"
+        android:label="fragment_training"
+        tools:layout="@layout/fragment_training" />
 </navigation>

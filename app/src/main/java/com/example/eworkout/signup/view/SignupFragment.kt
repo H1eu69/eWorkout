@@ -204,7 +204,7 @@ class SignupFragment : Fragment() {
             "NO_ERROR_CONFIRM_PASSWORD" -> binding.textFieldConfirmPassword.isErrorEnabled = false
             //Sign up Success
             "SUCCESS" -> {
-                findNavController().navigate(R.id.action_signupFragment_to_letsStartFragment)
+                findNavController().navigate(R.id.action_signupFragment_to_trainingFragment)
             }
         }
     }
