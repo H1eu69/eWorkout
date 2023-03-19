@@ -1,5 +1,7 @@
 package com.example.eworkout.signup.viewmodel
 
+import android.content.ContentValues.TAG
+import android.util.Log
 import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -26,13 +28,14 @@ class SignupViewModel : ViewModel() {
 
     private val auth: FirebaseAuth = Firebase.auth
 
-    suspend fun createUserWithEmailAndPassword(): Boolean {
-        return try {
-            auth.createUserWithEmailAndPassword(email.value.toString(), password.value.toString())
-                .await().user != null
+    suspend fun createUserWithEmailAndPassword() {
+        try {
+            if(auth.createUserWithEmailAndPassword(email.value.toString(), password.value.toString())
+                .await().user != null)
+                _signupState.postValue(SignupState.SUCCESS)
         } catch (ex: Exception) {
+            Log.d(TAG, ex.toString())
             _signupState.postValue(SignupState.ERROR_USED_EMAIL)
-            false
         }
     }
 
