@@ -8,9 +8,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.eworkout.login.viewmodel.LoginViewModel
-import com.example.fithome.R
-import com.example.fithome.databinding.FragmentLetsStartBinding
-import com.example.fithome.databinding.FragmentLoginBinding
+import com.example.eworkout.R
+import com.example.eworkout.databinding.FragmentLetsStartBinding
+import com.example.eworkout.databinding.FragmentLoginBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
