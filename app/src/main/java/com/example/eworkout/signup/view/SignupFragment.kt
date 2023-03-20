@@ -1,7 +1,7 @@
 package com.example.eworkout.signup.view
 
+import android.app.Activity
 import android.content.ContentValues.TAG
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -15,12 +15,13 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.eworkout.signup.model.SignupState
 import com.example.eworkout.signup.viewmodel.SignupViewModel
-import com.example.fithome.R
-import com.example.fithome.databinding.FragmentSignupBinding
+import com.example.eworkout.R
+import com.example.eworkout.databinding.FragmentSignupBinding
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.auth.api.identity.SignInClient
 import com.google.android.gms.common.api.ApiException
+import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.coroutines.*
 
 // TODO: Rename parameter arguments, choose names that match
@@ -43,36 +44,25 @@ class SignupFragment : Fragment() {
 
     private lateinit var oneTapClient: SignInClient
     private lateinit var signInRequest: BeginSignInRequest
-    private val REQ_ONE_TAP = 2  // Can be any integer unique to the Activity
-    private var showOneTapUI = true
+
 
     val googleSignInRegister = registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult())
     {
         when (it.resultCode) {
-            REQ_ONE_TAP -> {
+            Activity.RESULT_OK -> {
                 try {
                     val credential = oneTapClient.getSignInCredentialFromIntent(it.data)
                     val idToken = credential.googleIdToken
-                    val username = credential.id
-                    val password = credential.password
                     when {
                         idToken != null -> {
-                            // Got an ID token from Google. Use it to authenticate
-                            // with your backend.
-                            Log.d(TAG, "Got ID token.$username")
-                        }
-                        password != null -> {
-                            // Got a saved username and password. Use them to authenticate
-                            // with your backend.
-                            Log.d(TAG, "Got password.$password")
-                        }
-                        else -> {
-                            // Shouldn't happen.
-                            Log.d(TAG, "No ID token or password!")
+                            val firebaseCredential = GoogleAuthProvider.getCredential(idToken, null)
+                            lifecycleScope.launch(Dispatchers.IO) {
+                                _viewModel.signInWithCredential(firebaseCredential)
+                            }
                         }
                     }
-                } catch (e: ApiException) {
-                    // ...
+                }catch(e: ApiException) {
+                    Log.d(TAG, e.toString())
                 }
             }
         }
@@ -97,8 +87,6 @@ class SignupFragment : Fragment() {
         _viewModel = viewModel
         binding.viewModel = viewModel
         binding.lifecycleOwner = this@SignupFragment
-
-        setupGoogleSignIn()
         return binding.root
     }
 
@@ -126,6 +114,7 @@ class SignupFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         observerViewModel()
         setOnClickListener()
+        setupGoogleSignIn()
     }
 
     private fun setOnClickListener()
@@ -219,7 +208,7 @@ class SignupFragment : Fragment() {
                     // Your server's client ID, not your Android client ID.
                     .setServerClientId(getString(R.string.web_client_id))
                     // Only show accounts previously used to sign in.
-                    .setFilterByAuthorizedAccounts(true)
+                    .setFilterByAuthorizedAccounts(false)
                     .build())
             .build()
     }
@@ -234,7 +223,7 @@ class SignupFragment : Fragment() {
             .addOnFailureListener(requireActivity()) { e ->
                 // No saved credentials found. Launch the One Tap sign-up flow, or
                 // do nothing and continue presenting the signed-out UI.
-                Log.d(TAG, e.localizedMessage)
+                e.localizedMessage?.let { Log.d(TAG, it) }
             }
 
     }

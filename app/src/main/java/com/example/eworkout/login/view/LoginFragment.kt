@@ -13,8 +13,8 @@ import androidx.navigation.fragment.findNavController
 import com.example.eworkout.login.model.LoginState
 import com.example.eworkout.login.viewmodel.LoginViewModel
 import com.example.eworkout.signup.model.SignupState
-import com.example.fithome.R
-import com.example.fithome.databinding.FragmentLoginBinding
+import com.example.eworkout.R
+import com.example.eworkout.databinding.FragmentLoginBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -70,7 +70,6 @@ class LoginFragment : Fragment() {
             {
                 lifecycleScope.launch(Dispatchers.IO){
                     _viewModel.signInWithEmailAndPassword()
-                    findNavController().navigate(R.id.action_loginFragment_to_trainingFragment)
                 }
             }
             else{
@@ -142,13 +141,4 @@ class LoginFragment : Fragment() {
             }
     }
 
-    private fun handleState(state: SignupState) {
-        when(state.name)
-        {
-            //Sign up Success
-            "SUCCESS" -> {
-                findNavController().navigate(R.id.action_loginFragment_to_trainingFragment)
-            }
-        }
-    }
 }

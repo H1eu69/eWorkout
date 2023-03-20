@@ -2,7 +2,7 @@ package com.example.eworkout
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.fithome.R
+import com.example.eworkout.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
