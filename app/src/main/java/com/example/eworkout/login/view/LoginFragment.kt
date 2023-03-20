@@ -70,7 +70,7 @@ class LoginFragment : Fragment() {
             {
                 lifecycleScope.launch(Dispatchers.IO){
                     _viewModel.signInWithEmailAndPassword()
-                    findNavController().navigate(R.id.action_loginFragment_to_letsStartFragment)
+                    findNavController().navigate(R.id.action_loginFragment_to_trainingFragment)
                 }
             }
             else{
@@ -118,7 +118,7 @@ class LoginFragment : Fragment() {
             "NO_ERROR_PASSWORD" -> binding.textFieldPassword.isErrorEnabled = false
             //Sign in Success
             "SUCCESS" -> {
-                findNavController().navigate(R.id.action_loginFragment_to_letsStartFragment)
+                findNavController().navigate(R.id.action_loginFragment_to_trainingFragment)
             }
         }
     }
