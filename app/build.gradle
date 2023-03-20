@@ -7,11 +7,11 @@ plugins {
 }
 
 android {
-    namespace 'com.example.fithome'
+    namespace 'com.example.eworkout'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.example.fithome"
+        applicationId "com.example.eworkout"
         minSdk 21
         targetSdk 33
         versionCode 1
