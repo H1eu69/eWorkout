@@ -74,8 +74,7 @@ class LoginFragment : Fragment() {
                 }
             }
             else{
-
-                Log.d(TAG,"signin failed")
+                Log.d(TAG,"login failed")
             }
         }
 
@@ -141,5 +140,15 @@ class LoginFragment : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
+    }
+
+    private fun handleState(state: SignupState) {
+        when(state.name)
+        {
+            //Sign up Success
+            "SUCCESS" -> {
+                findNavController().navigate(R.id.action_loginFragment_to_trainingFragment)
+            }
+        }
     }
 }
