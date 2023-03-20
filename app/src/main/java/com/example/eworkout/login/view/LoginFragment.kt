@@ -10,7 +10,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.example.eworkout.login.model.LoginState
 import com.example.eworkout.login.viewmodel.LoginViewModel
+import com.example.eworkout.signup.model.SignupState
 import com.example.fithome.R
 import com.example.fithome.databinding.FragmentLoginBinding
 import kotlinx.coroutines.Dispatchers
@@ -57,6 +59,7 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        observerViewModel()
         setOnClickListener()
     }
 
@@ -67,16 +70,57 @@ class LoginFragment : Fragment() {
             {
                 lifecycleScope.launch(Dispatchers.IO){
                     _viewModel.signInWithEmailAndPassword()
-
+                    findNavController().navigate(R.id.action_loginFragment_to_letsStartFragment)
                 }
             }
-            else
-                findNavController().navigate(R.id.action_loginFragment_to_letsStartFragment)
+            else{
+
                 Log.d(TAG,"signin failed")
+            }
         }
 
         binding.textViewCreateAccount.setOnClickListener(){
             findNavController().navigate(R.id.action_loginFragment_to_signupFragment)
+        }
+    }
+    private fun observerViewModel()
+    {
+        _viewModel.loginState.observe(viewLifecycleOwner)
+        {
+            handleState(it)
+        }
+    }
+    private fun handleState(state: LoginState) {
+        when(state.name)
+        {
+            "ERROR_EMAIL_EMPTY" -> {
+                binding.textFieldEmail.error = getString(R.string.ERROR_EMAIL_EMPTY)
+                binding.textFieldEmail.isErrorEnabled = true
+            }
+            "ERROR_EMAIL_FORMAT" -> {
+                binding.textFieldEmail.error = getString(R.string.ERROR_EMAIL_FORMAT)
+                binding.textFieldEmail.isErrorEnabled = true
+            }
+            "ERROR_PASSWORD_EMPTY" -> {
+                binding.textFieldPassword.error = getString(R.string.ERROR_PASSWORD_EMPTY)
+                binding.textFieldPassword.isErrorEnabled = true
+            }
+            "ERROR_PASSWORD_LENGTH" -> {
+                binding.textFieldPassword.error = getString(R.string.ERROR_PASSWORD_LENGTH)
+                binding.textFieldPassword.isErrorEnabled = true
+            }
+            "ERROR_WRONG_PASSWORD" -> {
+                binding.textFieldPassword.error = getString(R.string.ERROR_WRONG_PASSWORD)
+                binding.textFieldPassword.isErrorEnabled = true
+            }
+            //No above error
+
+            "NO_ERROR_EMAIL" -> binding.textFieldEmail.isErrorEnabled = false
+            "NO_ERROR_PASSWORD" -> binding.textFieldPassword.isErrorEnabled = false
+            //Sign in Success
+            "SUCCESS" -> {
+                findNavController().navigate(R.id.action_loginFragment_to_letsStartFragment)
+            }
         }
     }
     companion object {
