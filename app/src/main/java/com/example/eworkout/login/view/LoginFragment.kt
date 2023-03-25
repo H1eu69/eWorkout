@@ -13,10 +13,9 @@ import androidx.navigation.fragment.findNavController
 import com.example.eworkout.login.model.LoginState
 import com.example.eworkout.login.viewmodel.LoginViewModel
 import com.example.eworkout.signup.model.SignupState
-import com.example.fithome.R
-import com.example.fithome.databinding.FragmentLoginBinding
+import com.example.eworkout.R
+import com.example.eworkout.databinding.FragmentLoginBinding
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 // TODO: Rename parameter arguments, choose names that match
