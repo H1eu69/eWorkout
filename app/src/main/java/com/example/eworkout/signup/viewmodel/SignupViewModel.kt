@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.eworkout.signup.model.SignupState
+import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -36,6 +37,17 @@ class SignupViewModel : ViewModel() {
         } catch (ex: Exception) {
             Log.d(TAG, ex.toString())
             _signupState.postValue(SignupState.ERROR_USED_EMAIL)
+        }
+    }
+
+    suspend fun signInWithCredential(credential: AuthCredential)
+    {
+        try{
+            if(auth.signInWithCredential(credential).await().user != null)
+                _signupState.postValue(SignupState.SUCCESS)
+        }
+        catch (ex: Exception) {
+            Log.d(TAG, ex.toString())
         }
     }
 

@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1036376215736:android:d0f24890b15f10c1bf244d",
+        "mobilesdk_app_id": "1:1036376215736:android:b5882762b4bc2bedbf244d",
         "android_client_info": {
-          "package_name": "com.example.fithome"
+          "package_name": "com.example.eworkout"
         }
       },
       "oauth_client": [
