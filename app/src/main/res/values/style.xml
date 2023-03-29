@@ -61,4 +61,18 @@
         <item name="android:fontFamily">@font/montserrat</item>
         <item name="android:textSize">14sp</item>
     </style>
+
+    <style name="TextView3">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/montserrat_medium</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="roundedCornersImageView" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">12sp</item>
+    </style>
+
 </resources>

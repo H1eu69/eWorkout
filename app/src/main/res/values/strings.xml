@@ -36,4 +36,7 @@
     <string name="exercises">Exercises</string>
     <string name="_3_sets">3 Sets</string>
     <string name="start_workout">Start Workout</string>
+    <string name="set_1">Set 1</string>
+    <string name="warm_up">Warm up</string>
+    <string name="_05_15">05:15</string>
 </resources>

@@ -74,10 +74,12 @@
                 app:layout_constraintTop_toTopOf="@+id/textView" />
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/exercise_recyclerView"
                 android:layout_width="0dp"
-                android:layout_height="200dp"
+                android:layout_height="275dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
+                tools:listitem="@layout/set_recyclerview_item"
                 app:layout_constraintBottom_toTopOf="@+id/btn_start"
                 app:layout_constraintEnd_toEndOf="@+id/number_of_set_textview"
                 app:layout_constraintStart_toStartOf="@+id/textView"
