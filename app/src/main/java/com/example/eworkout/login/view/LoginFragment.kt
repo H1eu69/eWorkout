@@ -1,5 +1,6 @@
 package com.example.eworkout.login.view
 
+import android.app.Activity
 import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
@@ -7,16 +8,21 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.IntentSenderRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.eworkout.login.model.LoginState
 import com.example.eworkout.login.viewmodel.LoginViewModel
-import com.example.eworkout.signup.model.SignupState
 import com.example.eworkout.R
 import com.example.eworkout.databinding.FragmentLoginBinding
+import com.google.android.gms.auth.api.identity.BeginSignInRequest
+import com.google.android.gms.auth.api.identity.Identity
+import com.google.android.gms.auth.api.identity.SignInClient
+import com.google.android.gms.common.api.ApiException
+import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 // TODO: Rename parameter arguments, choose names that match
@@ -36,6 +42,31 @@ class LoginFragment : Fragment() {
     private var _binding: FragmentLoginBinding? = null
     val binding get() = _binding!!
     private lateinit var _viewModel: LoginViewModel
+
+    private lateinit var oneTapClient: SignInClient
+    private lateinit var signInRequest: BeginSignInRequest
+
+    val googleSignInRegister = registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult())
+    {
+        when (it.resultCode) {
+            Activity.RESULT_OK -> {
+                try {
+                    val credential = oneTapClient.getSignInCredentialFromIntent(it.data)
+                    val idToken = credential.googleIdToken
+                    when {
+                        idToken != null -> {
+                            val firebaseCredential = GoogleAuthProvider.getCredential(idToken, null)
+                            lifecycleScope.launch(Dispatchers.IO) {
+                                _viewModel.signInWithCredential(firebaseCredential)
+                            }
+                        }
+                    }
+                }catch(e: ApiException) {
+                    Log.d(TAG, e.toString())
+                }
+            }
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -61,6 +92,7 @@ class LoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         observerViewModel()
         setOnClickListener()
+        setupGoogleSignIn()
     }
 
     private fun setOnClickListener(){
@@ -76,7 +108,9 @@ class LoginFragment : Fragment() {
                 Log.d(TAG,"login failed")
             }
         }
-
+        binding.btnGoogleSignIn.setOnClickListener{
+            displayGoogleSignInUI()
+        }
         binding.textViewCreateAccount.setOnClickListener(){
             findNavController().navigate(R.id.action_loginFragment_to_signupFragment)
         }
@@ -120,6 +154,35 @@ class LoginFragment : Fragment() {
                 findNavController().navigate(R.id.action_loginFragment_to_trainingFragment)
             }
         }
+    }
+    private fun setupGoogleSignIn()
+    {
+        oneTapClient = Identity.getSignInClient(requireActivity())
+        signInRequest = BeginSignInRequest.builder()
+            .setGoogleIdTokenRequestOptions(
+                BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
+                    .setSupported(true)
+                    // Your server's client ID, not your Android client ID.
+                    .setServerClientId(getString(R.string.web_client_id))
+                    // Only show accounts previously used to sign in.
+                    .setFilterByAuthorizedAccounts(false)
+                    .build())
+            .build()
+    }
+
+    private fun displayGoogleSignInUI()
+    {
+        oneTapClient.beginSignIn(signInRequest)
+            .addOnSuccessListener(requireActivity()) { result ->
+                val intentSenderRequest = IntentSenderRequest.Builder(result.pendingIntent.intentSender).build()
+                googleSignInRegister.launch(intentSenderRequest)
+            }
+            .addOnFailureListener(requireActivity()) { e ->
+                // No saved credentials found. Launch the One Tap sign-up flow, or
+                // do nothing and continue presenting the signed-out UI.
+                e.localizedMessage?.let { Log.d(TAG, it) }
+            }
+
     }
     companion object {
         /**

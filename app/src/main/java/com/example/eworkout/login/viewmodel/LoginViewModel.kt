@@ -1,10 +1,14 @@
 package com.example.eworkout.login.viewmodel
 
+import android.content.ContentValues
+import android.util.Log
 import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.eworkout.login.model.LoginState
+import com.example.eworkout.signup.model.SignupState
+import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -30,7 +34,16 @@ class LoginViewModel: ViewModel() {
         }
     }
 
-
+    suspend fun signInWithCredential(credential: AuthCredential)
+    {
+        try{
+            if(auth.signInWithCredential(credential).await().user != null)
+                _loginState.postValue(LoginState.SUCCESS)
+        }
+        catch (ex: Exception) {
+            Log.d(ContentValues.TAG, ex.toString())
+        }
+    }
     fun validateText(): Boolean
     {
         if(
