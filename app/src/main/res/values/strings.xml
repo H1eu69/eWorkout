@@ -39,4 +39,6 @@
     <string name="set_1">Set 1</string>
     <string name="warm_up">Warm up</string>
     <string name="_05_15">05:15</string>
+    <string name="description">Description</string>
+    <string name="how_to_do_it">How to do it</string>
 </resources>

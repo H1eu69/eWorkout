@@ -48,7 +48,7 @@
                     android:layout_height="30dp"
                     android:layout_marginStart="28.8dp"
                     android:layout_marginTop="57.6dp"
-                    android:background="@drawable/btn_navigate_up_backgroundd"
+                    android:background="@drawable/btn_navigate_up_background"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
@@ -94,6 +94,7 @@
                 <TextView
                     android:id="@+id/textView"
                     style="@style/TextView1"
+                    android:text="@string/exercises"
                     android:layout_marginTop="40dp"
                     app:layout_constraintStart_toStartOf="@id/set_information_TextView"
                     app:layout_constraintTop_toTopOf="@id/set_information_TextView" />

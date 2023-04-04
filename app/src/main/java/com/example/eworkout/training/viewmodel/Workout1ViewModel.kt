@@ -8,6 +8,7 @@ import com.example.eworkout.training.model.Exercise
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.example.eworkout.training.model.WorkoutDetail1State
+import com.google.firebase.firestore.FieldPath
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
@@ -49,33 +50,35 @@ class Workout1ViewModel : ViewModel() {
             .whereEqualTo("set_id", id)
             .get()
             .addOnSuccessListener {
+                val exercisesId = mutableListOf<String>()
                 for (doc in it.documents){
-                    findAllExercises(doc.getString("exercise_id").toString())
+                    exercisesId.add(doc.getString("exercise_id").toString())
                     Log.d("Workout Detail 1", doc.getString("exercise_id").toString())
                 }
+                findExercises(exercisesId)
             }
     }
 
-    private fun findAllExercises(id: String) {
+    private fun findExercises(ids: List<String>) {
         firestore.collection("Exercises")
-            .document(id)
+            .whereIn(FieldPath.documentId(), ids)
             .get()
             .addOnSuccessListener {
-                exercises.add(
-                    Exercise(
-                        it.get("name").toString(),
-                        "",
-                        it.get("reps").toString(),
-                        it.get("description").toString(),
-                        it.get("calories").toString(),
-                        it.get("instruction").toString()
+                for (doc in it.documents){
+                    exercises.add(
+                        Exercise(
+                            doc.id,
+                            doc.get("name").toString(),
+                            "",
+                            doc.get("reps").toString(),
+                            doc.get("description").toString(),
+                            doc.get("calories").toString(),
+                            doc.get("instruction").toString())
                     )
-                )
-                Log.d("Workout Detail 1", it.get("reps").toString())
-            }
-            .addOnCompleteListener {
-                state.value = WorkoutDetail1State.FETCHED_NEW_DATA
+                }
+                state.value = WorkoutDetail1State.LOADED
                 Log.d("Workout Detail 1","LOADED")
             }
+
     }
 }

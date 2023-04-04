@@ -1,19 +1,32 @@
 package com.example.eworkout.training.adapter
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.eworkout.databinding.ExerciseRecyclerviewItemBinding
+import com.example.eworkout.training.listener.ExercisesOnClickListener
 import com.example.eworkout.training.model.Exercise
 
-class ExercisesAdapter(val list: List<Exercise>) : RecyclerView.Adapter<ExercisesAdapter.ViewHolder>() {
+class ExercisesAdapter(
+    val list: List<Exercise>,
+    val listener: ExercisesOnClickListener) : RecyclerView.Adapter<ExercisesAdapter.ViewHolder>() {
 
     inner class ViewHolder(val binding: ExerciseRecyclerviewItemBinding) : RecyclerView.ViewHolder(binding.root)
     {
         fun bind(exercise: Exercise)
         {
-            binding.exerciseNameTextview.text = exercise.name
-            binding.exerciseRepTextview.text = exercise.reps
+
+            exercise.apply {
+                val bundle = Bundle().apply {
+                    putString("exercise_id", id)
+                }
+                binding.exerciseNameTextview.text = name
+                binding.exerciseRepTextview.text = reps
+                binding.exerciseInformationBtn.setOnClickListener {
+                    listener.onClick(bundle)
+                }
+            }
         }
     }
 

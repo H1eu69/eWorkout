@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="16dp">
+
+    <TextView
+        android:id="@+id/step_textview"
+        style="@style/TextView2"
+        android:text="01"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/view2"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="32dp"
+        android:background="@drawable/circle_1"
+        app:layout_constraintBottom_toBottomOf="@+id/step_textview"
+        app:layout_constraintStart_toEndOf="@+id/step_textview"
+        app:layout_constraintTop_toTopOf="@+id/step_textview" />
+
+    <TextView
+        android:id="@+id/instruction_textview1"
+        style="@style/TextView3"
+        android:layout_marginStart="32dp"
+        android:text="Spread your arm oh yeah"
+        app:layout_constraintBottom_toBottomOf="@+id/view2"
+        app:layout_constraintStart_toEndOf="@+id/view2"
+        app:layout_constraintTop_toTopOf="@+id/view2" />
+
+    <TextView
+        android:id="@+id/instruction_textview2"
+        style="@style/TextView2"
+        android:layout_width="0dp"
+        android:text="@string/app_description"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="@+id/instruction_textview1"
+        app:layout_constraintTop_toBottomOf="@+id/instruction_textview1"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="1dp"
+        android:layout_height="0dp"
+        android:background="@drawable/pink_linear"
+        app:layout_constraintBottom_toBottomOf="@+id/instruction_textview2"
+        app:layout_constraintEnd_toEndOf="@+id/view2"
+        app:layout_constraintStart_toStartOf="@+id/view2"
+        app:layout_constraintTop_toBottomOf="@+id/view2" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

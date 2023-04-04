@@ -4,11 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import com.example.eworkout.R
 import com.example.eworkout.databinding.FragmentWorkoutDetail1Binding
 import com.example.eworkout.training.adapter.ExercisesAdapter
+import com.example.eworkout.training.listener.ExercisesOnClickListener
 import com.example.eworkout.training.viewmodel.Workout1ViewModel
 import com.example.eworkout.training.model.WorkoutDetail1State
 import kotlinx.coroutines.Dispatchers
@@ -26,6 +30,7 @@ class WorkoutDetail1 : Fragment() {
     private var _binding: FragmentWorkoutDetail1Binding? = null
     val binding get() = _binding!!
     private lateinit var _viewModel: Workout1ViewModel
+    private lateinit var exercisesOnClickListener : ExercisesOnClickListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -91,7 +96,7 @@ class WorkoutDetail1 : Fragment() {
             "LOADING" -> {
                 _viewModel.getDocumentFields("1iXUMoTZF1MxrQ9ResPr")
             }
-            "FETCHED_NEW_DATA" -> {
+            "LOADED" -> {
                 showUI()
                 notifyDataChanged()}
         }
@@ -111,7 +116,10 @@ class WorkoutDetail1 : Fragment() {
 
     private fun setupRecyclerView()
     {
+        val listener = ExercisesOnClickListener {
+            findNavController().navigate(R.id.action_workoutDetail1_to_workoutDetail2, it)
+        }
         val list = _viewModel.exercises
-        binding.recyclerView.adapter = ExercisesAdapter(list)
+        binding.recyclerView.adapter = ExercisesAdapter(list, listener)
     }
 }

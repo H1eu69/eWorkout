@@ -45,5 +45,18 @@
     <fragment
         android:id="@+id/workoutDetail1"
         android:name="com.example.eworkout.training.view.WorkoutDetail1"
-        android:label="WorkoutDetail1" />
+        android:label="WorkoutDetail1" >
+        <action
+            android:id="@+id/action_workoutDetail1_to_workoutDetail2"
+            app:destination="@id/workoutDetail2" />
+    </fragment>
+    <fragment
+        android:id="@+id/workoutDetail2"
+        android:name="com.example.eworkout.training.view.WorkoutDetail2"
+        android:label="fragment_workout_detail2"
+        tools:layout="@layout/fragment_workout_detail2" >
+        <action
+            android:id="@+id/action_workoutDetail2_to_workoutDetail1"
+            app:destination="@id/workoutDetail1" />
+    </fragment>
 </navigation>
