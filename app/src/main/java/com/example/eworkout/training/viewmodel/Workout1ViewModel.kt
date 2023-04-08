@@ -1,17 +1,14 @@
 package com.example.eworkout.training.viewmodel
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.example.eworkout.training.model.Exercise
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.example.eworkout.training.model.WorkoutDetail1State
 import com.google.firebase.firestore.FieldPath
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
 
 class Workout1ViewModel : ViewModel() {
     val firestore = Firebase.firestore
@@ -22,9 +19,10 @@ class Workout1ViewModel : ViewModel() {
 
     val setsInformation: MutableLiveData<String> = MutableLiveData()
 
-    val state = MutableLiveData(WorkoutDetail1State.LOADING)
+    private val _state : MutableLiveData<WorkoutDetail1State> = MutableLiveData(WorkoutDetail1State.LOADING)
+    val state : LiveData<WorkoutDetail1State> get() = _state
 
-    fun getDocumentFields(id: String) {
+    fun getSetsFieldsById(id: String) {
         firestore.collection("Sets")
             .document(id)
             .get()
@@ -37,7 +35,7 @@ class Workout1ViewModel : ViewModel() {
 
                 setsInformation.value = "$numOfExercise Exercise | $totalCalories Calories Burn"
 
-                findAllSetInformation(id)
+                findAllSetInformationBySetId(id)
                 Log.d("Workout Detail 1", it.getString("name").toString())
             }
             .addOnFailureListener {
@@ -45,21 +43,21 @@ class Workout1ViewModel : ViewModel() {
             }
     }
 
-    private fun findAllSetInformation(id: String) {
+    private fun findAllSetInformationBySetId(id: String) {
         firestore.collection("Set_Information")
             .whereEqualTo("set_id", id)
             .get()
             .addOnSuccessListener {
-                val exercisesId = mutableListOf<String>()
+                val exercisesIds = mutableListOf<String>()
                 for (doc in it.documents){
-                    exercisesId.add(doc.getString("exercise_id").toString())
+                    exercisesIds.add(doc.getString("exercise_id").toString())
                     Log.d("Workout Detail 1", doc.getString("exercise_id").toString())
                 }
-                findExercises(exercisesId)
+                findExercisesByIds(exercisesIds)
             }
     }
 
-    private fun findExercises(ids: List<String>) {
+    private fun findExercisesByIds(ids: List<String>) {
         firestore.collection("Exercises")
             .whereIn(FieldPath.documentId(), ids)
             .get()
@@ -76,7 +74,7 @@ class Workout1ViewModel : ViewModel() {
                             doc.get("instruction").toString())
                     )
                 }
-                state.value = WorkoutDetail1State.LOADED
+                _state.value = WorkoutDetail1State.LOADED
                 Log.d("Workout Detail 1","LOADED")
             }
 

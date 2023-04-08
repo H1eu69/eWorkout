@@ -4,33 +4,39 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:paddingTop="8dp"
     android:layout_marginBottom="16dp">
 
     <TextView
         android:id="@+id/step_textview"
         style="@style/TextView2"
-        android:text="01"
+        android:layout_width="10dp"
+        android:textAlignment="center"
+        android:text="3"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <View
+    <ImageView
         android:id="@+id/view2"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="32dp"
-        android:background="@drawable/circle_1"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="16dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/circle_1"
         app:layout_constraintBottom_toBottomOf="@+id/step_textview"
         app:layout_constraintStart_toEndOf="@+id/step_textview"
-        app:layout_constraintTop_toTopOf="@+id/step_textview" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/instruction_textview1"
-        style="@style/TextView3"
+        style="@style/TextView4"
+        android:layout_width="0dp"
         android:layout_marginStart="32dp"
-        android:text="Spread your arm oh yeah"
-        app:layout_constraintBottom_toBottomOf="@+id/view2"
+        android:text="@string/spread_your_arm_oh_yeah"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/view2"
-        app:layout_constraintTop_toTopOf="@+id/view2" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/instruction_textview2"

@@ -2,68 +2,172 @@
 <layout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.eworkout.training.viewmodel.Workout2ViewModel" />
+    </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="28.8dp"
-        android:layout_marginEnd="28.8dp"
+
         tools:context=".training.view.WorkoutDetail2">
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/button"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginTop="57.6dp"
-            android:background="@drawable/btn_close_background"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
-        <!-- TODO: Update blank fragment layout -->
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmerFrameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/exercises_name_textview"
-            style="@style/TextView1"
-            android:text="@string/hello_blank_fragment"
-            app:layout_constraintStart_toStartOf="@+id/button"
-            app:layout_constraintTop_toBottomOf="@+id/button" />
+            <include layout="@layout/workout_detail2_loading" />
+        </com.facebook.shimmer.ShimmerFrameLayout>
 
-        <TextView
-            android:id="@+id/exercises_information_textview"
-            style="@style/TextView2"
-            android:text="@string/hello_blank_fragment"
-            app:layout_constraintStart_toStartOf="@+id/exercises_name_textview"
-            app:layout_constraintTop_toBottomOf="@+id/exercises_name_textview" />
-
-        <TextView
-            android:id="@+id/description_hardcode_textview"
-            style="@style/TextView1"
-            android:text="@string/description"
-            app:layout_constraintStart_toStartOf="@+id/exercises_information_textview"
-            app:layout_constraintTop_toBottomOf="@+id/exercises_information_textview" />
-
-        <TextView
-            android:id="@+id/description_textview"
-            style="@style/TextView2"
-            android:text="@string/app_description"
-            app:layout_constraintStart_toStartOf="@+id/description_hardcode_textview"
-            app:layout_constraintTop_toBottomOf="@+id/description_hardcode_textview" />
-
-        <TextView
-            android:id="@+id/htdi_textview"
-            style="@style/TextView1"
-            android:text="@string/how_to_do_it"
-            app:layout_constraintStart_toStartOf="@+id/description_textview"
-            app:layout_constraintTop_toBottomOf="@+id/description_textview" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            tools:listitem="@layout/how_to_do_recyclerview_item"
-            app:layout_constraintStart_toStartOf="@+id/htdi_textview"
-            app:layout_constraintTop_toBottomOf="@+id/htdi_textview"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/data_layout"
+            android:visibility="gone"
+            android:layout_marginStart="28.8dp"
+            android:layout_marginEnd="28.8dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintStart_toEndOf="@+id/shimmerFrameLayout"
+            app:layout_constraintTop_toTopOf="parent">
 
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_navigate_up"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="57.6dp"
+                android:background="@drawable/btn_close_background"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardview"
+                style="@style/Widget.Material3.CardView.Elevated"
+                android:layout_width="0dp"
+                android:layout_height="200dp"
+                android:layout_marginTop="16dp"
+                android:theme="@style/Theme.MaterialComponents"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="1dp"
+                app:cardPreventCornerOverlap="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btn_navigate_up">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/view_thumbnail_background"
+                        android:layout_width="0dp"
+                        android:layout_height="200dp"
+                        android:src="@drawable/blue_linear"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/image_background_thumbnail"
+                        android:layout_width="0dp"
+                        android:layout_height="200dp"
+                        android:background="#99000000"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/image_thumbnail"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        android:src="@drawable/jumping_rope"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageButton
+                        android:id="@+id/exo_play_pause_btn"
+                        style="@style/ExoStyledControls.Button.Center.PlayPause"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.media3.ui.PlayerView
+                        android:id="@+id/playerView"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:resize_mode="fill" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:id="@+id/exercises_name_textview"
+                style="@style/TextView1"
+                android:layout_marginTop="16dp"
+                android:text="@={viewModel.exerciseName}"
+                app:layout_constraintStart_toStartOf="@+id/button"
+                app:layout_constraintTop_toBottomOf="@+id/cardview" />
+
+            <TextView
+                android:id="@+id/exercises_information_textview"
+                style="@style/TextView2"
+                android:layout_marginTop="8dp"
+                android:text="@={viewModel.exerciseInfo}"
+                app:layout_constraintStart_toStartOf="@+id/exercises_name_textview"
+                app:layout_constraintTop_toBottomOf="@+id/exercises_name_textview" />
+
+            <TextView
+                android:id="@+id/description_hardcode_textview"
+                style="@style/TextView1"
+                android:layout_marginTop="16dp"
+                android:text="@string/description"
+                app:layout_constraintStart_toStartOf="@+id/exercises_information_textview"
+                app:layout_constraintTop_toBottomOf="@+id/exercises_information_textview" />
+
+            <TextView
+                android:id="@+id/description_textview"
+                style="@style/TextView2"
+                android:layout_marginTop="16dp"
+                android:text="@={viewModel.exerciseDescription}"
+                app:layout_constraintStart_toStartOf="@+id/description_hardcode_textview"
+                app:layout_constraintTop_toBottomOf="@+id/description_hardcode_textview" />
+
+            <TextView
+                android:id="@+id/htdi_textview"
+                style="@style/TextView1"
+                android:layout_marginTop="16dp"
+                android:text="@string/how_to_do_it"
+                app:layout_constraintStart_toStartOf="@+id/description_textview"
+                app:layout_constraintTop_toBottomOf="@+id/description_textview" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerview"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="16dp"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/htdi_textview"
+                app:layout_constraintTop_toBottomOf="@+id/htdi_textview"
+                tools:listitem="@layout/how_to_do_recyclerview_item" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

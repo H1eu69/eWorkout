@@ -30,7 +30,6 @@ class WorkoutDetail1 : Fragment() {
     private var _binding: FragmentWorkoutDetail1Binding? = null
     val binding get() = _binding!!
     private lateinit var _viewModel: Workout1ViewModel
-    private lateinit var exercisesOnClickListener : ExercisesOnClickListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -94,7 +93,7 @@ class WorkoutDetail1 : Fragment() {
     {
         when(state.name){
             "LOADING" -> {
-                _viewModel.getDocumentFields("1iXUMoTZF1MxrQ9ResPr")
+                _viewModel.getSetsFieldsById("1iXUMoTZF1MxrQ9ResPr")
             }
             "LOADED" -> {
                 showUI()
