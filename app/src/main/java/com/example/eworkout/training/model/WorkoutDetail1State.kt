@@ -2,5 +2,6 @@ package com.example.eworkout.training.model
 
 enum class WorkoutDetail1State {
     LOADING,
-    LOADED
+    LOADED,
+    IMAGE_LOADED
 }

@@ -1,6 +1,8 @@
 package com.example.eworkout.training.view
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,12 +39,15 @@ class WorkoutDetail1 : Fragment() {
             mParam1 = it.getString(ARG_PARAM1)
             mParam2 = it.getString(ARG_PARAM2)
         }
+        Log.d("test view state", " create")
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        Log.d("test view state", " create view")
+
         _binding = FragmentWorkoutDetail1Binding.inflate(inflater, container, false)
         val viewModel: Workout1ViewModel by viewModels()
         _viewModel = viewModel
@@ -78,6 +83,8 @@ class WorkoutDetail1 : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Log.d("test view state", " view created")
+
         observeViewModel()
         setupRecyclerView()
     }
@@ -97,7 +104,11 @@ class WorkoutDetail1 : Fragment() {
             }
             "LOADED" -> {
                 showUI()
-                notifyDataChanged()}
+                setupRecyclerView()
+            }
+            "IMAGE_LOADED" -> {
+                notifyDataChange()
+            }
         }
     }
 
@@ -107,12 +118,6 @@ class WorkoutDetail1 : Fragment() {
         binding.dataLayout.visibility = View.VISIBLE
     }
 
-    private fun notifyDataChanged()
-    {
-        val list = _viewModel.exercises
-        binding.recyclerView.adapter?.notifyItemInserted(list.size - 1)
-    }
-
     private fun setupRecyclerView()
     {
         val listener = ExercisesOnClickListener {
@@ -120,5 +125,38 @@ class WorkoutDetail1 : Fragment() {
         }
         val list = _viewModel.exercises
         binding.recyclerView.adapter = ExercisesAdapter(list, listener)
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun notifyDataChange()
+    {
+        binding.recyclerView.adapter?.notifyDataSetChanged()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Log.d("test view state", " start")
+
+    }
+    override fun onResume() {
+        super.onResume()
+        Log.d("test view state", " resume")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d("test view state", "pause")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.d("test view state", " on stop")
+
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        Log.d("test view state", " destroy view")
+        _viewModel.changeStateToLoaded()
     }
 }

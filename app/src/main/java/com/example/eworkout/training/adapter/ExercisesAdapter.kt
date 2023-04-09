@@ -2,8 +2,13 @@ package com.example.eworkout.training.adapter
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.RoundedCorner
 import android.view.ViewGroup
+import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.example.eworkout.R
 import com.example.eworkout.databinding.ExerciseRecyclerviewItemBinding
 import com.example.eworkout.training.listener.ExercisesOnClickListener
 import com.example.eworkout.training.model.Exercise
@@ -16,7 +21,6 @@ class ExercisesAdapter(
     {
         fun bind(exercise: Exercise)
         {
-
             exercise.apply {
                 val bundle = Bundle().apply {
                     putString("exercise_id", id)
@@ -26,6 +30,14 @@ class ExercisesAdapter(
                 binding.exerciseInformationBtn.setOnClickListener {
                     listener.onClick(bundle)
                 }
+                if(image != ""){
+                    val radius = binding.root.context.resources.getDimensionPixelSize(R.dimen.corner_radius)
+                    Glide.with(binding.root.context).load(image)
+                        .transform(RoundedCorners(radius))
+                        .centerCrop()
+                        .into(binding.shapeableImageView)
+                }
+
             }
         }
     }
