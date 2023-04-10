@@ -1,11 +1,25 @@
 package com.example.eworkout.training.view
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.example.eworkout.R
+import com.example.eworkout.databinding.FragmentLoginBinding
+import com.example.eworkout.databinding.FragmentTrainingBinding
+import com.example.eworkout.login.viewmodel.LoginViewModel
+import com.example.eworkout.training.viewmodel.TrainingViewModel
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.FieldPath
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 /**
  * A simple [Fragment] subclass.
@@ -19,7 +33,11 @@ class TrainingFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private var _binding: FragmentTrainingBinding? = null
+    val binding get() = _binding!!
+    private lateinit var _viewModel: TrainingViewModel
 
+    val totalTime = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -31,9 +49,14 @@ class TrainingFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_training, container, false)
+        _binding = FragmentTrainingBinding.inflate(inflater,container,false)
+        val viewModel: TrainingViewModel by viewModels()
+        _viewModel = viewModel
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = this@TrainingFragment
+        return binding.root
     }
 
     companion object {
@@ -55,4 +78,33 @@ class TrainingFragment : Fragment() {
                 }
             }
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setOnClickListener()
+    }
+
+    private fun setOnClickListener() {
+        binding.buttonViewMoreFullbody.setOnClickListener {
+            val name = binding.textViewFullBody.text.toString()
+            _viewModel.getSetId(name)
+        }
+
+        binding.buttonViewLowerBody.setOnClickListener{
+            val name = binding.textViewLowerBody.text.toString()
+            _viewModel.getSetId(name)
+        }
+
+        binding.buttonViewUpperBody.setOnClickListener{
+            val name = binding.textViewUpperBody.text.toString()
+            _viewModel.getSetId(name)
+        }
+
+        binding.buttonViewMoreAB.setOnClickListener{
+            val name = binding.textViewAB.text.toString()
+            _viewModel.getSetId(name)
+        }
+    }
 }
+
+

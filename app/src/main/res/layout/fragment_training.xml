@@ -1,13 +1,510 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.example.eworkout.training.view.TrainingFragment">
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable name="viewModel" type="com.example.eworkout.training.viewmodel.TrainingViewModel"/>
+    </data>
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/welcome_back"
+            android:fontFamily="@font/poppins"
+            android:layout_marginTop="30dp"
+            android:layout_marginStart="10dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
 
-</FrameLayout>
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:fontFamily="@font/poppins_bold"
+            android:text="@string/user_name"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView1" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/buttonNotification"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            style="@style/Button3"
+            android:background="@drawable/notification_icon"
+            android:contentDescription="Notification"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/frame1"
+            android:layout_width="350dp"
+            android:layout_height="70dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView2"
+            app:layout_constraintBottom_toTopOf="@id/bottomNavigationView"
+            android:background="@drawable/radius_shape"
+            app:layout_constraintVertical_bias="0">
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/poppins"
+                android:text="@string/daily_workout_schedule"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@+id/frame1"
+                app:layout_constraintStart_toStartOf="@id/frame1"
+                app:layout_constraintTop_toTopOf="@+id/frame1" />
+
+
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/buttonCheck"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginEnd="5dp"
+                android:background="@drawable/gradient_shape"
+                android:text="Check"
+                android:textSize="16sp"
+                style="@style/Button4"
+                app:layout_constraintTop_toTopOf="@+id/frame1"
+                app:layout_constraintBottom_toBottomOf="@+id/frame1"
+                app:layout_constraintEnd_toEndOf="@id/frame1"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="560dp"
+            app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/frame1"
+            android:layout_marginTop="15dp"
+            android:paddingBottom="5dp"
+            app:layout_constraintVertical_bias="0">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/a"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/textView5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:text="@string/activity_status"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    app:layout_constraintStart_toStartOf="@id/a"
+                    app:layout_constraintTop_toTopOf="@id/a" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/frameCalories"
+                android:layout_width="350dp"
+                android:layout_height="150dp"
+                android:layout_marginTop="5dp"
+                android:paddingTop="5dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView5"
+                android:background="@drawable/radius_shape">
+
+                <TextView
+                    android:id="@+id/textView7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="Calories"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:layout_marginStart="30dp"
+                    app:layout_constraintStart_toEndOf="@+id/progressBarCalories"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textViewCalories"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    app:layout_constraintTop_toBottomOf="@+id/textView7"
+                    app:layout_constraintStart_toEndOf="@+id/progressBarCalories"
+                    android:text="107/255 kCal"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textSize="20sp"
+                    android:textColor="#92A3FD"/>
+
+                <TextView
+                    android:id="@+id/textViewWorkoutHours"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="Workout Hours"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:layout_marginStart="30dp"
+                    app:layout_constraintStart_toEndOf="@+id/progressBarCalories"
+                    app:layout_constraintTop_toBottomOf="@id/textViewCalories" />
+
+                <TextView
+                    android:id="@+id/textViewHours"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewWorkoutHours"
+                    app:layout_constraintStart_toEndOf="@+id/progressBarCalories"
+                    android:text="8h 32min"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textSize="20sp"
+                    android:textColor="#92A3FD"/>
+
+                <com.google.android.material.progressindicator.CircularProgressIndicator
+                    android:id="@+id/progressBarCalories"
+                    android:layout_width="150dp"
+                    android:layout_height="match_parent"
+                    android:max="255"
+                    android:progress="107"
+                    app:indicatorColor="#C58Bf2"
+                    app:indicatorInset="4dp"
+                    app:indicatorSize="140dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:trackColor="#F7F8F8"
+                    app:trackCornerRadius="5dp"
+                    app:trackThickness="20dp" />
+
+                <TextView
+                    android:id="@+id/textViewCaloriesNumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="@+id/progressBarCalories"
+                    app:layout_constraintEnd_toEndOf="@+id/progressBarCalories"
+                    app:layout_constraintBottom_toBottomOf="@+id/progressBarCalories"
+                    app:layout_constraintStart_toStartOf="@+id/progressBarCalories"
+                    android:text="107/255 kCal"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/poppins_medium"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:text="@string/what_you_wanna_train"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/frameCalories" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/frameFullBody"
+                    android:layout_width="350dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:background="@drawable/radius_shape"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textView6">
+
+                    <TextView
+                        android:id="@+id/textViewFullBody"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="15dp"
+                        android:text="Fullbody Workout"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/poppins_medium"
+                        android:textColor="@color/black"/>
+
+                    <TextView
+                        android:id="@+id/FullbodyDescrition"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@+id/textViewFullBody"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="5dp"
+                        android:text="11 exercies | 32 mins"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/poppins_medium"/>
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/buttonViewMoreFullbody"
+                        android:layout_width="100dp"
+                        android:layout_height="35dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/FullbodyDescrition"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.1"
+                        android:layout_marginTop="10dp"
+                        android:text="View More"
+                        style="@style/Button5"
+                        android:background="@drawable/radius_button"/>
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/bgViewFullbody"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/ellipse"/>
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/imageViewFullbody"
+                        android:layout_width="100dp"
+                        android:layout_height="130dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/vectorfullbody"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/frameLowerBody"
+                    android:layout_width="350dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:paddingBottom="5dp"
+                    android:background="@drawable/radius_shape"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/frameFullBody">
+
+                    <TextView
+                        android:id="@+id/textViewLowerBody"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="15dp"
+                        android:text="LowerBody Workout"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/poppins_medium"
+                        android:textColor="@color/black"/>
+
+                    <TextView
+                        android:id="@+id/LowerBodyDescrition"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@+id/textViewLowerBody"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="5dp"
+                        android:text="12 exercies | 40 mins"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/poppins_medium"/>
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/buttonViewLowerBody"
+                        android:layout_width="100dp"
+                        android:layout_height="35dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/LowerBodyDescrition"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.1"
+                        android:layout_marginTop="10dp"
+                        android:text="View More"
+                        style="@style/Button5"
+                        android:background="@drawable/radius_button"/>
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/bgViewLowerbody"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/ellipse"/>
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/imageViewLowerbody"
+                        android:layout_width="100dp"
+                        android:layout_height="130dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/vectorlowerbody"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/frameUpperBody"
+                    android:layout_width="350dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:paddingBottom="5dp"
+                    android:background="@drawable/radius_shape"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/frameLowerBody">
+
+                    <TextView
+                        android:id="@+id/textViewUpperBody"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="15dp"
+                        android:text="UpperBody Workout"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/poppins_medium"
+                        android:textColor="@color/black"/>
+
+                    <TextView
+                        android:id="@+id/UpperBodyDescrition"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@+id/textViewUpperBody"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="5dp"
+                        android:text="14 exercies | 40 mins"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/poppins_medium"/>
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/buttonViewUpperBody"
+                        android:layout_width="100dp"
+                        android:layout_height="35dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/UpperBodyDescrition"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.1"
+                        android:layout_marginTop="10dp"
+                        android:text="View More"
+                        style="@style/Button5"
+                        android:background="@drawable/radius_button"/>
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/bgViewUpperbody"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/ellipse"/>
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/imageViewUpperbody"
+                        android:layout_width="100dp"
+                        android:layout_height="130dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/vectorupperbody"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/frameAB"
+                    android:layout_width="350dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:paddingBottom="5dp"
+                    android:background="@drawable/radius_shape"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/frameUpperBody">
+
+                    <TextView
+                        android:id="@+id/textViewAB"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="15dp"
+                        android:text="AB Workout"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/poppins_medium"
+                        android:textColor="@color/black"/>
+
+                    <TextView
+                        android:id="@+id/ABDescrition"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@+id/textViewAB"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="5dp"
+                        android:text="14 exercies | 40 mins"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/poppins_medium"/>
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/buttonViewMoreAB"
+                        android:layout_width="100dp"
+                        android:layout_height="35dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/ABDescrition"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.1"
+                        android:layout_marginTop="10dp"
+                        android:text="View More"
+                        style="@style/Button5"
+                        android:background="@drawable/radius_button"/>
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/bgViewAB"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/ellipse"/>
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/imageAB"
+                        android:layout_width="130dp"
+                        android:layout_height="100dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/vectorab"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottomNavigationView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:menu="@menu/bottom_nav" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

@@ -31,4 +31,11 @@
     <string name="ERROR_WRONG_PASSWORD">Wrong Password!</string>
     <string name="ERROR_CONFIRM_PASSWORD_MATCH">Confirm password does not match!</string>
     <string name="web_client_id">521031319461-t020snnbqqjk81djnlmoetl791idg7r5.apps.googleusercontent.com</string>
+    <string name="welcome_back">Welcome Back</string>
+    <string name="user_name">Hahaha</string>
+    <string name="daily_workout_schedule">Daily Workout Schedule</string>
+    <string name="activity_status">Activity Status</string>
+    <string name="what_you_wanna_train">What Do You Want To Train?</string>
+
+
 </resources>
