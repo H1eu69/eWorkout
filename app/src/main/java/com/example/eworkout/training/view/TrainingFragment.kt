@@ -17,6 +17,7 @@ import com.example.eworkout.databinding.FragmentLoginBinding
 import com.example.eworkout.databinding.FragmentTrainingBinding
 import com.example.eworkout.login.viewmodel.LoginViewModel
 import com.example.eworkout.training.adapter.set_recycler_adapter
+import com.example.eworkout.training.listener.SetOnClickListener
 import com.example.eworkout.training.model.TrainingState
 import com.example.eworkout.training.viewmodel.TrainingViewModel
 import com.google.firebase.firestore.DocumentSnapshot
@@ -120,8 +121,8 @@ class TrainingFragment : Fragment() {
 
     private fun setupRecyclerView()
     {
-        val listener = ExercisesOnClickListener {
-            findNavController().navigate(R.id.action_workoutDetail1_to_workoutDetail2, it)
+        val listener = SetOnClickListener {
+            findNavController().navigate(R.id.action_trainingFragment_to_letsStartFragment, it)
         }
         val list = _viewModel.sets
         binding.recyclerView.adapter = set_recycler_adapter(list)
