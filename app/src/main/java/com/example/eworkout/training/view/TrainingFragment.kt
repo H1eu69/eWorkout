@@ -41,7 +41,7 @@ class TrainingFragment : Fragment() {
     val binding get() = _binding!!
     private lateinit var _viewModel: TrainingViewModel
 
-    val totalTime = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -103,7 +103,7 @@ class TrainingFragment : Fragment() {
                 _viewModel.getSetsFieldsById("1iXUMoTZF1MxrQ9ResPr")
             }
             "LOADED" -> {
-                showUI()
+                //showUI()
                 setupRecyclerView()
             }
             "IMAGE_LOADED" -> {
@@ -113,11 +113,11 @@ class TrainingFragment : Fragment() {
     }
 
 
-    private fun showUI()
+    /*private fun showUI()
     {
         binding.shimmerLayout.visibility = View.GONE
         binding.dataLayout.visibility = View.VISIBLE
-    }
+    }*/
 
     private fun setupRecyclerView()
     {

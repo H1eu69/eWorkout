@@ -21,7 +21,7 @@ class set_recycler_adapter(val list: List<Set>): RecyclerView.Adapter<set_recycl
         {
             set.apply {
                 val bundle = Bundle().apply {
-                    putString("exercise_id", setId)
+                    putString("set_id", setId)
                 }
                 binding.textViewSetName.text = setName
                 binding.textViewTotalExercises.text = totalExercises
@@ -48,8 +48,11 @@ class set_recycler_adapter(val list: List<Set>): RecyclerView.Adapter<set_recycl
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val setTaken = list[position]
-        holder.bind(setTaken)
+        val currentset = list[position]
+        holder.bind(currentset)
+        holder.binding.textViewSetName.text = currentset.setName
+        holder.binding.textViewTotalExercises.text = currentset.totalExercises
+        holder.binding.texViewTotalTime.text = currentset.totalTime
     }
 
     override fun getItemCount(): Int {
