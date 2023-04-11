@@ -1,5 +1,6 @@
 package com.example.eworkout.training.view
 
+import android.annotation.SuppressLint
 import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
@@ -15,6 +16,8 @@ import com.example.eworkout.R
 import com.example.eworkout.databinding.FragmentLoginBinding
 import com.example.eworkout.databinding.FragmentTrainingBinding
 import com.example.eworkout.login.viewmodel.LoginViewModel
+import com.example.eworkout.training.adapter.set_recycler_adapter
+import com.example.eworkout.training.model.TrainingState
 import com.example.eworkout.training.viewmodel.TrainingViewModel
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FieldPath
@@ -81,29 +84,80 @@ class TrainingFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setOnClickListener()
+        observeViewModel()
+        setupRecyclerView()
     }
 
-    private fun setOnClickListener() {
-        binding.buttonViewMoreFullbody.setOnClickListener {
-            val name = binding.textViewFullBody.text.toString()
-            _viewModel.getSetId(name)
+    private fun observeViewModel()
+    {
+        _viewModel.state.observe(viewLifecycleOwner){
+            handleState(it)
         }
+    }
 
-        binding.buttonViewLowerBody.setOnClickListener{
-            val name = binding.textViewLowerBody.text.toString()
-            _viewModel.getSetId(name)
+    private fun handleState(state: TrainingState)
+    {
+        when(state.name){
+            "LOADING" -> {
+                _viewModel.getSetsFieldsById("1iXUMoTZF1MxrQ9ResPr")
+            }
+            "LOADED" -> {
+                showUI()
+                setupRecyclerView()
+            }
+            "IMAGE_LOADED" -> {
+                notifyDataChange()
+            }
         }
+    }
 
-        binding.buttonViewUpperBody.setOnClickListener{
-            val name = binding.textViewUpperBody.text.toString()
-            _viewModel.getSetId(name)
-        }
 
-        binding.buttonViewMoreAB.setOnClickListener{
-            val name = binding.textViewAB.text.toString()
-            _viewModel.getSetId(name)
+    private fun showUI()
+    {
+        binding.shimmerLayout.visibility = View.GONE
+        binding.dataLayout.visibility = View.VISIBLE
+    }
+
+    private fun setupRecyclerView()
+    {
+        val listener = ExercisesOnClickListener {
+            findNavController().navigate(R.id.action_workoutDetail1_to_workoutDetail2, it)
         }
+        val list = _viewModel.setExercises
+        binding.recyclerView.adapter = set_recycler_adapter(list)
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun notifyDataChange()
+    {
+        binding.recyclerView.adapter?.notifyDataSetChanged()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Log.d("test view state", " start")
+
+    }
+    override fun onResume() {
+        super.onResume()
+        Log.d("test view state", " resume")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d("test view state", "pause")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.d("test view state", " on stop")
+
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        Log.d("test view state", " destroy view")
+        //_viewModel.changeStateToLoaded()
     }
 }
 

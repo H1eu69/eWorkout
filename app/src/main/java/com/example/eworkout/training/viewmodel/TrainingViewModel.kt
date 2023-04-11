@@ -25,11 +25,11 @@ class TrainingViewModel: ViewModel() {
 
     val exercises = mutableListOf<Set>()
 
-    val setsName: MutableLiveData<String> = MutableLiveData()
+    val setName: MutableLiveData<String> = MutableLiveData()
 
-    val setsExercises: MutableLiveData<String> = MutableLiveData()
+    val setExercises: MutableLiveData<String> = MutableLiveData()
 
-    val setsTime: MutableLiveData<String> = MutableLiveData()
+    val setTime: MutableLiveData<String> = MutableLiveData()
 
     private val _state : MutableLiveData<TrainingState> = MutableLiveData(TrainingState.LOADING)
     val state : LiveData<TrainingState> get() = _state
@@ -40,14 +40,14 @@ class TrainingViewModel: ViewModel() {
             .get()
             .addOnSuccessListener {
 
-                setsName.value = it.getString("name").toString()
+                setName.value = it.getString("name").toString()
 
-                setsExercises.value = it.getDouble("number_of_exercises")?.toInt().toString()
+                setExercises.value = it.getDouble("number_of_exercises")?.toInt().toString()
 
-                setsTime.value = it.getDouble("total_time").toString()
+                setTime.value = it.getDouble("total_time").toString()
 
                 //findAllSetInformationBySetId(id)
-                Log.d("Workout Detail 1", it.getString("name").toString())
+                //Log.d("Workout Detail 1", it.getString("name").toString())
             }
             .addOnFailureListener {
                 Log.d("Workout Detail 1", it.message.toString())
