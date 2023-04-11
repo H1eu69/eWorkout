@@ -23,7 +23,7 @@ class TrainingViewModel: ViewModel() {
 
     val storageRef = Firebase.storage.reference
 
-    val exercises = mutableListOf<Set>()
+    val sets = mutableListOf<Set>()
 
     val setName: MutableLiveData<String> = MutableLiveData()
 

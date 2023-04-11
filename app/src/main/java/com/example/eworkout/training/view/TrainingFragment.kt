@@ -123,7 +123,7 @@ class TrainingFragment : Fragment() {
         val listener = ExercisesOnClickListener {
             findNavController().navigate(R.id.action_workoutDetail1_to_workoutDetail2, it)
         }
-        val list = _viewModel.setExercises
+        val list = _viewModel.sets
         binding.recyclerView.adapter = set_recycler_adapter(list)
     }
 
