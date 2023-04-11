@@ -1,29 +1,40 @@
 package com.example.eworkout.training.adapter
 
+import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.eworkout.R
+import com.example.eworkout.training.model.Set
 
-class set_recycler_adapter: RecyclerView.Adapter<set_recycler_adapter.ViewHolder>() {
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): set_recycler_adapter.ViewHolder {
-        TODO("Not yet implemented")
+class set_recycler_adapter(val set: List<Set>): RecyclerView.Adapter<set_recycler_adapter.ViewHolder>() {
+
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.fragment_sets_item,parent,false)
+        return ViewHolder(itemView)
     }
 
-    override fun onBindViewHolder(holder: set_recycler_adapter.ViewHolder, position: Int) {
-        TODO("Not yet implemented")
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val setTaken = set[position]
+        holder._setName.text = setTaken.setName
+        holder._totalExercise.text = setTaken.totalExercises
+        holder._totalTime.text = setTaken.totalTime
     }
 
     override fun getItemCount(): Int {
-        TODO("Not yet implemented")
+        return set.size
     }
 
-    init class ViewHolder (
-        val list: List<Set>
-            ): RecyclerView.Adapter<set_recycler_adapter.ViewHolder>{
-
+    class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
+        val _setName: TextView = itemView.findViewById(R.id.textView_SetName)
+        val _totalExercise: TextView = itemView.findViewById(R.id.textView_TotalExercises)
+        val _totalTime: TextView = itemView.findViewById(R.id.texView_TotalTime)
+        val _image: ImageView = itemView.findViewById(R.id.Set_imageView)
     }
+
     /*val list: List<Exercise>,
     val listener: ExercisesOnClickListener) : RecyclerView.Adapter<ExercisesAdapter.ViewHolder>() {
 
