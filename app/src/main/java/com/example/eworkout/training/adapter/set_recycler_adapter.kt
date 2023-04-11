@@ -19,7 +19,11 @@ class set_recycler_adapter: RecyclerView.Adapter<set_recycler_adapter.ViewHolder
         TODO("Not yet implemented")
     }
 
-    init class ViewHolder (val binding: ExerciseRecyclerviewItemBinding) : set_recycler_adapter.ViewHolder(binding.root)
+    init class ViewHolder (
+        val list: List<Set>
+            ): RecyclerView.Adapter<set_recycler_adapter.ViewHolder>{
+
+    }
     /*val list: List<Exercise>,
     val listener: ExercisesOnClickListener) : RecyclerView.Adapter<ExercisesAdapter.ViewHolder>() {
 
