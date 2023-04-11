@@ -85,18 +85,20 @@ class TrainingFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        observeViewModel()
+        //observeViewModel()
+
+        _viewModel.loadSets()
         setupRecyclerView()
     }
 
-    private fun observeViewModel()
+   /* private fun observeViewModel()
     {
         _viewModel.state.observe(viewLifecycleOwner){
             handleState(it)
         }
-    }
+    }*/
 
-    private fun handleState(state: TrainingState)
+    /*private fun handleState(state: TrainingState)
     {
         when(state.name){
             "LOADING" -> {
@@ -110,7 +112,7 @@ class TrainingFragment : Fragment() {
                 notifyDataChange()
             }
         }
-    }
+    }*/
 
 
     /*private fun showUI()
@@ -121,14 +123,14 @@ class TrainingFragment : Fragment() {
 
     private fun setupRecyclerView()
     {
-        val listener = SetOnClickListener {
+        /*val listener = SetOnClickListener {
             findNavController().navigate(R.id.action_trainingFragment_to_letsStartFragment, it)
-        }
+        }*/
         val list = _viewModel.sets
         binding.recyclerView.adapter = set_recycler_adapter(list)
     }
 
-    @SuppressLint("NotifyDataSetChanged")
+    /*@SuppressLint("NotifyDataSetChanged")
     private fun notifyDataChange()
     {
         binding.recyclerView.adapter?.notifyDataSetChanged()
@@ -159,7 +161,7 @@ class TrainingFragment : Fragment() {
         super.onDestroyView()
         Log.d("test view state", " destroy view")
         //_viewModel.changeStateToLoaded()
-    }
+    }*/
 }
 
 

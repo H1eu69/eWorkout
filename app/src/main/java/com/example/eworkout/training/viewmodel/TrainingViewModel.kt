@@ -9,11 +9,14 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.recyclerview.widget.RecyclerView
 import com.example.eworkout.login.model.LoginState
 import com.example.eworkout.training.model.Set
 import com.example.eworkout.training.model.TrainingState
 import com.google.firebase.firestore.FieldPath
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 
@@ -34,17 +37,41 @@ class TrainingViewModel: ViewModel() {
     private val _state : MutableLiveData<TrainingState> = MutableLiveData(TrainingState.LOADING)
     val state : LiveData<TrainingState> get() = _state
 
-    fun getSetsFieldsById(id: String) {
+
+
+    fun loadSets(){
+        firestore.collection("Sets")
+            .get()
+            .addOnSuccessListener {
+                if(!it.isEmpty)
+                {
+                    for(data in it.documents)
+                    {
+                        val set = Set(
+                            data.id,
+                            data.get("name").toString(),
+                            data.get("total_time").toString(),
+                            data.get("total_calories").toString(),
+                            data.get("number_of_exercises").toString()
+                        )
+                        if(set != null)
+                            sets.add(set)
+                    }
+                }
+            }
+    }
+
+    /*fun getSetsFieldsById(id: String) {
         firestore.collection("Sets")
             .document(id)
             .get()
             .addOnSuccessListener {
 
-                setName.value = it.getString("name").toString()
+                setName.value = it.getString("name")
 
-                setExercises.value = it.getDouble("number_of_exercises")?.toInt().toString()
+                setExercises.value = it.getString("number_of_exercises")
 
-                setTime.value = it.getDouble("total_time").toString()
+                setTime.value = it.getString("total_time")
 
                 findAllSetInformationBySetId(id)
                 //Log.d("Workout Detail 1", it.getString("name").toString())
@@ -86,5 +113,5 @@ class TrainingViewModel: ViewModel() {
                 _state.value = TrainingState.LOADED
                 //Log.d("Workout Detail 1","LOADED")
             }
-    }
+    }*/
 }

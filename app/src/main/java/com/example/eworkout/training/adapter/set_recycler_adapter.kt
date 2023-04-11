@@ -50,9 +50,6 @@ class set_recycler_adapter(val list: List<Set>): RecyclerView.Adapter<set_recycl
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentset = list[position]
         holder.bind(currentset)
-        holder.binding.textViewSetName.text = currentset.setName
-        holder.binding.textViewTotalExercises.text = currentset.totalExercises
-        holder.binding.texViewTotalTime.text = currentset.totalTime
     }
 
     override fun getItemCount(): Int {
