@@ -11,6 +11,7 @@ import androidx.media3.common.MediaItem
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.navigation.fragment.findNavController
+import com.example.eworkout.R
 import com.example.eworkout.databinding.FragmentWorkoutDetail2Binding
 import com.example.eworkout.training.adapter.InstructionsAdapter
 import com.example.eworkout.training.model.WorkoutDetail2State
@@ -33,7 +34,7 @@ class WorkoutDetail2 : Fragment() {
     private var exerciseId: String? = null
     private var _binding: FragmentWorkoutDetail2Binding? = null
     val binding get() = _binding!!
-    private lateinit var _viewModel: Workout2ViewModel
+    private val _viewModel: Workout2ViewModel by viewModels()
 
     private var exoPlayer: ExoPlayer? = null
     private var playbackPosition = 0L
@@ -52,8 +53,6 @@ class WorkoutDetail2 : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentWorkoutDetail2Binding.inflate(inflater, container, false)
-        val vm : Workout2ViewModel by viewModels()
-        _viewModel = vm
         binding.lifecycleOwner = this
         binding.viewModel = _viewModel
         // Inflate the layout for this fragment
@@ -102,7 +101,7 @@ class WorkoutDetail2 : Fragment() {
             _viewModel.get()
         }
         binding.btnNavigateUp.setOnClickListener {
-            findNavController().navigateUp()
+            findNavController().popBackStack()
         }
     }
 
@@ -184,4 +183,6 @@ class WorkoutDetail2 : Fragment() {
         super.onDestroy()
         relasePlayer()
     }
+
+
 }

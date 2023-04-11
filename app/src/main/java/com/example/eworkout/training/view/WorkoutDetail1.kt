@@ -31,7 +31,7 @@ class WorkoutDetail1 : Fragment() {
     private var mParam2: String? = null
     private var _binding: FragmentWorkoutDetail1Binding? = null
     val binding get() = _binding!!
-    private lateinit var _viewModel: Workout1ViewModel
+    private val _viewModel: Workout1ViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,12 +47,9 @@ class WorkoutDetail1 : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         Log.d("test view state", " create view")
-
         _binding = FragmentWorkoutDetail1Binding.inflate(inflater, container, false)
-        val viewModel: Workout1ViewModel by viewModels()
-        _viewModel = viewModel
         binding.viewModel = _viewModel
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
     }
 
@@ -83,8 +80,6 @@ class WorkoutDetail1 : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d("test view state", " view created")
-
         observeViewModel()
         setupRecyclerView()
     }
@@ -100,22 +95,34 @@ class WorkoutDetail1 : Fragment() {
     {
         when(state.name){
             "LOADING" -> {
+                Log.d("hahohi", " LOADING")
+                showLoading()
                 _viewModel.getSetsFieldsById("1iXUMoTZF1MxrQ9ResPr")
             }
             "LOADED" -> {
-                showUI()
+                Log.d("hahohi", " LOADED")
+                hideLoading()
                 setupRecyclerView()
             }
             "IMAGE_LOADED" -> {
+                Log.d("hahohi", " IMAGE_LOADED")
                 notifyDataChange()
             }
         }
     }
-
-    private fun showUI()
+    private fun showLoading()
     {
-        binding.shimmerLayout.visibility = View.GONE
-        binding.dataLayout.visibility = View.VISIBLE
+        //binding.shimmerLayout.visibility = View.VISIBLE
+        //binding.dataLayout.visibility = View.GONE
+        binding.hideShimmerLayout = false
+        binding.hideDataLayout = true
+    }
+    private fun hideLoading()
+    {
+        //binding.shimmerLayout.visibility = View.GONE
+        //binding.dataLayout.visibility = View.VISIBLE
+        binding.hideShimmerLayout = true
+        binding.hideDataLayout = false
     }
 
     private fun setupRecyclerView()
@@ -133,7 +140,7 @@ class WorkoutDetail1 : Fragment() {
         binding.recyclerView.adapter?.notifyDataSetChanged()
     }
 
-    override fun onStart() {
+    /*override fun onStart() {
         super.onStart()
         Log.d("test view state", " start")
 
@@ -154,9 +161,20 @@ class WorkoutDetail1 : Fragment() {
 
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        Log.d("test view state", " saveinstance view")
+    }
+
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+        Log.d("test view state", " view state resotre view")
+
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         Log.d("test view state", " destroy view")
-        _viewModel.changeStateToLoaded()
-    }
+        //_viewModel.changeStateToLoaded()
+    }*/
 }
