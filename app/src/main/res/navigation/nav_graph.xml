@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/letsStartFragment">
+    app:startDestination="@id/fragmentWorkoutReady">
 
     <fragment
         android:id="@+id/letsStartFragment"
@@ -59,4 +59,8 @@
             android:id="@+id/action_workoutDetail2_to_workoutDetail1"
             app:destination="@id/workoutDetail1"/>
     </fragment>
+    <fragment
+        android:id="@+id/fragmentWorkoutReady"
+        android:name="com.example.eworkout.training.view.FragmentWorkoutReady"
+        android:label="FragmentWorkoutReady" />
 </navigation>
