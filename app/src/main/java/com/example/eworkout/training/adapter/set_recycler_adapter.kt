@@ -15,14 +15,13 @@ import kotlinx.coroutines.NonDisposableHandle.parent
 
 class set_recycler_adapter(val list: List<Set>): RecyclerView.Adapter<set_recycler_adapter.ViewHolder>() {
 
-    inner class ViewHolder(val binding: FragmentSetsItemBinding) : RecyclerView.ViewHolder(binding.root)
-    {
-        fun bind(set: Set)
-        {
+    inner class ViewHolder(val binding: FragmentSetsItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(set: Set) {
             set.apply {
-                /*val bundle = Bundle().apply {
+                val bundle = Bundle().apply {
                     putString("set_id", setId)
-                }*/
+                }
                 binding.textViewSetName.text = setName
                 binding.textViewTotalExercises.text = totalExercises
                 binding.texViewTotalTime.text = totalTime
@@ -35,28 +34,30 @@ class set_recycler_adapter(val list: List<Set>): RecyclerView.Adapter<set_recycl
                         .transform(RoundedCorners(radius))
                         .centerCrop()
                         .into(binding.shapeableImageView)
-                }*/
+                }
 
+            }*/
             }
         }
-    }
+        }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = FragmentSetsItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ViewHolder(binding)
-    }
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+            val binding =
+                FragmentSetsItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            return ViewHolder(binding)
+        }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val currentset = list[position]
-        holder.bind(currentset)
-    }
+        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+            val currentset = list[position]
+            holder.bind(currentset)
+        }
 
-    override fun getItemCount(): Int {
-        return list.size
-    }
+        override fun getItemCount(): Int {
+            return list.size
+        }
 
 
-    /*val list: List<Exercise>,
+        /*val list: List<Exercise>,
     val listener: ExercisesOnClickListener) : RecyclerView.Adapter<ExercisesAdapter.ViewHolder>() {
 
     inner class ViewHolder(val binding: ExerciseRecyclerviewItemBinding) : RecyclerView.ViewHolder(binding.root)
@@ -95,4 +96,5 @@ class set_recycler_adapter(val list: List<Set>): RecyclerView.Adapter<set_recycl
         val exercise = list[position]
         holder.bind(exercise)
     }*/
+
 }

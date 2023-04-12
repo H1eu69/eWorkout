@@ -28,19 +28,29 @@
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginStart="15dp"
         android:layout_marginTop="5dp"
-        android:text="14 Exercises"
+        android:text="14"
         android:textSize="16sp"
         android:fontFamily="@font/poppins_medium"/>
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/textView_SetName"
+        app:layout_constraintStart_toEndOf="@id/textView_TotalExercises"
+        android:layout_marginTop="5dp"
+        android:text=" Exercises | "
+        android:textSize="16sp"
+        android:fontFamily="@font/poppins_medium"/>
     <TextView
         android:id="@+id/texView_TotalTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/textView_SetName"
-        app:layout_constraintStart_toEndOf="@id/textView_TotalExercises"
+        app:layout_constraintStart_toEndOf="@id/textView"
         android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
-        android:text="| 32 mins"
+        android:text="32 mins"
         android:textSize="16sp"
         android:fontFamily="@font/poppins_medium"/>
 

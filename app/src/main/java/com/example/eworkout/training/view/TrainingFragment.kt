@@ -85,34 +85,33 @@ class TrainingFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //observeViewModel()
-
         _viewModel.loadSets()
-        setupRecyclerView()
+        observeViewModel()
+        //setupRecyclerView()
     }
 
-   /* private fun observeViewModel()
+   private fun observeViewModel()
     {
         _viewModel.state.observe(viewLifecycleOwner){
             handleState(it)
         }
-    }*/
+    }
 
-    /*private fun handleState(state: TrainingState)
+    private fun handleState(state: TrainingState)
     {
         when(state.name){
-            "LOADING" -> {
-                _viewModel.getSetsFieldsById("1iXUMoTZF1MxrQ9ResPr")
-            }
+            /*"LOADING" -> {
+                //_viewModel.getSetsFieldsById("1iXUMoTZF1MxrQ9ResPr")
+            }*/
             "LOADED" -> {
                 //showUI()
                 setupRecyclerView()
             }
             "IMAGE_LOADED" -> {
-                notifyDataChange()
+                //notifyDataChange()
             }
         }
-    }*/
+    }
 
 
     /*private fun showUI()
