@@ -98,7 +98,7 @@ class TrainingViewModel: ViewModel() {
         _state.value = TrainingState.LOADED
     }
 
-    private fun getUriImageByName(set: com.example.eworkout.training.model.Set)
+    private fun getUriImageByName(set: Set)
     {
         val path = "images/" + set.setName + ".svg"
         storageRef.child(path)
