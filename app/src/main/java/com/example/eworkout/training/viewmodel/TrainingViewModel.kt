@@ -35,9 +35,9 @@ class TrainingViewModel: ViewModel() {
 
     fun loadSets(){
         firestore.collection("Sets")
+            .document("cV4RagVwciBDCqFfdfOi")
             .get()
-            .addOnSuccessListener {
-                it.documents.forEach { data ->
+            .addOnSuccessListener {data ->
                     val set = com.example.eworkout.training.model.Set(
                         data.id,
                         data.get("name").toString(),
@@ -49,8 +49,53 @@ class TrainingViewModel: ViewModel() {
                     sets.add(set)
                     getUriImageByName(set)
                 }
-                _state.value = TrainingState.LOADED
+        firestore.collection("Sets")
+            .document("z9BQfujVcuRKYs4d2DbW")
+            .get()
+            .addOnSuccessListener {data ->
+                val set = com.example.eworkout.training.model.Set(
+                    data.id,
+                    data.get("name").toString(),
+                    data.get("total_time").toString(),
+                    data.get("total_calories").toString(),
+                    data.get("number_of_exercises").toString(),
+                    ""
+                )
+                sets.add(set)
+                getUriImageByName(set)
             }
+        firestore.collection("Sets")
+            .document("bPGOVbrUNAnWf4y7dun1")
+            .get()
+            .addOnSuccessListener {data ->
+                val set = com.example.eworkout.training.model.Set(
+                    data.id,
+                    data.get("name").toString(),
+                    data.get("total_time").toString(),
+                    data.get("total_calories").toString(),
+                    data.get("number_of_exercises").toString(),
+                    ""
+                )
+                sets.add(set)
+                getUriImageByName(set)
+            }
+        firestore.collection("Sets")
+            .document("CkU0yD2WlQweVEqqjupN")
+            .get()
+            .addOnSuccessListener {data ->
+                val set = com.example.eworkout.training.model.Set(
+                    data.id,
+                    data.get("name").toString(),
+                    data.get("total_time").toString(),
+                    data.get("total_calories").toString(),
+                    data.get("number_of_exercises").toString(),
+                    ""
+                )
+                sets.add(set)
+                getUriImageByName(set)
+            }
+
+        _state.value = TrainingState.LOADED
     }
 
     private fun getUriImageByName(set: com.example.eworkout.training.model.Set)
@@ -60,6 +105,9 @@ class TrainingViewModel: ViewModel() {
             .downloadUrl.addOnSuccessListener {
                 set.setImage = it.toString()
                 _state.value = TrainingState.IMAGE_LOADED
+            }
+            .addOnFailureListener {
+                Log.d("adsa", it.message.toString())
             }
     }
 

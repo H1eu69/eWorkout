@@ -104,7 +104,7 @@ class TrainingFragment : Fragment() {
                 setupRecyclerView()
             }
             "IMAGE_LOADED" -> {
-
+                notifyDataChange()
             }
         }
     }
@@ -119,6 +119,11 @@ class TrainingFragment : Fragment() {
         binding.recyclerView.adapter = set_recycler_adapter(list, listener)
     }
 
+    @SuppressLint("NotifyDataSetChanged")
+    private fun notifyDataChange()
+    {
+        binding.recyclerView.adapter?.notifyDataSetChanged()
+    }
 }
 
 
