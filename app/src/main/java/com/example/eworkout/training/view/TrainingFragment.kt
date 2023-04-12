@@ -103,6 +103,9 @@ class TrainingFragment : Fragment() {
             "LOADED" -> {
                 setupRecyclerView()
             }
+            "IMAGE_LOADED" -> {
+
+            }
         }
     }
 

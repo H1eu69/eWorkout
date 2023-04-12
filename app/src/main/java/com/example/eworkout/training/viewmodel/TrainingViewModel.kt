@@ -59,7 +59,7 @@ class TrainingViewModel: ViewModel() {
         storageRef.child(path)
             .downloadUrl.addOnSuccessListener {
                 set.setImage = it.toString()
-                _state.value = TrainingState.LOADING
+                _state.value = TrainingState.IMAGE_LOADED
             }
     }
 

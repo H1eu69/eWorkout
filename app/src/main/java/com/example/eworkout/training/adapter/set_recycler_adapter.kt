@@ -32,9 +32,7 @@ class set_recycler_adapter(val list: List<Set>,val listener: SetOnClickListener)
                     listener.onClick(bundle)
                 }
                 if(setImage != ""){
-                    val radius = binding.root.context.resources.getDimensionPixelSize(R.dimen.corner_radius)
                     Glide.with(binding.root.context).load(setImage)
-                        .transform(RoundedCorners(radius))
                         .centerCrop()
                         .into(binding.SetImageView)
                 }
@@ -57,46 +55,4 @@ class set_recycler_adapter(val list: List<Set>,val listener: SetOnClickListener)
         override fun getItemCount(): Int {
             return list.size
         }
-
-
-        /*val list: List<Exercise>,
-    val listener: ExercisesOnClickListener) : RecyclerView.Adapter<ExercisesAdapter.ViewHolder>() {
-
-    inner class ViewHolder(val binding: ExerciseRecyclerviewItemBinding) : RecyclerView.ViewHolder(binding.root)
-    {
-        fun bind(exercise: Exercise)
-        {
-            exercise.apply {
-                val bundle = Bundle().apply {
-                    putString("exercise_id", id)
-                }
-                binding.exerciseNameTextview.text = name
-                binding.exerciseRepTextview.text = reps
-                binding.exerciseInformationBtn.setOnClickListener {
-                    listener.onClick(bundle)
-                }
-                if(image != ""){
-                    val radius = binding.root.context.resources.getDimensionPixelSize(R.dimen.corner_radius)
-                    Glide.with(binding.root.context).load(image)
-                        .transform(RoundedCorners(radius))
-                        .centerCrop()
-                        .into(binding.shapeableImageView)
-                }
-
-            }
-        }
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ExerciseRecyclerviewItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ViewHolder(binding)
-    }
-
-    override fun getItemCount() = list.size
-
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val exercise = list[position]
-        holder.bind(exercise)
-    }*/
-
 }
