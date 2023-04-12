@@ -54,8 +54,7 @@ class TrainingViewModel: ViewModel() {
                             data.get("total_calories").toString(),
                             data.get("number_of_exercises").toString()
                         )
-                        if(set != null)
-                            sets.add(set)
+                        sets.add(set)
                     }
                 }
             }

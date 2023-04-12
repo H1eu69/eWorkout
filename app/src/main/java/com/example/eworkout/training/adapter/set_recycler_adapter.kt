@@ -42,8 +42,7 @@ class set_recycler_adapter(val list: List<Set>): RecyclerView.Adapter<set_recycl
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = FragmentSetsItemBinding.inflate(LayoutInflater.from(parent.context),
-            parent, false)
+        val binding = FragmentSetsItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
