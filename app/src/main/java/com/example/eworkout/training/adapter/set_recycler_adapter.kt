@@ -9,11 +9,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.eworkout.R
 import com.example.eworkout.databinding.FragmentSetsItemBinding
+import com.example.eworkout.training.listener.SetOnClickListener
 import com.example.eworkout.training.model.Set
 import kotlinx.coroutines.NonDisposableHandle
 import kotlinx.coroutines.NonDisposableHandle.parent
 
-class set_recycler_adapter(val list: List<Set>): RecyclerView.Adapter<set_recycler_adapter.ViewHolder>() {
+class set_recycler_adapter(val list: List<Set>,val listener: SetOnClickListener): RecyclerView.Adapter<set_recycler_adapter.ViewHolder>() {
 
     inner class ViewHolder(val binding: FragmentSetsItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -25,10 +26,10 @@ class set_recycler_adapter(val list: List<Set>): RecyclerView.Adapter<set_recycl
                 binding.textViewSetName.text = setName
                 binding.textViewTotalExercises.text = totalExercises
                 binding.texViewTotalTime.text = totalTime
-                /*binding.exerciseInformationBtn.setOnClickListener {
+                binding.buttonViewDetail.setOnClickListener {
                     listener.onClick(bundle)
                 }
-                if(image != ""){
+                /*if(image != ""){
                     val radius = binding.root.context.resources.getDimensionPixelSize(R.dimen.corner_radius)
                     Glide.with(binding.root.context).load(image)
                         .transform(RoundedCorners(radius))

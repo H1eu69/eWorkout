@@ -46,6 +46,7 @@ class TrainingViewModel: ViewModel() {
                         data.get("number_of_exercises").toString()
                     )
                     sets.add(set)
+                    getUriImageByName(exercise)
                 }
                 _state.value = TrainingState.LOADED
             }
