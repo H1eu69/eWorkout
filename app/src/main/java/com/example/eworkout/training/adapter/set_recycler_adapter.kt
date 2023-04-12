@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.eworkout.R
 import com.example.eworkout.databinding.FragmentSetsItemBinding
 import com.example.eworkout.training.listener.SetOnClickListener
@@ -29,7 +31,13 @@ class set_recycler_adapter(val list: List<Set>,val listener: SetOnClickListener)
                 binding.buttonViewDetail.setOnClickListener {
                     listener.onClick(bundle)
                 }
-
+                if(setImage != ""){
+                    val radius = binding.root.context.resources.getDimensionPixelSize(R.dimen.corner_radius)
+                    Glide.with(binding.root.context).load(setImage)
+                        .transform(RoundedCorners(radius))
+                        .centerCrop()
+                        .into(binding.SetImageView)
+                }
 
             }
             }

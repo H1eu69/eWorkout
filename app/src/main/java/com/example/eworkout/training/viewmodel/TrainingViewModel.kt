@@ -55,64 +55,12 @@ class TrainingViewModel: ViewModel() {
 
     private fun getUriImageByName(set: com.example.eworkout.training.model.Set)
     {
-        val path = "images/" + set.setName + ".jpg"
+        val path = "images/" + set.setName + ".svg"
         storageRef.child(path)
             .downloadUrl.addOnSuccessListener {
                 set.setImage = it.toString()
-                _state.value = TrainingState.LOADED
-            }
-    }
-    /*fun getSetsFieldsById(id: String) {
-        firestore.collection("Sets")
-            .document(id)
-            .get()
-            .addOnSuccessListener {
-
-                setName.value = it.getString("name")
-
-                setExercises.value = it.getString("number_of_exercises")
-
-                setTime.value = it.getString("total_time")
-
-                findAllSetInformationBySetId(id)
-                //Log.d("Workout Detail 1", it.getString("name").toString())
-            }
-            .addOnFailureListener {
-                Log.d("Workout Detail 1", it.message.toString())
+                _state.value = TrainingState.LOADING
             }
     }
 
-    private fun findAllSetInformationBySetId(id: String) {
-        firestore.collection("Set_Information")
-            .whereEqualTo("set_id", id)
-            .get()
-            .addOnSuccessListener {
-                val SetsIds = mutableListOf<String>()
-                for (doc in it.documents){
-                    SetsIds.add(doc.getString("set_id").toString())
-                    //Log.d("Workout Detail 1", doc.getString("exercise_id").toString())
-                }
-                findSetsByIds(SetsIds)
-            }
-    }
-
-    private fun findSetsByIds(ids: List<String>) {
-        firestore.collection("Sets")
-            .whereIn(FieldPath.documentId(), ids)
-            .get()
-            .addOnSuccessListener {
-                for (doc in it.documents){
-                    val set = Set (
-                        doc.id,
-                        doc.get("name").toString(),
-                        doc.get("total_time").toString(),
-                        doc.get("total_calories").toString(),
-                        doc.get("number_of_exercises").toString() )
-                    sets.add(set)
-                    //getUriImageByName(exercise)
-                }
-                _state.value = TrainingState.LOADED
-                //Log.d("Workout Detail 1","LOADED")
-            }
-    }*/
 }

@@ -101,7 +101,6 @@ class TrainingFragment : Fragment() {
     {
         when(state.name){
             "LOADED" -> {
-
                 setupRecyclerView()
             }
         }
