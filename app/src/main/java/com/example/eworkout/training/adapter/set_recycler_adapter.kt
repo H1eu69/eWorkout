@@ -20,9 +20,9 @@ class set_recycler_adapter(val list: List<Set>): RecyclerView.Adapter<set_recycl
         fun bind(set: Set)
         {
             set.apply {
-                val bundle = Bundle().apply {
+                /*val bundle = Bundle().apply {
                     putString("set_id", setId)
-                }
+                }*/
                 binding.textViewSetName.text = setName
                 binding.textViewTotalExercises.text = totalExercises
                 binding.texViewTotalTime.text = totalTime

@@ -28,14 +28,8 @@ class TrainingViewModel: ViewModel() {
 
     val sets = mutableListOf<Set>()
 
-    val setName: MutableLiveData<String> = MutableLiveData()
-
-    val setExercises: MutableLiveData<String> = MutableLiveData()
-
-    val setTime: MutableLiveData<String> = MutableLiveData()
-
-    private val _state : MutableLiveData<TrainingState> = MutableLiveData(TrainingState.LOADING)
-    val state : LiveData<TrainingState> get() = _state
+    //private val _state : MutableLiveData<TrainingState> = MutableLiveData(TrainingState.LOADING)
+    //val state : LiveData<TrainingState> get() = _state
 
 
 
@@ -43,18 +37,17 @@ class TrainingViewModel: ViewModel() {
         firestore.collection("Sets")
             .get()
             .addOnSuccessListener {
-                if(!it.isEmpty)
-                {
-                    for(data in it.documents)
-                    {
+                if (!it.isEmpty) {
+                    for (data in it.documents){
                         val set = Set(
                             data.id,
-                            data.get("name").toString(),
-                            data.get("total_time").toString(),
-                            data.get("total_calories").toString(),
-                            data.get("number_of_exercises").toString()
+                            data.getString("name").toString(),
+                            data.getString("total_time").toString(),
+                            data.getString("total_calories").toString(),
+                            data.getString("number_of_exercises").toString()
                         )
-                        sets.add(set)
+                        if (set != null)
+                            sets.add(set)
                     }
                 }
             }
