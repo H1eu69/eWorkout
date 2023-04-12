@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.contentValuesOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
@@ -87,7 +88,6 @@ class TrainingFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         _viewModel.loadSets()
         observeViewModel()
-        //setupRecyclerView()
     }
 
    private fun observeViewModel()
@@ -100,67 +100,23 @@ class TrainingFragment : Fragment() {
     private fun handleState(state: TrainingState)
     {
         when(state.name){
-            /*"LOADING" -> {
-                //_viewModel.getSetsFieldsById("1iXUMoTZF1MxrQ9ResPr")
-            }*/
             "LOADED" -> {
-                //showUI()
+
                 setupRecyclerView()
-            }
-            "IMAGE_LOADED" -> {
-                //notifyDataChange()
             }
         }
     }
 
-
-    /*private fun showUI()
-    {
-        binding.shimmerLayout.visibility = View.GONE
-        binding.dataLayout.visibility = View.VISIBLE
-    }*/
-
     private fun setupRecyclerView()
     {
-        /*val listener = SetOnClickListener {
+        val listener = SetOnClickListener {
+            Log.d(TAG,"setId")
             findNavController().navigate(R.id.action_trainingFragment_to_letsStartFragment, it)
-        }*/
+        }
         val list = _viewModel.sets
-        binding.recyclerView.adapter = set_recycler_adapter(list)
+        binding.recyclerView.adapter = set_recycler_adapter(list, listener)
     }
 
-    /*@SuppressLint("NotifyDataSetChanged")
-    private fun notifyDataChange()
-    {
-        binding.recyclerView.adapter?.notifyDataSetChanged()
-    }
-
-    override fun onStart() {
-        super.onStart()
-        Log.d("test view state", " start")
-
-    }
-    override fun onResume() {
-        super.onResume()
-        Log.d("test view state", " resume")
-    }
-
-    override fun onPause() {
-        super.onPause()
-        Log.d("test view state", "pause")
-    }
-
-    override fun onStop() {
-        super.onStop()
-        Log.d("test view state", " on stop")
-
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        Log.d("test view state", " destroy view")
-        //_viewModel.changeStateToLoaded()
-    }*/
 }
 
 

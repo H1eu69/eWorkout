@@ -29,17 +29,10 @@ class set_recycler_adapter(val list: List<Set>,val listener: SetOnClickListener)
                 binding.buttonViewDetail.setOnClickListener {
                     listener.onClick(bundle)
                 }
-                /*if(image != ""){
-                    val radius = binding.root.context.resources.getDimensionPixelSize(R.dimen.corner_radius)
-                    Glide.with(binding.root.context).load(image)
-                        .transform(RoundedCorners(radius))
-                        .centerCrop()
-                        .into(binding.shapeableImageView)
-                }
 
-            }*/
+
             }
-        }
+            }
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

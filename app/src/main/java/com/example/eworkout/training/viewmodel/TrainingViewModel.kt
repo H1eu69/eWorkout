@@ -44,7 +44,7 @@ class TrainingViewModel: ViewModel() {
                         data.get("total_time").toString(),
                         data.get("total_calories").toString(),
                         data.get("number_of_exercises").toString(),
-
+                    ""
                     )
                     sets.add(set)
                     getUriImageByName(set)
