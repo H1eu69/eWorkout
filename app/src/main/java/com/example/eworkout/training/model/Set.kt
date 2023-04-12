@@ -5,5 +5,6 @@ data class Set(
     val setName: String,
     val totalTime: String,
     val totalCalories: String,
-    val totalExercises: String
+    val totalExercises: String,
+    var setImage: String
 )

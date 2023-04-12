@@ -38,20 +38,30 @@ class TrainingViewModel: ViewModel() {
             .get()
             .addOnSuccessListener {
                 it.documents.forEach { data ->
-                    val set = Set(
+                    val set = com.example.eworkout.training.model.Set(
                         data.id,
                         data.get("name").toString(),
                         data.get("total_time").toString(),
                         data.get("total_calories").toString(),
-                        data.get("number_of_exercises").toString()
+                        data.get("number_of_exercises").toString(),
+
                     )
                     sets.add(set)
-                    getUriImageByName(exercise)
+                    getUriImageByName(set)
                 }
                 _state.value = TrainingState.LOADED
             }
     }
 
+    private fun getUriImageByName(set: com.example.eworkout.training.model.Set)
+    {
+        val path = "images/" + set.setName + ".jpg"
+        storageRef.child(path)
+            .downloadUrl.addOnSuccessListener {
+                set.setImage = it.toString()
+                _state.value = TrainingState.LOADED
+            }
+    }
     /*fun getSetsFieldsById(id: String) {
         firestore.collection("Sets")
             .document(id)
