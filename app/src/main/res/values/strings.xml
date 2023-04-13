@@ -36,6 +36,7 @@
     <string name="daily_workout_schedule">Daily Workout Schedule</string>
     <string name="activity_status">Activity Status</string>
     <string name="what_you_wanna_train">What Do You Want To Train?</string>
-
-
+    <string name="check">Check</string>
+    <string name="calories">Calories</string>
+    <string name="workout_hours">Workout Hours</string>
 </resources>

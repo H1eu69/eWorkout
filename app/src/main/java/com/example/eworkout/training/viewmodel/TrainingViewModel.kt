@@ -3,8 +3,12 @@ package com.example.eworkout.training.viewmodel
 import android.content.ContentValues
 import android.content.ContentValues.TAG
 import android.content.Intent
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
+import android.widget.ImageView
+import androidx.core.content.ContextCompat.getDrawable
 import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -30,8 +34,6 @@ class TrainingViewModel: ViewModel() {
 
     private val _state : MutableLiveData<TrainingState> = MutableLiveData(TrainingState.LOADING)
     val state : LiveData<TrainingState> get() = _state
-
-
 
     fun loadSets(){
         firestore.collection("Sets")
@@ -94,13 +96,12 @@ class TrainingViewModel: ViewModel() {
                 sets.add(set)
                 getUriImageByName(set)
             }
-
         _state.value = TrainingState.LOADED
     }
 
     private fun getUriImageByName(set: Set)
     {
-        val path = "images/" + set.setName + ".svg"
+        val path = "images/" + set.setName + ".png"
         storageRef.child(path)
             .downloadUrl.addOnSuccessListener {
                 set.setImage = it.toString()
