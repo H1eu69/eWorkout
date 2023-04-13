@@ -12,7 +12,10 @@ import android.view.animation.DecelerateInterpolator
 import android.view.animation.LinearInterpolator
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.navGraphViewModels
+import com.example.eworkout.R
 import com.example.eworkout.databinding.FragmentWorkoutReadyBinding
+import com.example.eworkout.training.viewmodel.Workout1ViewModel
 
 
 /**
@@ -27,9 +30,9 @@ class FragmentWorkoutReady : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private var progress = 0L
     private var _binding: FragmentWorkoutReadyBinding? = null
     val binding get() = _binding!!
+    private val _viewModel: Workout1ViewModel by navGraphViewModels(R.id.training_nav)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,8 +48,8 @@ class FragmentWorkoutReady : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         _binding = FragmentWorkoutReadyBinding.inflate(inflater, container, false)
-        //binding.viewModel = _viewModel
-        //binding.lifecycleOwner = viewLifecycleOwner
+        binding.viewModel = _viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
     }
 

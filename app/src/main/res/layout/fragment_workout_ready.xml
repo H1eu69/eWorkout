@@ -4,6 +4,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
         <variable
+            name="viewModel"
+            type="com.example.eworkout.training.viewmodel.Workout1ViewModel" />
+
+        <variable
             name="hideShimmerLayout"
             type="Boolean" />
         <variable
@@ -92,7 +96,7 @@
                     android:id="@+id/set_information_TextView"
                     style="@style/TextView6"
                     android:layout_marginTop="8dp"
-                    android:text="Jumping Pack"
+                    android:text="@{viewModel.currentExercise}"
                     app:layout_constraintEnd_toEndOf="@+id/set_name_TextView"
                     app:layout_constraintStart_toStartOf="@id/set_name_TextView"
                     app:layout_constraintTop_toBottomOf="@+id/set_name_TextView" />

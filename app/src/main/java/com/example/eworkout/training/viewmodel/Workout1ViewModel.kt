@@ -25,6 +25,9 @@ class Workout1ViewModel : ViewModel() {
     private val _state : MutableLiveData<WorkoutDetail1State> = MutableLiveData(WorkoutDetail1State.LOADING)
     val state : LiveData<WorkoutDetail1State> get() = _state
 
+    private var currentExerciseIndex = 0
+    val currentExerciseName = ""
+
     fun getSetsFieldsById(id: String) {
         firestore.collection("Sets")
             .document(id)
@@ -92,8 +95,15 @@ class Workout1ViewModel : ViewModel() {
             }
     }
 
-    fun changeStateToLoaded()
+    private fun increaseCurrentExerciseIndex()
     {
-        _state.value = WorkoutDetail1State.LOADED
+        currentExerciseIndex += 1
+    }
+
+    fun getCurrentExercise(): Exercise
+    {
+        val current = exercises[currentExerciseIndex]
+        increaseCurrentExerciseIndex()
+        return current
     }
 }

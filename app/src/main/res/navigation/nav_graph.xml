@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/login_nav">
+    app:startDestination="@id/training_nav">
 
 
     <navigation android:id="@+id/login_nav"
@@ -26,7 +26,8 @@
                 app:destination="@id/signupFragment" />
             <action
                 android:id="@+id/action_loginFragment_to_trainingFragment"
-                app:destination="@id/training_nav" />
+                app:destination="@id/training_nav"
+                app:popUpTo="@id/trainingFragment" />
         </fragment>
         <fragment
             android:id="@+id/signupFragment"
@@ -38,11 +39,12 @@
                 app:destination="@id/loginFragment" />
             <action
                 android:id="@+id/action_signupFragment_to_trainingFragment"
-                app:destination="@id/training_nav" />
+                app:destination="@id/training_nav"
+                app:popUpTo="@id/trainingFragment"/>
         </fragment>
     </navigation>
     <navigation android:id="@+id/training_nav"
-        app:startDestination="@id/trainingFragment">
+        app:startDestination="@id/workoutDetail1">
         <fragment
             android:id="@+id/workoutDetail2"
             android:name="com.example.eworkout.training.view.WorkoutDetail2"
@@ -63,6 +65,9 @@
             <action
                 android:id="@+id/action_workoutDetail1_to_workoutDetail2"
                 app:destination="@id/workoutDetail2" />
+            <action
+                android:id="@+id/action_workoutDetail1_to_fragmentWorkoutReady"
+                app:destination="@id/fragmentWorkoutReady" />
         </fragment>
         <fragment
             android:id="@+id/trainingFragment"
