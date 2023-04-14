@@ -6,10 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import com.example.eworkout.R
@@ -18,15 +15,13 @@ import com.example.eworkout.training.adapter.ExercisesAdapter
 import com.example.eworkout.training.listener.ExercisesOnClickListener
 import com.example.eworkout.training.viewmodel.Workout1ViewModel
 import com.example.eworkout.training.model.WorkoutDetail1State
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 /**
  * A simple [Fragment] subclass.
- * Use the [WorkoutDetail1.newInstance] factory method to
+ * Use the [FragmentWorkoutDetail1.newInstance] factory method to
  * create an instance of this fragment.
  */
-class WorkoutDetail1 : Fragment() {
+class FragmentWorkoutDetail1 : Fragment() {
     // TODO: Rename and change types of parameters
     private var mParam1: String? = null
     private var mParam2: String? = null
@@ -69,8 +64,8 @@ class WorkoutDetail1 : Fragment() {
          * @return A new instance of fragment WorkoutDetail1.
          */
         // TODO: Rename and change types and number of parameters
-        fun newInstance(param1: String?, param2: String?): WorkoutDetail1 {
-            val fragment = WorkoutDetail1()
+        fun newInstance(param1: String?, param2: String?): FragmentWorkoutDetail1 {
+            val fragment = FragmentWorkoutDetail1()
             val args = Bundle()
             args.putString(ARG_PARAM1, param1)
             args.putString(ARG_PARAM2, param2)

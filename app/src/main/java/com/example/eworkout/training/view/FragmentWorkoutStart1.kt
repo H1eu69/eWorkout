@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.LinearInterpolator
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import com.example.eworkout.R
 import com.example.eworkout.databinding.FragmentWorkoutStart1Binding
@@ -17,10 +16,10 @@ import com.example.eworkout.training.viewmodel.Workout1ViewModel
 
 /**
  * A simple [Fragment] subclass.
- * Use the [WorkoutStart1.newInstance] factory method to
+ * Use the [FragmentWorkoutStart1.newInstance] factory method to
  * create an instance of this fragment.
  */
-class WorkoutStart1 : Fragment() {
+class FragmentWorkoutStart1 : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -55,7 +54,7 @@ class WorkoutStart1 : Fragment() {
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            WorkoutStart1().apply {
+            FragmentWorkoutStart1().apply {
                 }
             }
 

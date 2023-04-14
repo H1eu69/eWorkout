@@ -11,7 +11,6 @@ import androidx.media3.common.MediaItem
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.navigation.fragment.findNavController
-import com.example.eworkout.R
 import com.example.eworkout.databinding.FragmentWorkoutDetail2Binding
 import com.example.eworkout.training.adapter.InstructionsAdapter
 import com.example.eworkout.training.model.WorkoutDetail2State
@@ -24,10 +23,10 @@ private const val ARG_PARAM2 = "param2"
 
 @UnstableApi /**
  * A simple [Fragment] subclass.
- * Use the [WorkoutDetail2.newInstance] factory method to
+ * Use the [FragmentWorkoutDetail2.newInstance] factory method to
  * create an instance of this fragment.
  */
-class WorkoutDetail2 : Fragment() {
+class FragmentWorkoutDetail2 : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -71,7 +70,7 @@ class WorkoutDetail2 : Fragment() {
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            WorkoutDetail2().apply {
+            FragmentWorkoutDetail2().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)
