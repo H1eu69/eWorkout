@@ -2,9 +2,9 @@ package com.example.eworkout.training.util
 
 import com.example.eworkout.training.model.Instruction
 
-class InstructionAnalyzer {
+class StringUlti {
     companion object{
-        fun analyze(originalString: String): MutableList<Instruction>
+        fun subInstructionsIntoList(originalString: String): MutableList<Instruction>
         {
             val result = mutableListOf<Instruction>()
             var subOriginalString = originalString
@@ -33,6 +33,11 @@ class InstructionAnalyzer {
 
             }
             return result
+        }
+
+        fun removeRepsPostfix(originalString: String): String
+        {
+            return originalString.removeSuffix("s")
         }
     }
 }

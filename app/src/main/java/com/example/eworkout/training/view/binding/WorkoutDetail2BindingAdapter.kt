@@ -23,7 +23,3 @@ fun isGone(view: ConstraintLayout, isGone: Boolean) {
         view.visibility = View.VISIBLE
 }
 
-@BindingAdapter("android:text")
-fun text(view: TextView, exercise: Exercise) {
-    view.text = exercise.name
-}

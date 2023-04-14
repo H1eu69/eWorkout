@@ -26,7 +26,6 @@ class Workout1ViewModel : ViewModel() {
     val state : LiveData<WorkoutDetail1State> get() = _state
 
     private var currentExerciseIndex = 0
-    val currentExerciseName = ""
 
     fun getSetsFieldsById(id: String) {
         firestore.collection("Sets")
@@ -100,10 +99,18 @@ class Workout1ViewModel : ViewModel() {
         currentExerciseIndex += 1
     }
 
-    fun getCurrentExercise(): Exercise
+    fun getCurrentExercise(): Exercise {
+        return exercises[currentExerciseIndex]
+    }
+    fun getCurrentExerciseAndIncreaseIndex(): Exercise
     {
         val current = exercises[currentExerciseIndex]
         increaseCurrentExerciseIndex()
         return current
     }
+
+    fun getNextExercise(): Exercise{
+        return exercises[currentExerciseIndex + 1]
+    }
+
 }

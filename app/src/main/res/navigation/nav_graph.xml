@@ -57,7 +57,11 @@
         <fragment
             android:id="@+id/fragmentWorkoutReady"
             android:name="com.example.eworkout.training.view.FragmentWorkoutReady"
-            android:label="FragmentWorkoutReady" />
+            android:label="FragmentWorkoutReady" >
+            <action
+                android:id="@+id/action_fragmentWorkoutReady_to_workoutStart1"
+                app:destination="@id/workoutStart1" />
+        </fragment>
         <fragment
             android:id="@+id/workoutDetail1"
             android:name="com.example.eworkout.training.view.WorkoutDetail1"
@@ -74,6 +78,10 @@
             android:name="com.example.eworkout.training.view.TrainingFragment"
             android:label="fragment_training"
             tools:layout="@layout/fragment_training" />
+        <fragment
+            android:id="@+id/workoutStart1"
+            android:name="com.example.eworkout.training.view.WorkoutStart1"
+            android:label="WorkoutStart1" />
     </navigation>
 
 
