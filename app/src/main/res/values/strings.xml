@@ -42,4 +42,8 @@
     <string name="description">Description</string>
     <string name="how_to_do_it">How to do it</string>
     <string name="spread_your_arm_oh_yeah">Spread your arm oh yeah</string>
+    <string name="rest">Rest</string>
+    <string name="_10s">+10s</string>
+    <string name="skip">Skip</string>
+    <string name="next_2_11">Next 2/11</string>
 </resources>

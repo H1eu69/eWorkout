@@ -44,7 +44,7 @@
         </fragment>
     </navigation>
     <navigation android:id="@+id/training_nav"
-        app:startDestination="@id/workoutDetail1">
+        app:startDestination="@id/fragmentWorkoutRest">
         <fragment
             android:id="@+id/workoutDetail2"
             android:name="com.example.eworkout.training.view.FragmentWorkoutDetail2"
@@ -89,6 +89,10 @@
             android:id="@+id/fragmentWorkoutStart2"
             android:name="com.example.eworkout.training.view.FragmentWorkoutStart2"
             android:label="FragmentWorkoutStart2" />
+        <fragment
+            android:id="@+id/fragmentWorkoutRest"
+            android:name="com.example.eworkout.training.view.FragmentWorkoutRest"
+            android:label="FragmentWorkoutRest" />
     </navigation>
 
 
