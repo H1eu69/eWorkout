@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginStart="28.8dp"
+    android:layout_marginEnd="28.8dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardview"
+        style="@style/Widget.Material3.CardView.Elevated"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="104dp"
+        android:theme="@style/Theme.MaterialComponents"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="1dp"
+        app:cardPreventCornerOverlap="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/view_thumbnail_background_loading"
+                android:layout_width="0dp"
+                android:layout_height="200dp"
+                android:src="@drawable/blue_linear"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/image_background_thumbnail_loading"
+                android:layout_width="0dp"
+                android:layout_height="200dp"
+                android:background="#99000000"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/image_thumbnail_loading"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:src="@drawable/jumping_rope"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/exo_play_pause_btn_loading"
+                style="@style/ExoStyledControls.Button.Center.PlayPause"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.media3.ui.PlayerView
+                android:id="@+id/playerView_loading"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:resize_mode="fill" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <TextView
+        android:layout_width="200dp"
+        android:layout_height="20dp"
+        android:background="@drawable/loading_background"
+        android:id="@+id/exercises_name_textview"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="@+id/cardview"
+        app:layout_constraintTop_toBottomOf="@+id/cardview" />
+
+    <TextView
+        android:id="@+id/exercises_information_textview"
+        android:layout_width="200dp"
+        android:layout_height="20dp"
+        android:background="@drawable/loading_background"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="@+id/exercises_name_textview"
+        app:layout_constraintTop_toBottomOf="@+id/exercises_name_textview" />
+
+    <TextView
+        android:id="@+id/description_hardcode_textview"
+        android:layout_width="200dp"
+        android:layout_height="20dp"
+        android:background="@drawable/loading_background"
+        android:layout_marginTop="32dp"
+        app:layout_constraintStart_toStartOf="@+id/exercises_information_textview"
+        app:layout_constraintTop_toBottomOf="@+id/exercises_information_textview" />
+
+    <TextView
+        android:id="@+id/description_textview1"
+        android:layout_width="0dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/loading_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/description_hardcode_textview"
+        app:layout_constraintTop_toBottomOf="@+id/description_hardcode_textview" />
+
+    <TextView
+        android:id="@+id/description_textview2"
+        android:layout_width="0dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/loading_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/description_textview1"
+        app:layout_constraintTop_toBottomOf="@+id/description_textview1" />
+
+    <TextView
+        android:id="@+id/description_textview3"
+        android:layout_width="0dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/loading_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/description_textview2"
+        app:layout_constraintTop_toBottomOf="@+id/description_textview2" />
+
+    <TextView
+        android:id="@+id/description_textview4"
+        android:layout_width="0dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/loading_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/description_textview3"
+        app:layout_constraintTop_toBottomOf="@+id/description_textview3" />
+
+
+    <TextView
+        android:id="@+id/htdi_textview"
+        android:layout_width="200dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/loading_background"
+        app:layout_constraintStart_toStartOf="@+id/description_textview4"
+        app:layout_constraintTop_toBottomOf="@+id/description_textview4" />
+</androidx.constraintlayout.widget.ConstraintLayout>
