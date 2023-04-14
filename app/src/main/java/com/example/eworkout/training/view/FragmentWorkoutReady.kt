@@ -75,7 +75,17 @@ class FragmentWorkoutReady : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setOnClickListener()
         startCountDown()
+    }
+
+    private fun setOnClickListener() {
+        binding.btnStart.setOnClickListener {
+            if(_viewModel.getCurrentExercise().reps.contains("s"))
+                findNavController().navigate(R.id.action_fragmentWorkoutReady_to_workoutStart1)
+            else
+                findNavController().navigate(R.id.action_fragmentWorkoutReady_to_fragmentWorkoutStart2)
+        }
     }
 
     private fun startCountDown()
@@ -95,7 +105,10 @@ class FragmentWorkoutReady : Fragment() {
             }
 
             override fun onFinish() {
-                findNavController().navigate(R.id.action_fragmentWorkoutReady_to_workoutStart1)
+                if(_viewModel.getCurrentExercise().reps.contains("s"))
+                    findNavController().navigate(R.id.action_fragmentWorkoutReady_to_workoutStart1)
+                else
+                    findNavController().navigate(R.id.action_fragmentWorkoutReady_to_fragmentWorkoutStart2)
             }
         }.start()
 

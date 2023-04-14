@@ -5,7 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.navGraphViewModels
 import com.example.eworkout.R
+import com.example.eworkout.databinding.FragmentWorkoutStart1Binding
+import com.example.eworkout.databinding.FragmentWorkoutStart2Binding
+import com.example.eworkout.training.viewmodel.Workout1ViewModel
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -21,6 +25,9 @@ class FragmentWorkoutStart2 : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private var _binding: FragmentWorkoutStart2Binding? = null
+    val binding get() = _binding!!
+    private val _viewModel: Workout1ViewModel by navGraphViewModels(R.id.training_nav)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,9 +40,12 @@ class FragmentWorkoutStart2 : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_workout_start2, container, false)
+        _binding = FragmentWorkoutStart2Binding.inflate(inflater, container, false)
+        binding.viewModel = _viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+        return binding.root
     }
 
     companion object {
@@ -56,5 +66,9 @@ class FragmentWorkoutStart2 : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
     }
 }
