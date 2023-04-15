@@ -188,7 +188,8 @@
                         app:layout_constraintTop_toTopOf="parent"
                         app:trackColor="#F7F8F8"
                         app:trackCornerRadius="10dp"
-                        app:trackThickness="15dp" />
+                        app:trackThickness="15dp"
+                        android:theme="@style/Theme.AppCompat"/>
 
                     <TextView
                         android:id="@+id/textViewCaloriesNumber"
@@ -241,7 +242,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:menu="@menu/bottom_nav" />
+            app:menu="@menu/bottom_nav"
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
