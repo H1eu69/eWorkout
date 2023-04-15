@@ -70,6 +70,15 @@ abstract class SonicCountDownTimer : SonicCountDownTimerListener {
         }
     }
 
+    private fun initSonicCountDownTimer2() {
+        if (!isTimerPaused) {
+            if (localTime <= mTime) {
+                onTimerTick(mTime - localTime)
+                localTime += timeInterval
+            } else stopCountDownTimer()
+        }
+    }
+
     /**
      * Convenience method to check whether the timer is running or not
      *
@@ -154,6 +163,13 @@ abstract class SonicCountDownTimer : SonicCountDownTimerListener {
         if (isTimerRunning) return
         if (mTime <= 0) if (timeInMillis < 0) timeInMillis *= -1
         mTime = timeInMillis
+    }
+
+    fun addTime(timeInMillis: Long)
+    {
+        cancelCountDownTimer()
+        setCountDownTime(timeInMillis)
+        initSonicCountDownTimer()
     }
 
     /**

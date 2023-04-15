@@ -3,6 +3,7 @@ package com.example.eworkout.training.view
 import android.animation.ObjectAnimator
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,9 +12,9 @@ import android.view.animation.LinearInterpolator
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import com.example.eworkout.R
-import com.example.eworkout.databinding.FragmentWorkoutReadyBinding
 import com.example.eworkout.databinding.FragmentWorkoutRestBinding
 import com.example.eworkout.training.viewmodel.Workout1SharedViewModel
+import com.orbitalsonic.sonictimer.SonicCountDownTimer
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -34,7 +35,7 @@ class FragmentWorkoutRest : Fragment() {
     private val _viewModel: Workout1SharedViewModel by navGraphViewModels(R.id.training_nav)
     private lateinit var countDownTimer : CountDownTimer
     private lateinit var animation: ObjectAnimator
-    private var millisLeft = 0L
+    private var timeRemaining = 0L
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -88,6 +89,17 @@ class FragmentWorkoutRest : Fragment() {
             else
                 findNavController().navigate(R.id.action_fragmentWorkoutRest_to_fragmentWorkoutStart2)
         }
+
+        binding.add10sTextView.setOnClickListener {
+            animation.duration += 10000
+            cancelAndStartNewCountDown(timeRemaining + 10000)
+        }
+    }
+
+    private fun cancelAndStartNewCountDown(millisCountDown: Long)
+    {
+        countDownTimer.cancel()
+        startCountDown(millisCountDown)
     }
 
     private fun startProgressAnimation(millisCountDown: Long)
@@ -105,9 +117,9 @@ class FragmentWorkoutRest : Fragment() {
     {
         countDownTimer = object : CountDownTimer(millisCountDown, 1000) {
 
-            override fun onTick(millisUntilFinished: Long) {
-                millisLeft = millisUntilFinished
-                binding.repsTextview.text = (millisUntilFinished / 1000).toString()
+            override fun onTick(timeRemaining: Long) {
+                this@FragmentWorkoutRest.timeRemaining = timeRemaining
+                binding.repsTextview.text = (timeRemaining / 1000).toString()
             }
 
             override fun onFinish() {
@@ -116,7 +128,9 @@ class FragmentWorkoutRest : Fragment() {
                 else
                     findNavController().navigate(R.id.action_fragmentWorkoutReady_to_fragmentWorkoutStart2)
             }
-        }.start()
+
+        }
+        countDownTimer.start()
     }
     override fun onDestroyView() {
         super.onDestroyView()
