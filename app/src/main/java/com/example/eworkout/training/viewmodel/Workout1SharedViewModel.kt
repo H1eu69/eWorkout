@@ -11,7 +11,7 @@ import com.example.eworkout.training.model.WorkoutDetail1State
 import com.google.firebase.firestore.FieldPath
 import com.google.firebase.storage.ktx.storage
 
-class Workout1ViewModel : ViewModel() {
+class Workout1SharedViewModel : ViewModel() {
     val firestore = Firebase.firestore
 
     val storageRef = Firebase.storage.reference
@@ -94,9 +94,20 @@ class Workout1ViewModel : ViewModel() {
             }
     }
 
-    private fun increaseCurrentExerciseIndex()
+    fun increaseCurrentExerciseIndex()
     {
-        currentExerciseIndex += 1
+        if(currentExerciseIndex <= exercises.size)
+            currentExerciseIndex += 1
+    }
+    fun decreaseCurrentExerciseIndex()
+    {
+        if(currentExerciseIndex >= 0)
+            currentExerciseIndex -= 1
+    }
+
+    fun showExercisesUntilFinish(): String
+    {
+        return "Next " + (currentExerciseIndex + 1).toString() + "/" + exercises.size
     }
 
     fun getCurrentExercise(): Exercise {

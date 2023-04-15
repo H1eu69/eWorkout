@@ -13,7 +13,7 @@ import com.example.eworkout.R
 import com.example.eworkout.databinding.FragmentWorkoutDetail1Binding
 import com.example.eworkout.training.adapter.ExercisesAdapter
 import com.example.eworkout.training.listener.ExercisesOnClickListener
-import com.example.eworkout.training.viewmodel.Workout1ViewModel
+import com.example.eworkout.training.viewmodel.Workout1SharedViewModel
 import com.example.eworkout.training.model.WorkoutDetail1State
 
 /**
@@ -27,7 +27,7 @@ class FragmentWorkoutDetail1 : Fragment() {
     private var mParam2: String? = null
     private var _binding: FragmentWorkoutDetail1Binding? = null
     val binding get() = _binding!!
-    private val _viewModel: Workout1ViewModel by navGraphViewModels(R.id.training_nav)
+    private val _viewModel: Workout1SharedViewModel by navGraphViewModels(R.id.training_nav)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

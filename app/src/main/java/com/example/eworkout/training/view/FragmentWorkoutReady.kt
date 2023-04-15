@@ -1,21 +1,18 @@
 package com.example.eworkout.training.view
 
 import android.animation.ObjectAnimator
-import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.BounceInterpolator
-import android.view.animation.DecelerateInterpolator
 import android.view.animation.LinearInterpolator
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import com.example.eworkout.R
 import com.example.eworkout.databinding.FragmentWorkoutReadyBinding
-import com.example.eworkout.training.viewmodel.Workout1ViewModel
+import com.example.eworkout.training.viewmodel.Workout1SharedViewModel
 
 
 /**
@@ -32,8 +29,9 @@ class FragmentWorkoutReady : Fragment() {
     private var param2: String? = null
     private var _binding: FragmentWorkoutReadyBinding? = null
     val binding get() = _binding!!
-    private val _viewModel: Workout1ViewModel by navGraphViewModels(R.id.training_nav)
-
+    private val _viewModel: Workout1SharedViewModel by navGraphViewModels(R.id.training_nav)
+    private lateinit var countDownTimer : CountDownTimer
+    private lateinit var animation: ObjectAnimator
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -76,7 +74,8 @@ class FragmentWorkoutReady : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setOnClickListener()
-        startCountDown()
+        startProgressAnimation(16000)
+        startCountDown(16000)
     }
 
     private fun setOnClickListener() {
@@ -88,17 +87,20 @@ class FragmentWorkoutReady : Fragment() {
         }
     }
 
-    private fun startCountDown()
+    private fun startProgressAnimation(millisCountDown: Long)
     {
-        val animation: ObjectAnimator =
-            ObjectAnimator.ofInt(binding.countDownProgressbar,
-                "progress",
-                0, 10000)
-        animation.duration = 16000
+        animation =
+        ObjectAnimator.ofInt(binding.countDownProgressbar,
+            "progress",
+            0, 10000)
+        animation.duration = millisCountDown
         animation.interpolator = LinearInterpolator()
         animation.start()
+    }
 
-        object : CountDownTimer(16000, 1000) {
+    private fun startCountDown(millisCountDown: Long)
+    {
+        countDownTimer = object : CountDownTimer(millisCountDown, 1000) {
 
             override fun onTick(millisUntilFinished: Long) {
                 binding.countDownTimeTextview.text = (millisUntilFinished / 1000).toString()
@@ -111,6 +113,10 @@ class FragmentWorkoutReady : Fragment() {
                     findNavController().navigate(R.id.action_fragmentWorkoutReady_to_fragmentWorkoutStart2)
             }
         }.start()
+    }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        countDownTimer.cancel()
     }
 }

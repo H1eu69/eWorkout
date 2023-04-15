@@ -2,17 +2,19 @@ package com.example.eworkout.training.view
 
 import android.animation.ObjectAnimator
 import android.os.Bundle
-import android.os.CountDownTimer
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.LinearInterpolator
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import com.example.eworkout.R
 import com.example.eworkout.databinding.FragmentWorkoutStart1Binding
 import com.example.eworkout.training.util.StringUlti
-import com.example.eworkout.training.viewmodel.Workout1ViewModel
+import com.example.eworkout.training.viewmodel.Workout1SharedViewModel
+import com.orbitalsonic.sonictimer.SonicCountDownTimer
 
 /**
  * A simple [Fragment] subclass.
@@ -25,8 +27,11 @@ class FragmentWorkoutStart1 : Fragment() {
     private var param2: String? = null
     private var _binding: FragmentWorkoutStart1Binding? = null
     val binding get() = _binding!!
-    private val _viewModel: Workout1ViewModel by navGraphViewModels(R.id.training_nav)
-
+    private val _viewModel: Workout1SharedViewModel by navGraphViewModels(R.id.training_nav)
+    private lateinit var countDownTimer : SonicCountDownTimer
+    private lateinit var animation: ObjectAnimator
+    private var isPaused = false
+    private var millisLeft = 0L
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -40,7 +45,8 @@ class FragmentWorkoutStart1 : Fragment() {
         _binding = FragmentWorkoutStart1Binding.inflate(inflater, container, false)
         binding.viewModel = _viewModel
         binding.lifecycleOwner = viewLifecycleOwner
-        return binding.root    }
+        return binding.root
+    }
 
     companion object {
         /**
@@ -60,30 +66,93 @@ class FragmentWorkoutStart1 : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        startCountDown()
+        var time = (StringUlti.removeRepsPostfix(_viewModel.getCurrentExercise().reps)).toLong()
+        time *= 1000
+
+        startProgressAnimation(time)
+
+        startCountDown(time)
+
+        setOnClickListener()
     }
 
-    private fun startCountDown()
+    private fun startProgressAnimation(millisCountDown: Long)
     {
-        val millisCountDown = (StringUlti.removeRepsPostfix(_viewModel.getCurrentExercise().reps)).toLong()
-        val animation: ObjectAnimator =
-            ObjectAnimator.ofInt(binding.countDownProgressbar,
+        animation = ObjectAnimator.ofInt(binding.countDownProgressbar,
                 "progress",
                 0, 10000)
-        animation.duration = millisCountDown * 1000
+        animation.duration = millisCountDown
         animation.interpolator = LinearInterpolator()
         animation.start()
+    }
 
-        object : CountDownTimer(millisCountDown * 1000, 1000) {
-
-            override fun onTick(millisUntilFinished: Long) {
-                binding.repsTextview.text = (millisUntilFinished / 1000).toString()
+    private fun startCountDown(millisCountDown: Long)
+    {
+        countDownTimer =
+            object : SonicCountDownTimer(millisCountDown, 1000)
+        {
+            override fun onTimerTick(timeRemaining: Long) {
+                binding.repsTextview.text = (timeRemaining / 1000).toString()
             }
 
-            override fun onFinish() {
-
+            override fun onTimerFinish() {
+                Log.d("sa","dsa")
             }
-        }.start()
 
+        }
+        countDownTimer.startCountDownTimer()
+    }
+
+    private fun setOnClickListener()
+    {
+        binding.btnPrevious.setOnClickListener {
+            _viewModel.decreaseCurrentExerciseIndex()
+            findNavController().navigate(R.id.action_fragmentWorkoutStart2_to_fragmentWorkoutRest)
+        }
+        binding.btnMiddle.setOnClickListener {
+            if(isPaused)
+            {
+                isPaused = false
+                it.background =  requireContext().resources.getDrawable(R.drawable.btn_pause_training_background , requireContext().theme)
+                resumeCountDown()
+                resumeProgress()
+            }
+            else
+            {
+                isPaused = true
+                it.background =  requireContext().resources.getDrawable(R.drawable.btn_play_training_background, requireContext().theme)
+                pauseCountDown()
+                pauseProgress()
+            }
+        }
+        binding.btnNext.setOnClickListener {
+            _viewModel.increaseCurrentExerciseIndex()
+            findNavController().navigate(R.id.action_fragmentWorkoutStart2_to_fragmentWorkoutRest)
+        }
+    }
+
+    private fun pauseCountDown()
+    {
+        countDownTimer.pauseCountDownTimer()
+    }
+
+    private fun resumeCountDown()
+    {
+        countDownTimer.resumeCountDownTimer()
+    }
+
+    private fun pauseProgress()
+    {
+        animation.pause()
+    }
+
+    private fun resumeProgress()
+    {
+        animation.resume()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        countDownTimer.stopCountDownTimer()
     }
 }

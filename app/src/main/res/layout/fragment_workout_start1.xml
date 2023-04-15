@@ -5,7 +5,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.eworkout.training.viewmodel.Workout1ViewModel" />
+            type="com.example.eworkout.training.viewmodel.Workout1SharedViewModel" />
 
         <variable
             name="hideShimmerLayout"
@@ -129,7 +129,7 @@
                     android:id="@+id/btn_middle"
                     style="@style/Button5"
                     android:layout_marginBottom="40dp"
-                    android:background="@drawable/btn_play_training_background"
+                    android:background="@drawable/btn_pause_training_background"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />

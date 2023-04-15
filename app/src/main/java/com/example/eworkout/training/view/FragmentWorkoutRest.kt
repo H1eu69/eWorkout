@@ -1,11 +1,19 @@
 package com.example.eworkout.training.view
 
+import android.animation.ObjectAnimator
 import android.os.Bundle
+import android.os.CountDownTimer
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.LinearInterpolator
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.navGraphViewModels
 import com.example.eworkout.R
+import com.example.eworkout.databinding.FragmentWorkoutReadyBinding
+import com.example.eworkout.databinding.FragmentWorkoutRestBinding
+import com.example.eworkout.training.viewmodel.Workout1SharedViewModel
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -21,7 +29,12 @@ class FragmentWorkoutRest : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-
+    private var _binding: FragmentWorkoutRestBinding? = null
+    val binding get() = _binding!!
+    private val _viewModel: Workout1SharedViewModel by navGraphViewModels(R.id.training_nav)
+    private lateinit var countDownTimer : CountDownTimer
+    private lateinit var animation: ObjectAnimator
+    private var millisLeft = 0L
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -33,9 +46,12 @@ class FragmentWorkoutRest : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_workout_rest, container, false)
+        _binding = FragmentWorkoutRestBinding.inflate(inflater, container, false)
+        binding.viewModel = _viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+        return binding.root
     }
 
     companion object {
@@ -56,5 +72,54 @@ class FragmentWorkoutRest : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setOnCLickListener()
+        startProgressAnimation(30000)
+        startCountDown(30000)
+    }
+
+    private fun setOnCLickListener() {
+        binding.skipTextView.setOnClickListener {
+            if(_viewModel.getCurrentExercise().reps.contains("s"))
+                findNavController().navigate(R.id.action_fragmentWorkoutRest_to_workoutStart1)
+            else
+                findNavController().navigate(R.id.action_fragmentWorkoutRest_to_fragmentWorkoutStart2)
+        }
+    }
+
+    private fun startProgressAnimation(millisCountDown: Long)
+    {
+        animation =
+            ObjectAnimator.ofInt(binding.countDownProgressbar,
+                "progress",
+                0, 10000)
+        animation.duration = millisCountDown
+        animation.interpolator = LinearInterpolator()
+        animation.start()
+    }
+
+    private fun startCountDown(millisCountDown: Long)
+    {
+        countDownTimer = object : CountDownTimer(millisCountDown, 1000) {
+
+            override fun onTick(millisUntilFinished: Long) {
+                millisLeft = millisUntilFinished
+                binding.repsTextview.text = (millisUntilFinished / 1000).toString()
+            }
+
+            override fun onFinish() {
+                if(_viewModel.getCurrentExercise().reps.contains("s"))
+                    findNavController().navigate(R.id.action_fragmentWorkoutReady_to_workoutStart1)
+                else
+                    findNavController().navigate(R.id.action_fragmentWorkoutReady_to_fragmentWorkoutStart2)
+            }
+        }.start()
+    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        countDownTimer.cancel()
     }
 }
