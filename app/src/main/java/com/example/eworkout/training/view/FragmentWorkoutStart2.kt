@@ -10,6 +10,7 @@ import androidx.navigation.navGraphViewModels
 import com.example.eworkout.R
 import com.example.eworkout.databinding.FragmentWorkoutStart2Binding
 import com.example.eworkout.training.viewmodel.Workout1SharedViewModel
+import java.io.FileNotFoundException
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -70,7 +71,18 @@ class FragmentWorkoutStart2 : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setAnimation()
         setOnClickListener()
+    }
+
+    private fun setAnimation() {
+        try {
+            binding.backgroundAnimationView.setAnimation(_viewModel.getCurrentExercise().name + ".json")
+        }
+        catch (e : FileNotFoundException)
+        {
+
+        }
     }
 
     private fun setOnClickListener()
@@ -86,6 +98,10 @@ class FragmentWorkoutStart2 : Fragment() {
         binding.btnNext.setOnClickListener {
             _viewModel.increaseCurrentExerciseIndex()
             findNavController().navigate(R.id.action_fragmentWorkoutStart2_to_fragmentWorkoutRest)
+        }
+        binding.backgroundAnimationView.setFailureListener {
+            binding.backgroundImageview.visibility = View.VISIBLE
+            binding.backgroundAnimationView.visibility = View.GONE
         }
     }
 }

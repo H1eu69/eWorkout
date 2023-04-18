@@ -75,7 +75,8 @@ class Workout1SharedViewModel : ViewModel() {
                         doc.get("reps").toString(),
                         doc.get("description").toString(),
                         doc.get("calories").toString(),
-                        doc.get("instruction").toString())
+                        doc.get("instruction").toString(),
+                        doc.get("animation_url").toString())
                     exercises.add(exercise)
                     getUriImageByName(exercise)
                 }
@@ -96,12 +97,12 @@ class Workout1SharedViewModel : ViewModel() {
 
     fun increaseCurrentExerciseIndex()
     {
-        if(currentExerciseIndex <= exercises.size)
+        if(currentExerciseIndex < exercises.size - 1)
             currentExerciseIndex += 1
     }
     fun decreaseCurrentExerciseIndex()
     {
-        if(currentExerciseIndex >= 0)
+        if(currentExerciseIndex > 0)
             currentExerciseIndex -= 1
     }
 

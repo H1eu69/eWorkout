@@ -85,7 +85,7 @@ class FragmentWorkoutRest : Fragment() {
     private fun setOnCLickListener() {
         binding.skipTextView.setOnClickListener {
             if(_viewModel.getCurrentExercise().reps.contains("s"))
-                findNavController().navigate(R.id.action_fragmentWorkoutRest_to_workoutStart1)
+                findNavController().navigate(R.id.action_fragmentWorkoutRest_to_fragmentWorkoutStart1)
             else
                 findNavController().navigate(R.id.action_fragmentWorkoutRest_to_fragmentWorkoutStart2)
         }
@@ -124,9 +124,9 @@ class FragmentWorkoutRest : Fragment() {
 
             override fun onFinish() {
                 if(_viewModel.getCurrentExercise().reps.contains("s"))
-                    findNavController().navigate(R.id.action_fragmentWorkoutReady_to_workoutStart1)
+                    findNavController().navigate(R.id.action_fragmentWorkoutRest_to_fragmentWorkoutStart1)
                 else
-                    findNavController().navigate(R.id.action_fragmentWorkoutReady_to_fragmentWorkoutStart2)
+                    findNavController().navigate(R.id.action_fragmentWorkoutRest_to_fragmentWorkoutStart2)
             }
 
         }

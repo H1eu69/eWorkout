@@ -81,7 +81,7 @@ class FragmentWorkoutReady : Fragment() {
     private fun setOnClickListener() {
         binding.btnStart.setOnClickListener {
             if(_viewModel.getCurrentExercise().reps.contains("s"))
-                findNavController().navigate(R.id.action_fragmentWorkoutReady_to_workoutStart1)
+                findNavController().navigate(R.id.action_fragmentWorkoutReady_to_fragmentWorkoutStart1)
             else
                 findNavController().navigate(R.id.action_fragmentWorkoutReady_to_fragmentWorkoutStart2)
         }
@@ -108,7 +108,7 @@ class FragmentWorkoutReady : Fragment() {
 
             override fun onFinish() {
                 if(_viewModel.getCurrentExercise().reps.contains("s"))
-                    findNavController().navigate(R.id.action_fragmentWorkoutReady_to_workoutStart1)
+                    findNavController().navigate(R.id.action_fragmentWorkoutReady_to_fragmentWorkoutStart1)
                 else
                     findNavController().navigate(R.id.action_fragmentWorkoutReady_to_fragmentWorkoutStart2)
             }

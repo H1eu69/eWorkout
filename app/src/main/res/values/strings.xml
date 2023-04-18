@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">eWorkout</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="explore_the_app">Explore the App</string>
     <string name="lets_start">Lets Start</string>

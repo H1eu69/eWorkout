@@ -7,5 +7,6 @@ data class Exercise(
     val reps: String,
     val description: String,
     val calo: String,
-    val instruction: String
+    val instruction: String,
+    val animation_url: String
 )

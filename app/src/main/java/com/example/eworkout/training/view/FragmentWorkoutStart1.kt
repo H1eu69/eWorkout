@@ -15,6 +15,7 @@ import com.example.eworkout.databinding.FragmentWorkoutStart1Binding
 import com.example.eworkout.training.util.StringUlti
 import com.example.eworkout.training.viewmodel.Workout1SharedViewModel
 import com.orbitalsonic.sonictimer.SonicCountDownTimer
+import java.io.FileNotFoundException
 
 /**
  * A simple [Fragment] subclass.
@@ -68,12 +69,17 @@ class FragmentWorkoutStart1 : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         var time = (StringUlti.removeRepsPostfix(_viewModel.getCurrentExercise().reps)).toLong()
         time *= 1000
+        setAnimation()
 
         startProgressAnimation(time)
 
         startCountDown(time)
 
         setOnClickListener()
+    }
+
+    private fun setAnimation() {
+            binding.backgroundAnimationView.setAnimation(_viewModel.getCurrentExercise().name + ".json")
     }
 
     private fun startProgressAnimation(millisCountDown: Long)
@@ -107,11 +113,12 @@ class FragmentWorkoutStart1 : Fragment() {
     {
         binding.btnPrevious.setOnClickListener {
             _viewModel.decreaseCurrentExerciseIndex()
-            findNavController().navigate(R.id.action_fragmentWorkoutStart2_to_fragmentWorkoutRest)
+            findNavController().navigate(R.id.action_fragmentWorkoutStart1_to_fragmentWorkoutRest)
         }
         binding.btnMiddle.setOnClickListener {
             if(isPaused)
             {
+                //Change to pause button
                 isPaused = false
                 it.background =  requireContext().resources.getDrawable(R.drawable.btn_pause_training_background , requireContext().theme)
                 resumeCountDown()
@@ -119,6 +126,7 @@ class FragmentWorkoutStart1 : Fragment() {
             }
             else
             {
+                //Change to play butto
                 isPaused = true
                 it.background =  requireContext().resources.getDrawable(R.drawable.btn_play_training_background, requireContext().theme)
                 pauseCountDown()
@@ -127,7 +135,12 @@ class FragmentWorkoutStart1 : Fragment() {
         }
         binding.btnNext.setOnClickListener {
             _viewModel.increaseCurrentExerciseIndex()
-            findNavController().navigate(R.id.action_fragmentWorkoutStart2_to_fragmentWorkoutRest)
+            findNavController().navigate(R.id.action_fragmentWorkoutStart1_to_fragmentWorkoutRest)
+        }
+
+        binding.backgroundAnimationView.setFailureListener {
+            binding.backgroundImageview.visibility = View.VISIBLE
+            binding.backgroundAnimationView.visibility = View.GONE
         }
     }
 
