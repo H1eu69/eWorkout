@@ -72,32 +72,34 @@ class FragmentWorkoutStart2 : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setAnimation()
-        setOnClickListener()
+        setListener()
     }
 
     private fun setAnimation() {
-        try {
-            binding.backgroundAnimationView.setAnimation(_viewModel.getCurrentExercise().name + ".json")
-        }
-        catch (e : FileNotFoundException)
-        {
-
-        }
+        binding.backgroundAnimationView.setAnimation(_viewModel.getCurrentExercise().name + ".json")
     }
 
-    private fun setOnClickListener()
+    private fun setListener()
     {
         binding.btnPrevious.setOnClickListener {
             _viewModel.decreaseCurrentExerciseIndex()
             findNavController().navigate(R.id.action_fragmentWorkoutStart2_to_fragmentWorkoutRest)
         }
         binding.btnMiddle.setOnClickListener {
-            _viewModel.increaseCurrentExerciseIndex()
-            findNavController().navigate(R.id.action_fragmentWorkoutStart2_to_fragmentWorkoutRest)
+            if(_viewModel.increaseCurrentExerciseIndex())
+                findNavController().navigate(R.id.action_fragmentWorkoutStart2_to_fragmentWorkoutRest)
+            else
+            {
+                findNavController().navigate(R.id.action_fragmentWorkoutStart2_to_fragmentWorkoutDone)
+            }
         }
         binding.btnNext.setOnClickListener {
-            _viewModel.increaseCurrentExerciseIndex()
-            findNavController().navigate(R.id.action_fragmentWorkoutStart2_to_fragmentWorkoutRest)
+            if(_viewModel.increaseCurrentExerciseIndex())
+                findNavController().navigate(R.id.action_fragmentWorkoutStart2_to_fragmentWorkoutRest)
+            else
+            {
+                findNavController().navigate(R.id.action_fragmentWorkoutStart2_to_fragmentWorkoutDone)
+            }
         }
         binding.backgroundAnimationView.setFailureListener {
             binding.backgroundImageview.visibility = View.VISIBLE

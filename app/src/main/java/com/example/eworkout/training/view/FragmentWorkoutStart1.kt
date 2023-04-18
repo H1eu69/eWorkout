@@ -75,7 +75,7 @@ class FragmentWorkoutStart1 : Fragment() {
 
         startCountDown(time)
 
-        setOnClickListener()
+        setListener()
     }
 
     private fun setAnimation() {
@@ -109,7 +109,7 @@ class FragmentWorkoutStart1 : Fragment() {
         countDownTimer.startCountDownTimer()
     }
 
-    private fun setOnClickListener()
+    private fun setListener()
     {
         binding.btnPrevious.setOnClickListener {
             _viewModel.decreaseCurrentExerciseIndex()
@@ -134,8 +134,10 @@ class FragmentWorkoutStart1 : Fragment() {
             }
         }
         binding.btnNext.setOnClickListener {
-            _viewModel.increaseCurrentExerciseIndex()
-            findNavController().navigate(R.id.action_fragmentWorkoutStart1_to_fragmentWorkoutRest)
+            if(_viewModel.increaseCurrentExerciseIndex())
+                findNavController().navigate(R.id.action_fragmentWorkoutStart1_to_fragmentWorkoutRest)
+            else
+                findNavController().navigate(R.id.action_fragmentWorkoutStart1_to_fragmentWorkoutDone)
         }
 
         binding.backgroundAnimationView.setFailureListener {

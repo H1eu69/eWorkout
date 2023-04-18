@@ -95,14 +95,18 @@ class Workout1SharedViewModel : ViewModel() {
             }
     }
 
-    fun increaseCurrentExerciseIndex()
+    fun increaseCurrentExerciseIndex(): Boolean
     {
-        if(currentExerciseIndex < exercises.size - 1)
+        if(!isLastExercise())
+        {
             currentExerciseIndex += 1
+            return true
+        }
+        return false
     }
     fun decreaseCurrentExerciseIndex()
     {
-        if(currentExerciseIndex > 0)
+        if(!isFirstExercise())
             currentExerciseIndex -= 1
     }
 
@@ -123,6 +127,16 @@ class Workout1SharedViewModel : ViewModel() {
 
     fun getNextExercise(): Exercise{
         return exercises[currentExerciseIndex + 1]
+    }
+
+    fun isLastExercise(): Boolean
+    {
+        return currentExerciseIndex == exercises.size - 1
+    }
+
+    fun isFirstExercise(): Boolean
+    {
+        return currentExerciseIndex == 0
     }
 
 }
