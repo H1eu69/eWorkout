@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.eworkout.training.viewmodel.Workout1SharedViewModel" />
+
+        <variable
+            name="hideShimmerLayout"
+            type="Boolean" />
+        <variable
+            name="hideDataLayout"
+            type="Boolean" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/data_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:isGone="@{hideDataLayout}"
+        android:background="@color/background_done_color"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/button"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="28.8dp"
+                android:layout_marginTop="57.6dp"
+                android:background="@drawable/btn_navigate_up_background"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+            <ImageView
+                android:id="@+id/background_imageview"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="28.8dp"
+                android:src="@drawable/trophy"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/button"
+                app:layout_constraintTop_toBottomOf="@+id/button" />
+
+            <TextView
+                android:id="@+id/textView_congrats"
+                style="@style/TextView7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Congratulations"
+                app:layout_constraintEnd_toEndOf="@+id/background_imageview"
+                app:layout_constraintStart_toStartOf="@+id/background_imageview"
+                app:layout_constraintTop_toBottomOf="@+id/background_imageview" />
+
+            <TextView
+                android:id="@+id/textView_num_exercises"
+                style="@style/TextView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="28dp"
+                android:text="5"
+                app:layout_constraintEnd_toEndOf="@+id/textView_exercises"
+                app:layout_constraintStart_toStartOf="@+id/textView_exercises"
+                app:layout_constraintTop_toBottomOf="@+id/textView_congrats" />
+
+            <TextView
+                android:id="@+id/textView_exercises"
+                style="@style/TextView10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Exercises"
+                app:layout_constraintStart_toStartOf="@+id/background_imageview"
+                app:layout_constraintTop_toBottomOf="@+id/textView_num_exercises" />
+
+            <TextView
+                android:id="@+id/textView_num_kcal"
+                style="@style/TextView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="332"
+                app:layout_constraintEnd_toEndOf="@+id/textView_kcal"
+                app:layout_constraintStart_toStartOf="@+id/textView_kcal"
+                app:layout_constraintTop_toTopOf="@+id/textView_num_exercises" />
+
+            <TextView
+                android:id="@+id/textView_kcal"
+                style="@style/TextView10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Kcal"
+                app:layout_constraintEnd_toEndOf="@+id/textView_congrats"
+                app:layout_constraintStart_toStartOf="@+id/textView_congrats"
+                app:layout_constraintTop_toBottomOf="@+id/textView_num_kcal" />
+
+            <TextView
+                android:id="@+id/textView_num_duration"
+                style="@style/TextView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="15:12"
+                app:layout_constraintEnd_toEndOf="@+id/textView_duration"
+                app:layout_constraintStart_toStartOf="@+id/textView_duration"
+                app:layout_constraintTop_toTopOf="@+id/textView_num_kcal" />
+
+            <TextView
+                android:id="@+id/textView_duration"
+                style="@style/TextView10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Duration"
+                app:layout_constraintEnd_toEndOf="@+id/background_imageview"
+                app:layout_constraintTop_toBottomOf="@+id/textView_num_duration" />
+
+            <TextView
+                android:id="@+id/textView_do_it_again"
+                style="@style/TextView11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="36dp"
+                android:text="DO IT AGAIN"
+                app:layout_constraintStart_toStartOf="@+id/background_imageview"
+                app:layout_constraintTop_toBottomOf="@+id/textView_exercises" />
+
+            <TextView
+                android:id="@+id/textView_next"
+                style="@style/TextView11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="36dp"
+                android:text="NEXT"
+                app:layout_constraintEnd_toEndOf="@+id/background_imageview"
+                app:layout_constraintTop_toBottomOf="@+id/textView_exercises" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/left_right_top_corner_background"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+            app:layout_constraintVertical_bias="0.0">
+
+            <TextView
+                android:id="@+id/textView_i_feel"
+                style="@style/TextView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="28.8dp"
+                android:layout_marginTop="28.8dp"
+                android:text="I feel"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView_easy"
+                style="@style/TextView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="28.8dp"
+                android:text="Easy"
+                app:layout_constraintStart_toStartOf="@+id/textView_i_feel"
+                app:layout_constraintTop_toBottomOf="@+id/textView_i_feel" />
+
+            <TextView
+                android:id="@+id/textView_hard"
+                style="@style/TextView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hard"
+                android:layout_marginEnd="28.8dp"
+                app:layout_constraintBottom_toBottomOf="@+id/textView_easy"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textView_easy" />
+
+            <RadioGroup
+                android:id="@+id/radioGroup"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView_easy">
+                <!-- Ta dao -->
+                <RadioButton
+                    android:visibility="invisible"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <RadioButton
+                    android:visibility="invisible"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
+
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <RadioButton
+                    android:visibility="invisible"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <RadioButton
+                    android:visibility="invisible"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <RadioButton
+                    android:visibility="invisible"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <RadioButton
+                    android:visibility="invisible"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
+            </RadioGroup>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_start"
+                style="@style/Button3"
+                android:layout_marginBottom="40dp"
+                android:background="@drawable/blue_linear_button"
+                android:text="@string/next"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

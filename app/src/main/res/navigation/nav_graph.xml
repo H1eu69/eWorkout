@@ -44,7 +44,7 @@
         </fragment>
     </navigation>
     <navigation android:id="@+id/training_nav"
-        app:startDestination="@id/workoutDetail1">
+        app:startDestination="@id/fragmentWorkoutDone">
         <fragment
             android:id="@+id/workoutDetail2"
             android:name="com.example.eworkout.training.view.FragmentWorkoutDetail2"
@@ -126,6 +126,10 @@
                 app:enterAnim="@android:anim/fade_in"
                 app:exitAnim="@android:anim/fade_out" />
         </fragment>
+        <fragment
+            android:id="@+id/fragmentWorkoutDone"
+            android:name="com.example.eworkout.training.view.FragmentWorkoutDone"
+            android:label="FragmentWorkoutDone" />
     </navigation>
 
 

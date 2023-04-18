@@ -11,5 +11,6 @@
     <color name="button2_pressed">#F1F1F1</color>
     <color name="edit_text_1_stroke_color">#171414</color>
     <color name="line_color">#434343</color>
+    <color name="background_done_color">#48517D</color>
 
 </resources>
