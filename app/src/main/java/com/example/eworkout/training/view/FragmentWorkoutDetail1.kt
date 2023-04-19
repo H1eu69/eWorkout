@@ -84,6 +84,7 @@ class FragmentWorkoutDetail1 : Fragment() {
     private fun setOnClickListener()
     {
         binding.btnStart.setOnClickListener {
+            _viewModel.addNewSetTaken("1iXUMoTZF1MxrQ9ResPr")
             findNavController().navigate(R.id.action_workoutDetail1_to_fragmentWorkoutReady)
         }
     }

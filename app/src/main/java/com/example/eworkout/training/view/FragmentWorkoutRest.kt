@@ -77,12 +77,17 @@ class FragmentWorkoutRest : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setOnCLickListener()
+        setListener()
+        setAnimation()
         startProgressAnimation(30000)
         startCountDown(30000)
     }
 
-    private fun setOnCLickListener() {
+    private fun setAnimation() {
+        binding.backgroundAnimationview.setAnimation(_viewModel.getCurrentExercise().name + ".json")
+    }
+
+    private fun setListener() {
         binding.skipTextView.setOnClickListener {
             if(_viewModel.getCurrentExercise().reps.contains("s"))
                 findNavController().navigate(R.id.action_fragmentWorkoutRest_to_fragmentWorkoutStart1)
@@ -93,6 +98,11 @@ class FragmentWorkoutRest : Fragment() {
         binding.add10sTextView.setOnClickListener {
             animation.duration += 10000
             cancelAndStartNewCountDown(timeRemaining + 10000)
+        }
+
+        binding.backgroundAnimationview.setFailureListener {
+            binding.backgroundImageview.visibility = View.VISIBLE
+            binding.backgroundAnimationview.visibility = View.GONE
         }
     }
 

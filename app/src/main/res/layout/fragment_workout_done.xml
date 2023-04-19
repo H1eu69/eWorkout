@@ -5,7 +5,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.eworkout.training.viewmodel.Workout1SharedViewModel" />
+            type="com.example.eworkout.training.viewmodel.WorkoutDoneViewModel" />
         <variable
             name="hideShimmerLayout"
             type="Boolean" />
@@ -87,7 +87,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="28dp"
-                    android:text="5"
+                    android:text="@={viewModel.modelLiveData.exerciseQuantity}"
                     app:layout_constraintEnd_toEndOf="@+id/textView_exercises"
                     app:layout_constraintStart_toStartOf="@+id/textView_exercises"
                     app:layout_constraintTop_toBottomOf="@+id/textView_congrats" />
@@ -106,7 +106,7 @@
                     style="@style/TextView6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="332"
+                    android:text="@={viewModel.modelLiveData.kcal}"
                     app:layout_constraintEnd_toEndOf="@+id/textView_kcal"
                     app:layout_constraintStart_toStartOf="@+id/textView_kcal"
                     app:layout_constraintTop_toTopOf="@+id/textView_num_exercises" />
@@ -126,7 +126,7 @@
                     style="@style/TextView6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="15:12"
+                    android:text="@={viewModel.modelLiveData.duration}"
                     app:layout_constraintEnd_toEndOf="@+id/textView_duration"
                     app:layout_constraintStart_toStartOf="@+id/textView_duration"
                     app:layout_constraintTop_toTopOf="@+id/textView_num_kcal" />

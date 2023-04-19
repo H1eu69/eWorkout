@@ -132,9 +132,7 @@
                 app:exitAnim="@android:anim/fade_out" />
             <action
                 android:id="@+id/action_fragmentWorkoutStart1_to_fragmentWorkoutDone"
-                app:destination="@id/fragmentWorkoutDone"
-                app:enterAnim="@android:anim/fade_in"
-                app:exitAnim="@android:anim/fade_out" />
+                app:destination="@id/fragmentWorkoutDone" />
         </fragment>
         <fragment
             android:id="@+id/fragmentWorkoutDone"

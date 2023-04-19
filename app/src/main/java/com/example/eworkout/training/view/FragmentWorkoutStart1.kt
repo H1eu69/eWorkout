@@ -2,11 +2,13 @@ package com.example.eworkout.training.view
 
 import android.animation.ObjectAnimator
 import android.os.Bundle
+import android.os.SystemClock
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.LinearInterpolator
+import android.widget.Chronometer
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
@@ -32,6 +34,8 @@ class FragmentWorkoutStart1 : Fragment() {
     private lateinit var countDownTimer : SonicCountDownTimer
     private lateinit var animation: ObjectAnimator
     private var isPaused = false
+    private lateinit var timer : Chronometer
+
     private var millisLeft = 0L
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,6 +80,8 @@ class FragmentWorkoutStart1 : Fragment() {
         startCountDown(time)
 
         setListener()
+        timer = Chronometer(context)
+        timer.start()
     }
 
     private fun setAnimation() {
@@ -95,16 +101,20 @@ class FragmentWorkoutStart1 : Fragment() {
     private fun startCountDown(millisCountDown: Long)
     {
         countDownTimer =
-            object : SonicCountDownTimer(millisCountDown, 1000)
-        {
+            object : SonicCountDownTimer(millisCountDown, 1000) {
             override fun onTimerTick(timeRemaining: Long) {
                 binding.repsTextview.text = (timeRemaining / 1000).toString()
             }
 
             override fun onTimerFinish() {
-                Log.d("sa","dsa")
+                Log.d("navigate", "timer fninish")
+                if(_viewModel.increaseCurrentExerciseIndex())
+                    findNavController().navigate(R.id.action_fragmentWorkoutStart1_to_fragmentWorkoutRest)
+                else{
+                    _viewModel.updateSetTaken()
+                    findNavController().navigate(R.id.action_fragmentWorkoutStart1_to_fragmentWorkoutDone)
+                }
             }
-
         }
         countDownTimer.startCountDownTimer()
     }
@@ -136,8 +146,12 @@ class FragmentWorkoutStart1 : Fragment() {
         binding.btnNext.setOnClickListener {
             if(_viewModel.increaseCurrentExerciseIndex())
                 findNavController().navigate(R.id.action_fragmentWorkoutStart1_to_fragmentWorkoutRest)
-            else
+            else{
+                val bundle = Bundle()
+                bundle.putString("set_taken_id", _viewModel.setTakenID)
+                _viewModel.updateSetTaken()
                 findNavController().navigate(R.id.action_fragmentWorkoutStart1_to_fragmentWorkoutDone)
+            }
         }
 
         binding.backgroundAnimationView.setFailureListener {
@@ -148,6 +162,7 @@ class FragmentWorkoutStart1 : Fragment() {
 
     private fun pauseCountDown()
     {
+        Log.d("test timer", (SystemClock.elapsedRealtime() - timer.base).toString())
         countDownTimer.pauseCountDownTimer()
     }
 
@@ -168,6 +183,8 @@ class FragmentWorkoutStart1 : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        countDownTimer.stopCountDownTimer()
+        Log.d("navigate", "destroyview")
+        countDownTimer.cancelCountDownTimer()
+        timer.stop()
     }
 }

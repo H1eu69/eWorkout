@@ -86,24 +86,26 @@ class FragmentWorkoutStart2 : Fragment() {
             findNavController().navigate(R.id.action_fragmentWorkoutStart2_to_fragmentWorkoutRest)
         }
         binding.btnMiddle.setOnClickListener {
-            if(_viewModel.increaseCurrentExerciseIndex())
-                findNavController().navigate(R.id.action_fragmentWorkoutStart2_to_fragmentWorkoutRest)
-            else
-            {
-                findNavController().navigate(R.id.action_fragmentWorkoutStart2_to_fragmentWorkoutDone)
-            }
+            onClick()
         }
         binding.btnNext.setOnClickListener {
-            if(_viewModel.increaseCurrentExerciseIndex())
-                findNavController().navigate(R.id.action_fragmentWorkoutStart2_to_fragmentWorkoutRest)
-            else
-            {
-                findNavController().navigate(R.id.action_fragmentWorkoutStart2_to_fragmentWorkoutDone)
-            }
+            onClick()
         }
         binding.backgroundAnimationView.setFailureListener {
             binding.backgroundImageview.visibility = View.VISIBLE
             binding.backgroundAnimationView.visibility = View.GONE
+        }
+    }
+
+    private fun onClick()
+    {
+        if(_viewModel.increaseCurrentExerciseIndex())
+            findNavController().navigate(R.id.action_fragmentWorkoutStart2_to_fragmentWorkoutRest)
+        else{
+            val bundle = Bundle()
+            bundle.putString("set_taken_id", _viewModel.setTakenID)
+            _viewModel.updateSetTaken()
+            findNavController().navigate(R.id.action_fragmentWorkoutStart2_to_fragmentWorkoutDone, bundle)
         }
     }
 }
