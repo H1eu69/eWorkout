@@ -24,6 +24,8 @@ class Workout1SharedViewModel : ViewModel() {
 
     lateinit var setTakenID: String
 
+    var kcalConsumed = 0;
+
     val setsName: MutableLiveData<String> = MutableLiveData()
 
     val setsInformation: MutableLiveData<String> = MutableLiveData()
@@ -63,9 +65,9 @@ class Workout1SharedViewModel : ViewModel() {
             .document(id)
             .get()
             .addOnSuccessListener {
-                val numOfExercise = it.getString("number_of_exercises").toString()
+                val numOfExercise = it.get("number_of_exercises").toString()
 
-                val totalCalories = it.getString("total_calories").toString()
+                val totalCalories = it.get("total_calories").toString()
 
                 setsName.value = it.getString("name").toString()
 
