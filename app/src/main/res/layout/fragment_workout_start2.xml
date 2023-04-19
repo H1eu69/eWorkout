@@ -37,6 +37,15 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/exercise_information_btn"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="28.8dp"
+                android:background="@drawable/white_arrow_right"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/button" />
+
             <ImageView
                 android:id="@+id/background_imageview"
                 android:layout_width="0dp"
