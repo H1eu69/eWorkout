@@ -81,6 +81,7 @@ class TrainingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         watching()
+        _viewModel.loadSets()
         observeViewModel()
     }
 
@@ -96,11 +97,10 @@ class TrainingFragment : Fragment() {
         when(state.name){
             "LOADING" -> {
                 showLoading()
-                _viewModel.loadSets()
             }
             "LOADED" -> {
                 setupRecyclerView()
-                hideLoading()
+                //hideLoading()
             }
             "IMAGE_LOADED" -> {
                 notifyDataChange()
@@ -119,8 +119,7 @@ class TrainingFragment : Fragment() {
     }
     private fun hideLoading()
     {
-        binding.shimmerLayout.stopShimmer()
-        binding.shimmerLayout.visibility = View.INVISIBLE
+        binding.shimmerLayout.visibility = View.GONE
         binding.recyclerView.visibility = View.VISIBLE
         //binding.hideShimmerLayout = true
         //binding.hideDataLayout = false
