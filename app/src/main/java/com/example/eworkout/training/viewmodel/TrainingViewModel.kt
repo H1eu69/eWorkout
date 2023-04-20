@@ -73,6 +73,9 @@ class TrainingViewModel: ViewModel() {
                 sets.add(set)
                 getUriImageByName(set)
             }
+            .addOnFailureListener { exception ->
+                Log.d(TAG, "get failed with ", exception)
+            }
         firestore.collection("Sets")
             .document("z9BQfujVcuRKYs4d2DbW")
             .get()
@@ -87,6 +90,9 @@ class TrainingViewModel: ViewModel() {
                 )
                 sets.add(set)
                 getUriImageByName(set)
+            }
+            .addOnFailureListener { exception ->
+                Log.d(TAG, "get failed with ", exception)
             }
         firestore.collection("Sets")
             .document("bPGOVbrUNAnWf4y7dun1")
@@ -103,6 +109,9 @@ class TrainingViewModel: ViewModel() {
                 sets.add(set)
                 getUriImageByName(set)
             }
+            .addOnFailureListener { exception ->
+                Log.d(TAG, "get failed with ", exception)
+            }
         firestore.collection("Sets")
             .document("CkU0yD2WlQweVEqqjupN")
             .get()
@@ -117,6 +126,9 @@ class TrainingViewModel: ViewModel() {
                 )
                 sets.add(set)
                 getUriImageByName(set)
+            }
+            .addOnFailureListener { exception ->
+                Log.d(TAG, "get failed with ", exception)
             }
         _state.value = TrainingState.LOADED
     }
