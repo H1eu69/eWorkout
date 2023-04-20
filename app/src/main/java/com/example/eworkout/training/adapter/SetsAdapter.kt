@@ -2,22 +2,14 @@ package com.example.eworkout.training.adapter
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.bumptech.glide.request.RequestOptions
-import com.example.eworkout.R
 import com.example.eworkout.databinding.FragmentSetsItemBinding
 import com.example.eworkout.training.listener.SetOnClickListener
 import com.example.eworkout.training.model.Set
-import kotlinx.coroutines.NonDisposableHandle
-import kotlinx.coroutines.NonDisposableHandle.parent
 
-class set_recycler_adapter(val list: List<Set>,val listener: SetOnClickListener): RecyclerView.Adapter<set_recycler_adapter.ViewHolder>() {
+class SetsAdapter(val list: List<Set>, val listener: SetOnClickListener): RecyclerView.Adapter<SetsAdapter.ViewHolder>() {
 
     inner class ViewHolder(val binding: FragmentSetsItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -27,7 +19,7 @@ class set_recycler_adapter(val list: List<Set>,val listener: SetOnClickListener)
                     putString("set_id", setId)
                 }
                 binding.textViewSetName.text = setName
-                binding.textViewTotalExercises.text = totalExercises
+                binding.textViewTotalExercises.text = totalExercises.toString()
                 binding.texViewTotalTime.text = totalTime
                 binding.buttonViewDetail.setOnClickListener {
                     listener.onClick(bundle)

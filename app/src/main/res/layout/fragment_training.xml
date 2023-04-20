@@ -12,6 +12,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginTop="10dp">
+
         <TextView
             android:id="@+id/textView1"
             android:layout_width="wrap_content"
@@ -34,14 +35,6 @@
             android:textSize="30sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textView1" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/buttonNotification"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            style="@style/Button3.1"
-            android:background="@drawable/notification_icon"
-            android:contentDescription="Notification"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/frame1"
@@ -128,26 +121,26 @@
                         android:id="@+id/textView7"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
                         android:fontFamily="@font/poppins_medium"
                         android:text="@string/calories"
                         android:textColor="@color/black"
                         android:textSize="15sp"
                         android:layout_marginStart="30dp"
-                        android:layout_marginTop="10dp"
-                        app:layout_constraintStart_toEndOf="@+id/progressBarCalories"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintStart_toEndOf="@+id/imageBg"
+                        app:layout_constraintTop_toTopOf="parent"/>
 
                     <TextView
                         android:id="@+id/textViewCalories"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="107 kCal"
+                        android:textColor="#92A3FD"
+                        android:textSize="20sp"
                         android:layout_marginStart="30dp"
                         app:layout_constraintTop_toBottomOf="@+id/textView7"
-                        app:layout_constraintStart_toEndOf="@+id/progressBarCalories"
-                        android:text="107/255 kCal"
-                        android:fontFamily="@font/poppins_medium"
-                        android:textSize="20sp"
-                        android:textColor="#92A3FD"/>
+                        app:layout_constraintStart_toEndOf="@+id/imageBg" />
 
                     <TextView
                         android:id="@+id/textViewWorkoutHours"
@@ -158,50 +151,43 @@
                         android:textColor="@color/black"
                         android:textSize="15sp"
                         android:layout_marginStart="30dp"
-                        app:layout_constraintStart_toEndOf="@+id/progressBarCalories"
-                        app:layout_constraintTop_toBottomOf="@id/textViewCalories" />
+                        app:layout_constraintTop_toBottomOf="@id/textViewCalories"
+                        app:layout_constraintStart_toEndOf="@+id/imageBg"/>
 
                     <TextView
                         android:id="@+id/textViewHours"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="8h 32min"
+                        android:textColor="#92A3FD"
+                        android:textSize="20sp"
                         android:layout_marginStart="30dp"
                         app:layout_constraintTop_toBottomOf="@+id/textViewWorkoutHours"
-                        app:layout_constraintStart_toEndOf="@+id/progressBarCalories"
-                        android:text="8h 32min"
-                        android:fontFamily="@font/poppins_medium"
-                        android:textSize="20sp"
-                        android:textColor="#92A3FD"/>
+                        app:layout_constraintStart_toEndOf="@+id/imageBg"/>
 
-                    <com.google.android.material.progressindicator.CircularProgressIndicator
-                        android:id="@+id/progressBarCalories"
-                        android:layout_width="150dp"
-                        android:layout_height="150dp"
-                        android:max="255"
-                        android:progress="107"
-                        app:indicatorColor="#C58Bf2"
-                        app:indicatorInset="4dp"
-                        app:indicatorSize="120dp"
-                        android:layout_margin="7dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
+                    <ImageView
+                        android:id="@+id/imageBg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/circle_shape"
+                        android:layout_margin="15dp"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:trackColor="#F7F8F8"
-                        app:trackCornerRadius="10dp"
-                        app:trackThickness="15dp"
-                        android:theme="@style/Theme.AppCompat"/>
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
 
                     <TextView
                         android:id="@+id/textViewCaloriesNumber"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:layout_constraintTop_toTopOf="@+id/progressBarCalories"
-                        app:layout_constraintEnd_toEndOf="@+id/progressBarCalories"
-                        app:layout_constraintBottom_toBottomOf="@+id/progressBarCalories"
-                        app:layout_constraintStart_toStartOf="@+id/progressBarCalories"
-                        android:text="107/255 kCal"
-                        android:textSize="15sp"
-                        android:fontFamily="@font/poppins_medium"/>
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="107 kCal"
+                        android:textSize="20sp"
+                        android:textColor="@color/white"
+                        app:layout_constraintTop_toTopOf="@+id/imageBg"
+                        app:layout_constraintStart_toStartOf="@+id/imageBg"
+                        app:layout_constraintBottom_toBottomOf="@+id/imageBg"
+                        app:layout_constraintEnd_toEndOf="@+id/imageBg"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -217,6 +203,20 @@
                     android:textSize="20sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/frameCalories" />
+
+
+                <com.facebook.shimmer.ShimmerFrameLayout
+                    android:id="@+id/shimmer_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="290dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textView6"
+                    app:layout_constraintBottom_toBottomOf="parent">
+
+                    <include layout="@layout/sets_loading" />
+
+                </com.facebook.shimmer.ShimmerFrameLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerView"

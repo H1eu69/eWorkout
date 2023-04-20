@@ -2,29 +2,22 @@ package com.example.eworkout.training.view
 
 import android.annotation.SuppressLint
 import android.content.ContentValues.TAG
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.contentValuesOf
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.example.eworkout.R
-import com.example.eworkout.databinding.FragmentLoginBinding
 import com.example.eworkout.databinding.FragmentTrainingBinding
-import com.example.eworkout.login.viewmodel.LoginViewModel
-import com.example.eworkout.training.adapter.set_recycler_adapter
+import com.example.eworkout.training.adapter.SetsAdapter
 import com.example.eworkout.training.listener.SetOnClickListener
 import com.example.eworkout.training.model.TrainingState
 import com.example.eworkout.training.viewmodel.TrainingViewModel
-import com.google.firebase.firestore.DocumentSnapshot
-import com.google.firebase.firestore.FieldPath
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 
 /**
  * A simple [Fragment] subclass.
@@ -84,10 +77,12 @@ class TrainingFragment : Fragment() {
             }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        _viewModel.loadSets()
+        watching()
         observeViewModel()
+        setupRecyclerView()
     }
 
    private fun observeViewModel()
@@ -100,13 +95,34 @@ class TrainingFragment : Fragment() {
     private fun handleState(state: TrainingState)
     {
         when(state.name){
+            "LOADING" -> {
+                showLoading()
+                _viewModel.loadSets()
+            }
             "LOADED" -> {
                 setupRecyclerView()
+                hideLoading()
             }
             "IMAGE_LOADED" -> {
                 notifyDataChange()
             }
         }
+    }
+
+
+    private fun showLoading()
+    {
+        binding.shimmerLayout.visibility = View.VISIBLE
+        binding.recyclerView.visibility = View.GONE
+        //binding.hideShimmerLayout = false
+        //binding.hideDataLayout = true
+    }
+    private fun hideLoading()
+    {
+        binding.shimmerLayout.visibility = View.GONE
+        binding.recyclerView.visibility = View.VISIBLE
+        //binding.hideShimmerLayout = true
+        //binding.hideDataLayout = false
     }
 
     private fun setupRecyclerView()
@@ -116,7 +132,15 @@ class TrainingFragment : Fragment() {
             findNavController().navigate(R.id.action_trainingFragment_to_workoutDetail1, it)
         }
         val list = _viewModel.sets
-        binding.recyclerView.adapter = set_recycler_adapter(list, listener)
+        binding.recyclerView.adapter = SetsAdapter(list, listener)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun watching(){
+        _viewModel.indicatorWatching("CkU0yD2WlQweVEqqjupN")
+        var num = _viewModel.numberOfCalories
+        binding.textViewCalories.text = "$num kCal"
+        binding.textViewCaloriesNumber.text = "$num kCal"
     }
 
     @SuppressLint("NotifyDataSetChanged")
