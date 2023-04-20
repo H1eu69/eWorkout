@@ -82,7 +82,6 @@ class TrainingFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         watching()
         observeViewModel()
-        setupRecyclerView()
     }
 
    private fun observeViewModel()

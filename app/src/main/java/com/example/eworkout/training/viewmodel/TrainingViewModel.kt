@@ -70,7 +70,7 @@ class TrainingViewModel: ViewModel() {
                 val set = Set(
                     data.id,
                     data.get("name").toString(),
-                    data.get("total_time").toString(),
+                    data.get("total_time") as Long,
                     data.get("total_calories") as Long,
                     data.get("number_of_exercises") as Long,
                     ""
@@ -85,7 +85,7 @@ class TrainingViewModel: ViewModel() {
                 val set = Set(
                     data.id,
                     data.get("name").toString(),
-                    data.get("total_time").toString(),
+                    data.get("total_time") as Long,
                     data.get("total_calories") as Long,
                     data.get("number_of_exercises") as Long,
                     ""
@@ -100,7 +100,7 @@ class TrainingViewModel: ViewModel() {
                 val set = Set(
                     data.id,
                     data.get("name").toString(),
-                    data.get("total_time").toString(),
+                    data.get("total_time") as Long,
                     data.get("total_calories")as Long,
                     data.get("number_of_exercises") as Long,
                     ""
@@ -115,7 +115,7 @@ class TrainingViewModel: ViewModel() {
                 val set = Set(
                     data.id,
                     data.get("name").toString(),
-                    data.get("total_time").toString(),
+                    data.get("total_time") as Long,
                     data.get("total_calories") as Long,
                     data.get("number_of_exercises") as Long,
                     ""

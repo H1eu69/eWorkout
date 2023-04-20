@@ -20,7 +20,7 @@ class SetsAdapter(val list: List<Set>, val listener: SetOnClickListener): Recycl
                 }
                 binding.textViewSetName.text = setName
                 binding.textViewTotalExercises.text = totalExercises.toString()
-                binding.texViewTotalTime.text = totalTime
+                binding.texViewTotalTime.text = totalTime.toString() + " mins"
                 binding.buttonViewDetail.setOnClickListener {
                     listener.onClick(bundle)
                 }
