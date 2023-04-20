@@ -1,4 +1,4 @@
-package com.example.eworkout.login.view
+package com.example.eworkout.authentication.login.view
 
 import android.app.Activity
 import android.content.ContentValues.TAG
@@ -13,8 +13,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.example.eworkout.login.model.LoginState
-import com.example.eworkout.login.viewmodel.LoginViewModel
+import com.example.eworkout.authentication.login.model.LoginState
+import com.example.eworkout.authentication.login.viewmodel.LoginViewModel
 import com.example.eworkout.R
 import com.example.eworkout.databinding.FragmentLoginBinding
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
@@ -84,7 +84,7 @@ class LoginFragment : Fragment() {
         val viewModel: LoginViewModel by viewModels()
         _viewModel = viewModel
         binding.viewModel = viewModel
-        binding.lifecycleOwner = this@LoginFragment
+        binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
     }
 
@@ -113,6 +113,10 @@ class LoginFragment : Fragment() {
         }
         binding.textViewCreateAccount.setOnClickListener(){
             findNavController().navigate(R.id.action_loginFragment_to_signupFragment)
+        }
+
+        binding.textViewAuthAsGuest.setOnClickListener {
+            findNavController().navigate(R.id.action_loginFragment_to_BMIEvaluation)
         }
     }
     private fun observerViewModel()

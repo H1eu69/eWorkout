@@ -1,4 +1,4 @@
-package com.example.eworkout.signup.model
+package com.example.eworkout.authentication.signup.model
 
 enum class SignupState{
     ERROR_FIRST_NAME_EMPTY,

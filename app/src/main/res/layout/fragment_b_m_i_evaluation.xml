@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.eworkout.authentication.bmi.viewmodel.BMIViewModel"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/app_bg"
+        tools:context=".authentication.bmi.view.BMIEvaluation">
+
+        <TextView
+            android:id="@+id/textView_skip"
+            style="@style/TextView3"
+            android:text="Skip"
+            android:layout_marginTop="48dp"
+            android:layout_marginEnd="28dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView_let_us_know_you_better"
+            style="@style/TextView12"
+            android:layout_marginTop="40dp"
+            android:text="LET US KNOW YOU BETTER"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView_skip" />
+
+        <TextView
+            android:id="@+id/textView_description"
+            style="@style/TextView2"
+            android:layout_width="0dp"
+            android:textAlignment="center"
+            android:layout_marginTop="32dp"
+            android:text="First let us know your better to boost workout result"
+            app:layout_constraintEnd_toEndOf="@+id/textView_let_us_know_you_better"
+            app:layout_constraintStart_toStartOf="@+id/textView_let_us_know_you_better"
+            app:layout_constraintTop_toBottomOf="@+id/textView_let_us_know_you_better" />
+
+        <TextView
+            android:id="@+id/textView_age"
+            style="@style/TextView1"
+            android:layout_width="0dp"
+            android:text="Age"
+            android:layout_marginTop="32dp"
+            app:layout_constraintStart_toStartOf="@+id/textView_let_us_know_you_better"
+            app:layout_constraintTop_toBottomOf="@+id/textView_description" />
+
+        <EditText
+            android:id="@+id/editText_age"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:setText="@={viewModel.bmiLiveData.age}"
+            android:hint="Your age"
+            android:inputType="number"
+            app:layout_constraintEnd_toEndOf="@+id/textView_description"
+            app:layout_constraintStart_toStartOf="@+id/textView_age"
+            app:layout_constraintTop_toBottomOf="@+id/textView_age" />
+
+        <TextView
+            android:id="@+id/textView_weight"
+            style="@style/TextView1"
+            android:layout_width="0dp"
+            android:layout_marginTop="32dp"
+            android:text="Weight"
+            app:layout_constraintStart_toStartOf="@+id/textView_age"
+            app:layout_constraintTop_toBottomOf="@+id/editText_age" />
+
+        <EditText
+            android:id="@+id/editText_weight"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:inputType="numberDecimal"
+            android:setText="@={viewModel.bmiLiveData.weight}"
+            android:hint="Your weight (KG)"
+            app:layout_constraintEnd_toEndOf="@+id/textView_description"
+            app:layout_constraintStart_toStartOf="@+id/textView_weight"
+            app:layout_constraintTop_toBottomOf="@+id/textView_weight" />
+
+        <TextView
+            android:id="@+id/textView_height"
+            style="@style/TextView1"
+            android:layout_width="0dp"
+            android:layout_marginTop="32dp"
+            android:text="Height"
+            app:layout_constraintStart_toStartOf="@+id/textView_weight"
+            app:layout_constraintTop_toBottomOf="@+id/editText_weight" />
+
+        <EditText
+            android:id="@+id/editText_height"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:inputType="numberDecimal"
+            android:setText="@={viewModel.bmiLiveData.weight}"
+            android:hint="Your height (CM)"
+            app:layout_constraintEnd_toEndOf="@+id/textView_description"
+            app:layout_constraintStart_toStartOf="@+id/textView_height"
+            app:layout_constraintTop_toBottomOf="@+id/textView_height" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnNext"
+            style="@style/Button1"
+            android:background="@drawable/button1"
+            android:text="@string/next"
+            app:layout_constraintVertical_bias=".6"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editText_height" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

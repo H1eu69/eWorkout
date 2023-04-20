@@ -1,4 +1,4 @@
-package com.example.eworkout.signup.view
+package com.example.eworkout.authentication.signup.view
 
 import android.app.Activity
 import android.content.ContentValues.TAG
@@ -13,8 +13,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.example.eworkout.signup.model.SignupState
-import com.example.eworkout.signup.viewmodel.SignupViewModel
+import com.example.eworkout.authentication.signup.model.SignupState
+import com.example.eworkout.authentication.signup.viewmodel.SignupViewModel
 import com.example.eworkout.R
 import com.example.eworkout.databinding.FragmentSignupBinding
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
@@ -86,7 +86,7 @@ class SignupFragment : Fragment() {
         val viewModel: SignupViewModel by viewModels()
         _viewModel = viewModel
         binding.viewModel = viewModel
-        binding.lifecycleOwner = this@SignupFragment
+        binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
     }
 
@@ -131,6 +131,10 @@ class SignupFragment : Fragment() {
         }
         binding.btnGoogleSignIn.setOnClickListener{
             displayGoogleSignInUI()
+        }
+
+        binding.textViewLoginHere.setOnClickListener {
+            findNavController().popBackStack()
         }
     }
 
@@ -193,7 +197,7 @@ class SignupFragment : Fragment() {
             "NO_ERROR_CONFIRM_PASSWORD" -> binding.textFieldConfirmPassword.isErrorEnabled = false
             //Sign up Success
             "SUCCESS" -> {
-                findNavController().navigate(R.id.action_signupFragment_to_trainingFragment)
+                findNavController().navigate(R.id.action_signupFragment_to_BMIEvaluation)
             }
         }
     }

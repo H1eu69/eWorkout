@@ -1,4 +1,4 @@
-package com.example.eworkout.signup.viewmodel
+package com.example.eworkout.authentication.signup.viewmodel
 
 import android.content.ContentValues.TAG
 import android.util.Log
@@ -6,7 +6,7 @@ import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.eworkout.signup.model.SignupState
+import com.example.eworkout.authentication.signup.model.SignupState
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth

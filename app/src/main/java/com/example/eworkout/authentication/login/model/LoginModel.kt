@@ -1,4 +1,4 @@
-package com.example.eworkout.login.model
+package com.example.eworkout.authentication.login.model
 
 data class LoginModel (
     val email :String?,
