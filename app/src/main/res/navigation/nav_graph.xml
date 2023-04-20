@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/login_nav">
+    app:startDestination="@id/training_nav">
 
 
     <navigation android:id="@+id/login_nav"
@@ -26,7 +26,8 @@
                 app:destination="@id/signupFragment" />
             <action
                 android:id="@+id/action_loginFragment_to_trainingFragment"
-                app:destination="@id/training_nav" />
+                app:destination="@id/training_nav"
+                app:popUpTo="@id/trainingFragment" />
         </fragment>
         <fragment
             android:id="@+id/signupFragment"
@@ -38,14 +39,15 @@
                 app:destination="@id/loginFragment" />
             <action
                 android:id="@+id/action_signupFragment_to_trainingFragment"
-                app:destination="@id/training_nav" />
+                app:destination="@id/training_nav"
+                app:popUpTo="@id/trainingFragment"/>
         </fragment>
     </navigation>
     <navigation android:id="@+id/training_nav"
-        app:startDestination="@id/trainingFragment">
+        app:startDestination="@id/workoutDetail1">
         <fragment
             android:id="@+id/workoutDetail2"
-            android:name="com.example.eworkout.training.view.WorkoutDetail2"
+            android:name="com.example.eworkout.training.view.FragmentWorkoutDetail2"
             android:label="fragment_workout_detail2"
             tools:layout="@layout/fragment_workout_detail2">
             <action
@@ -55,24 +57,87 @@
         <fragment
             android:id="@+id/fragmentWorkoutReady"
             android:name="com.example.eworkout.training.view.FragmentWorkoutReady"
-            android:label="FragmentWorkoutReady" />
+            android:label="FragmentWorkoutReady" >
+            <action
+                android:id="@+id/action_fragmentWorkoutReady_to_fragmentWorkoutStart2"
+                app:destination="@id/fragmentWorkoutStart2"
+                app:enterAnim="@android:anim/fade_in"
+                app:exitAnim="@android:anim/fade_out" />
+            <action
+                android:id="@+id/action_fragmentWorkoutReady_to_fragmentWorkoutStart1"
+                app:destination="@id/fragmentWorkoutStart1"
+                app:enterAnim="@android:anim/fade_in"
+                app:exitAnim="@android:anim/fade_out" />
+        </fragment>
         <fragment
             android:id="@+id/workoutDetail1"
-            android:name="com.example.eworkout.training.view.WorkoutDetail1"
+            android:name="com.example.eworkout.training.view.FragmentWorkoutDetail1"
             android:label="WorkoutDetail1">
             <action
                 android:id="@+id/action_workoutDetail1_to_workoutDetail2"
-                app:destination="@id/workoutDetail2" />
+                app:destination="@id/workoutDetail2"
+                app:enterAnim="@android:anim/fade_in"
+                app:exitAnim="@android:anim/fade_out"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+                app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+            <action
+                android:id="@+id/action_workoutDetail1_to_fragmentWorkoutReady"
+                app:destination="@id/fragmentWorkoutReady"
+                app:enterAnim="@android:anim/slide_in_left"
+                app:exitAnim="@android:anim/slide_out_right" />
         </fragment>
         <fragment
             android:id="@+id/trainingFragment"
             android:name="com.example.eworkout.training.view.TrainingFragment"
             android:label="fragment_training"
-            tools:layout="@layout/fragment_training" >
+            tools:layout="@layout/fragment_training" />
+        <fragment
+            android:id="@+id/fragmentWorkoutStart2"
+            android:name="com.example.eworkout.training.view.FragmentWorkoutStart2"
+            android:label="FragmentWorkoutStart2" >
             <action
-                android:id="@+id/action_trainingFragment_to_workoutDetail1"
-                app:destination="@id/workoutDetail1" />
+                android:id="@+id/action_fragmentWorkoutStart2_to_fragmentWorkoutRest"
+                app:destination="@id/fragmentWorkoutRest"
+                app:enterAnim="@android:anim/fade_in"
+                app:exitAnim="@android:anim/fade_out" />
+            <action
+                android:id="@+id/action_fragmentWorkoutStart2_to_fragmentWorkoutDone"
+                app:destination="@id/fragmentWorkoutDone"
+                app:enterAnim="@android:anim/fade_in"
+                app:exitAnim="@android:anim/fade_out" />
         </fragment>
+        <fragment
+            android:id="@+id/fragmentWorkoutRest"
+            android:name="com.example.eworkout.training.view.FragmentWorkoutRest"
+            android:label="FragmentWorkoutRest" >
+            <action
+                android:id="@+id/action_fragmentWorkoutRest_to_fragmentWorkoutStart2"
+                app:destination="@id/fragmentWorkoutStart2"
+                app:enterAnim="@android:anim/fade_in"
+                app:exitAnim="@android:anim/fade_out" />
+            <action
+                android:id="@+id/action_fragmentWorkoutRest_to_fragmentWorkoutStart1"
+                app:destination="@id/fragmentWorkoutStart1"
+                app:enterAnim="@android:anim/fade_in"
+                app:exitAnim="@android:anim/fade_out" />
+        </fragment>
+        <fragment
+            android:id="@+id/fragmentWorkoutStart1"
+            android:name="com.example.eworkout.training.view.FragmentWorkoutStart1"
+            android:label="FragmentWorkoutStart1" >
+            <action
+                android:id="@+id/action_fragmentWorkoutStart1_to_fragmentWorkoutRest"
+                app:destination="@id/fragmentWorkoutRest"
+                app:enterAnim="@android:anim/fade_in"
+                app:exitAnim="@android:anim/fade_out" />
+            <action
+                android:id="@+id/action_fragmentWorkoutStart1_to_fragmentWorkoutDone"
+                app:destination="@id/fragmentWorkoutDone" />
+        </fragment>
+        <fragment
+            android:id="@+id/fragmentWorkoutDone"
+            android:name="com.example.eworkout.training.view.FragmentWorkoutDone"
+            android:label="FragmentWorkoutDone" />
     </navigation>
 
 
