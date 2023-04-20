@@ -104,6 +104,7 @@ class TrainingFragment : Fragment() {
             }
             "IMAGE_LOADED" -> {
                 notifyDataChange()
+                hideLoading()
             }
         }
     }
@@ -118,7 +119,8 @@ class TrainingFragment : Fragment() {
     }
     private fun hideLoading()
     {
-        binding.shimmerLayout.visibility = View.GONE
+        binding.shimmerLayout.stopShimmer()
+        binding.shimmerLayout.visibility = View.INVISIBLE
         binding.recyclerView.visibility = View.VISIBLE
         //binding.hideShimmerLayout = true
         //binding.hideDataLayout = false
@@ -138,8 +140,11 @@ class TrainingFragment : Fragment() {
     private fun watching(){
         _viewModel.indicatorWatching("CkU0yD2WlQweVEqqjupN")
         var num = _viewModel.numberOfCalories
+        var hour = _viewModel.workoutHours/60
+        var min = _viewModel.workoutHours%60
         binding.textViewCalories.text = "$num kCal"
         binding.textViewCaloriesNumber.text = "$num kCal"
+        binding.textViewHours.text = hour.toString() + "h " + min.toString() + "mins"
     }
 
     @SuppressLint("NotifyDataSetChanged")

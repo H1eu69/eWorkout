@@ -41,24 +41,19 @@ class TrainingViewModel: ViewModel() {
 
     var numberOfCalories: Long = 0
 
-    val workoutHours: Long = 0
+    var workoutHours: Long = 0
 
     private val _state: MutableLiveData<TrainingState> = MutableLiveData(TrainingState.LOADING)
     val state: LiveData<TrainingState> get() = _state
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun resetIndicator(){
-        val today = LocalDate.now()
-        if (LocalDate.now() != today)
-            indicatorWatching("id")
-        _state.value = TrainingState.NEW_DAY
-    }
+
     @RequiresApi(Build.VERSION_CODES.O)
     fun indicatorWatching(id: String) {
         firestore.collection("Sets")
             .document("CkU0yD2WlQweVEqqjupN")
             .get().addOnSuccessListener { data ->
                 numberOfCalories += data.get("total_calories") as Long
+                workoutHours += data.get("total_time") as Long
             }
     }
 
