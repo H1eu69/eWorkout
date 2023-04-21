@@ -1,0 +1,37 @@
+Index: app/src/main/java/com/example/eworkout/training/adapter/set_recycler_adapter.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.eworkout.training.adapter\r\n\r\nimport android.view.ViewGroup\r\nimport androidx.recyclerview.widget.RecyclerView\r\n\r\nclass set_recycler_adapter: RecyclerView.Adapter<set_recycler_adapter.ViewHolder>() {\r\n    override fun onCreateViewHolder(\r\n        parent: ViewGroup,\r\n        viewType: Int\r\n    ): set_recycler_adapter.ViewHolder {\r\n        TODO(\"Not yet implemented\")\r\n    }\r\n\r\n    override fun onBindViewHolder(holder: set_recycler_adapter.ViewHolder, position: Int) {\r\n        TODO(\"Not yet implemented\")\r\n    }\r\n\r\n    override fun getItemCount(): Int {\r\n        TODO(\"Not yet implemented\")\r\n    }\r\n\r\n    init class ViewHolder (val binding: ExerciseRecyclerviewItemBinding) : set_recycler_adapter.ViewHolder(binding.root)\r\n    /*val list: List<Exercise>,\r\n    val listener: ExercisesOnClickListener) : RecyclerView.Adapter<ExercisesAdapter.ViewHolder>() {\r\n\r\n    inner class ViewHolder(val binding: ExerciseRecyclerviewItemBinding) : RecyclerView.ViewHolder(binding.root)\r\n    {\r\n        fun bind(exercise: Exercise)\r\n        {\r\n            exercise.apply {\r\n                val bundle = Bundle().apply {\r\n                    putString(\"exercise_id\", id)\r\n                }\r\n                binding.exerciseNameTextview.text = name\r\n                binding.exerciseRepTextview.text = reps\r\n                binding.exerciseInformationBtn.setOnClickListener {\r\n                    listener.onClick(bundle)\r\n                }\r\n                if(image != \"\"){\r\n                    val radius = binding.root.context.resources.getDimensionPixelSize(R.dimen.corner_radius)\r\n                    Glide.with(binding.root.context).load(image)\r\n                        .transform(RoundedCorners(radius))\r\n                        .centerCrop()\r\n                        .into(binding.shapeableImageView)\r\n                }\r\n\r\n            }\r\n        }\r\n    }\r\n\r\n    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {\r\n        val binding = ExerciseRecyclerviewItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)\r\n        return ViewHolder(binding)\r\n    }\r\n\r\n    override fun getItemCount() = list.size\r\n\r\n    override fun onBindViewHolder(holder: ViewHolder, position: Int) {\r\n        val exercise = list[position]\r\n        holder.bind(exercise)\r\n    }*/\r\n}
+===================================================================
+diff --git a/app/src/main/java/com/example/eworkout/training/adapter/set_recycler_adapter.kt b/app/src/main/java/com/example/eworkout/training/adapter/set_recycler_adapter.kt
+--- a/app/src/main/java/com/example/eworkout/training/adapter/set_recycler_adapter.kt	
++++ b/app/src/main/java/com/example/eworkout/training/adapter/set_recycler_adapter.kt	
+@@ -1,6 +1,9 @@
+ package com.example.eworkout.training.adapter
+ 
++import android.view.View
+ import android.view.ViewGroup
++import android.widget.ImageView
++import android.widget.TextView
+ import androidx.recyclerview.widget.RecyclerView
+ 
+ class set_recycler_adapter: RecyclerView.Adapter<set_recycler_adapter.ViewHolder>() {
+@@ -19,7 +22,17 @@
+         TODO("Not yet implemented")
+     }
+ 
+-    init class ViewHolder (val binding: ExerciseRecyclerviewItemBinding) : set_recycler_adapter.ViewHolder(binding.root)
++    init class ViewHolder (itemView: View) : RecyclerView.ViewHolder(itemView){
++
++        var _setName: TextView
++        var _totalExercises: TextView
++        var _totalTime: TextView
++        var _setImage: ImageView
++
++        init {
++            _setName = 
++        }
++    }
+     /*val list: List<Exercise>,
+     val listener: ExercisesOnClickListener) : RecyclerView.Adapter<ExercisesAdapter.ViewHolder>() {
+ 

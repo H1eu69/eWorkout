@@ -1,0 +1,50 @@
+Index: app/src/main/java/com/example/eworkout/training/viewmodel/TrainingViewModel.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.eworkout.training.viewmodel\r\n\r\nimport android.content.ContentValues\r\nimport android.content.ContentValues.TAG\r\nimport android.content.Intent\r\nimport android.os.Bundle\r\nimport android.util.Log\r\nimport androidx.core.content.ContextCompat.startActivity\r\nimport androidx.lifecycle.LiveData\r\nimport androidx.lifecycle.MutableLiveData\r\nimport androidx.lifecycle.ViewModel\r\nimport androidx.recyclerview.widget.RecyclerView\r\nimport com.example.eworkout.login.model.LoginState\r\nimport com.example.eworkout.training.model.Set\r\nimport com.example.eworkout.training.model.TrainingState\r\nimport com.google.firebase.firestore.FieldPath\r\nimport com.google.firebase.firestore.FirebaseFirestore\r\nimport com.google.firebase.firestore.ktx.firestore\r\nimport com.google.firebase.firestore.ktx.toObject\r\nimport com.google.firebase.ktx.Firebase\r\nimport com.google.firebase.storage.ktx.storage\r\n\r\n\r\nclass TrainingViewModel: ViewModel() {\r\n    val firestore = Firebase.firestore\r\n\r\n    val storageRef = Firebase.storage.reference\r\n\r\n    val sets = mutableListOf<Set>()\r\n\r\n    private val _state : MutableLiveData<TrainingState> = MutableLiveData(TrainingState.LOADING)\r\n    val state : LiveData<TrainingState> get() = _state\r\n\r\n\r\n\r\n    fun loadSets(){\r\n        firestore.collection(\"Sets\")\r\n            .document(\"cV4RagVwciBDCqFfdfOi\")\r\n            .get()\r\n            .addOnSuccessListener {data ->\r\n                    val set = com.example.eworkout.training.model.Set(\r\n                        data.id,\r\n                        data.get(\"name\").toString(),\r\n                        data.get(\"total_time\").toString(),\r\n                        data.get(\"total_calories\").toString(),\r\n                        data.get(\"number_of_exercises\").toString(),\r\n                    \"\"\r\n                    )\r\n                    sets.add(set)\r\n                    getUriImageByName(set)\r\n                }\r\n        firestore.collection(\"Sets\")\r\n            .document(\"z9BQfujVcuRKYs4d2DbW\")\r\n            .get()\r\n            .addOnSuccessListener {data ->\r\n                val set = com.example.eworkout.training.model.Set(\r\n                    data.id,\r\n                    data.get(\"name\").toString(),\r\n                    data.get(\"total_time\").toString(),\r\n                    data.get(\"total_calories\").toString(),\r\n                    data.get(\"number_of_exercises\").toString(),\r\n                    \"\"\r\n                )\r\n                sets.add(set)\r\n                getUriImageByName(set)\r\n            }\r\n        firestore.collection(\"Sets\")\r\n            .document(\"bPGOVbrUNAnWf4y7dun1\")\r\n            .get()\r\n            .addOnSuccessListener {data ->\r\n                val set = com.example.eworkout.training.model.Set(\r\n                    data.id,\r\n                    data.get(\"name\").toString(),\r\n                    data.get(\"total_time\").toString(),\r\n                    data.get(\"total_calories\").toString(),\r\n                    data.get(\"number_of_exercises\").toString(),\r\n                    \"\"\r\n                )\r\n                sets.add(set)\r\n                getUriImageByName(set)\r\n            }\r\n        firestore.collection(\"Sets\")\r\n            .document(\"CkU0yD2WlQweVEqqjupN\")\r\n            .get()\r\n            .addOnSuccessListener {data ->\r\n                val set = com.example.eworkout.training.model.Set(\r\n                    data.id,\r\n                    data.get(\"name\").toString(),\r\n                    data.get(\"total_time\").toString(),\r\n                    data.get(\"total_calories\").toString(),\r\n                    data.get(\"number_of_exercises\").toString(),\r\n                    \"\"\r\n                )\r\n                sets.add(set)\r\n                getUriImageByName(set)\r\n            }\r\n\r\n        _state.value = TrainingState.LOADED\r\n    }\r\n\r\n    private fun getUriImageByName(set: com.example.eworkout.training.model.Set)\r\n    {\r\n        val path = \"images/\" + set.setName + \".svg\"\r\n        storageRef.child(path)\r\n            .downloadUrl.addOnSuccessListener {\r\n                set.setImage = it.toString()\r\n                _state.value = TrainingState.IMAGE_LOADED\r\n            }\r\n            .addOnFailureListener {\r\n                Log.d(\"adsa\", it.message.toString())\r\n            }\r\n    }\r\n\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/eworkout/training/viewmodel/TrainingViewModel.kt b/app/src/main/java/com/example/eworkout/training/viewmodel/TrainingViewModel.kt
+--- a/app/src/main/java/com/example/eworkout/training/viewmodel/TrainingViewModel.kt	
++++ b/app/src/main/java/com/example/eworkout/training/viewmodel/TrainingViewModel.kt	
+@@ -49,7 +49,7 @@
+                     sets.add(set)
+                     getUriImageByName(set)
+                 }
+-        firestore.collection("Sets")
++        /*firestore.collection("Sets")
+             .document("z9BQfujVcuRKYs4d2DbW")
+             .get()
+             .addOnSuccessListener {data ->
+@@ -93,7 +93,7 @@
+                 )
+                 sets.add(set)
+                 getUriImageByName(set)
+-            }
++            }*/
+ 
+         _state.value = TrainingState.LOADED
+     }
+Index: app/src/main/java/com/example/eworkout/training/adapter/set_recycler_adapter.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.eworkout.training.adapter\r\n\r\nimport android.os.Bundle\r\nimport android.view.LayoutInflater\r\nimport android.view.View\r\nimport android.view.ViewGroup\r\nimport android.widget.ImageView\r\nimport android.widget.TextView\r\nimport androidx.recyclerview.widget.RecyclerView\r\nimport com.bumptech.glide.Glide\r\nimport com.bumptech.glide.load.resource.bitmap.RoundedCorners\r\nimport com.example.eworkout.R\r\nimport com.example.eworkout.databinding.FragmentSetsItemBinding\r\nimport com.example.eworkout.training.listener.SetOnClickListener\r\nimport com.example.eworkout.training.model.Set\r\nimport kotlinx.coroutines.NonDisposableHandle\r\nimport kotlinx.coroutines.NonDisposableHandle.parent\r\n\r\nclass set_recycler_adapter(val list: List<Set>,val listener: SetOnClickListener): RecyclerView.Adapter<set_recycler_adapter.ViewHolder>() {\r\n\r\n    inner class ViewHolder(val binding: FragmentSetsItemBinding) :\r\n        RecyclerView.ViewHolder(binding.root) {\r\n        fun bind(set: Set) {\r\n            set.apply {\r\n                val bundle = Bundle().apply {\r\n                    putString(\"set_id\", setId)\r\n                }\r\n                binding.textViewSetName.text = setName\r\n                binding.textViewTotalExercises.text = totalExercises\r\n                binding.texViewTotalTime.text = totalTime\r\n                binding.buttonViewDetail.setOnClickListener {\r\n                    listener.onClick(bundle)\r\n                }\r\n                if(setImage != \"\"){\r\n                    Glide.with(binding.root.context).load(setImage)\r\n                        .centerCrop()\r\n                        .into(binding.SetImageView)\r\n                }\r\n\r\n            }\r\n            }\r\n        }\r\n\r\n        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {\r\n            val binding =\r\n                FragmentSetsItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)\r\n            return ViewHolder(binding)\r\n        }\r\n\r\n        override fun onBindViewHolder(holder: ViewHolder, position: Int) {\r\n            val currentset = list[position]\r\n            holder.bind(currentset)\r\n        }\r\n\r\n        override fun getItemCount(): Int {\r\n            return list.size\r\n        }\r\n}
+===================================================================
+diff --git a/app/src/main/java/com/example/eworkout/training/adapter/set_recycler_adapter.kt b/app/src/main/java/com/example/eworkout/training/adapter/set_recycler_adapter.kt
+--- a/app/src/main/java/com/example/eworkout/training/adapter/set_recycler_adapter.kt	
++++ b/app/src/main/java/com/example/eworkout/training/adapter/set_recycler_adapter.kt	
+@@ -32,8 +32,11 @@
+                     listener.onClick(bundle)
+                 }
+                 if(setImage != ""){
+-                    Glide.with(binding.root.context).load(setImage)
+-                        .centerCrop()
++                    //val radius = binding.root.context.resources.getDimensionPixelSize(R.dimen.corner_radius)
++                    Glide.with(binding.root.context)
++                        .load(setImage)
++                        //.transform(RoundedCorners(radius))
++                        //.centerCrop()
+                         .into(binding.SetImageView)
+                 }
+ 

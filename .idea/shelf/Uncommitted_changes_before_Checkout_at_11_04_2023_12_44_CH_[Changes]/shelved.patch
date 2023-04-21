@@ -1,0 +1,30 @@
+Index: app/src/main/java/com/example/eworkout/training/model/Set.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.eworkout.training.model\r\n\r\nclass Set {\r\n    private var id: String = \"\"\r\n\r\n    private var name: String = \"\"\r\n\r\n\r\n    private var time: String = \"\"\r\n\r\n\r\n    private var calories: String = \"\"\r\n\r\n\r\n    private var totalExercises: Any = \"\"\r\n\r\n}\r\n
+===================================================================
+diff --git a/app/src/main/java/com/example/eworkout/training/model/Set.kt b/app/src/main/java/com/example/eworkout/training/model/Set.kt
+--- a/app/src/main/java/com/example/eworkout/training/model/Set.kt	
++++ b/app/src/main/java/com/example/eworkout/training/model/Set.kt	
+@@ -1,17 +1,5 @@
+ package com.example.eworkout.training.model
+ 
+-class Set {
+-    private var id: String = ""
+-
+-    private var name: String = ""
+-
+-
+-    private var time: String = ""
+-
+-
+-    private var calories: String = ""
+-
+-
+-    private var totalExercises: Any = ""
+-
+-}
++data class Set (
++    val 
++)
+\ No newline at end of file
