@@ -40,7 +40,7 @@ class TrainingViewModel: ViewModel() {
     }
 
     fun loadSets() {
-        firestore.collection("Sets")
+        /*firestore.collection("Sets")
             .document("cV4RagVwciBDCqFfdfOi")
             .get()
             .addOnSuccessListener { data ->
@@ -111,8 +111,27 @@ class TrainingViewModel: ViewModel() {
             }
             .addOnFailureListener { exception ->
                 Log.d(TAG, "get failed with ", exception)
+            }*/
+        firestore.collection("Sets")
+            .get()
+            .addOnSuccessListener { documents ->
+                for(data in documents){
+                val set = Set(
+                    data.id,
+                    data.get("name").toString(),
+                    data.get("total_time") as Long,
+                    data.get("total_calories") as Long,
+                    data.get("number_of_exercises") as Long,
+                    ""
+                )
+                sets.add(set)
+                getUriImageByName(set)}
+                _state.value = TrainingState.LOADED
             }
-        _state.value = TrainingState.LOADED
+            .addOnFailureListener { exception ->
+                Log.d(TAG, "get failed with ", exception)
+            }
+
     }
 
     private fun getUriImageByName(set: Set) {
