@@ -18,13 +18,13 @@ class Workout1SharedViewModel : ViewModel() {
 
     val auth = Firebase.auth
 
+    var kcalConsumed = 0;
+
     val storageRef = Firebase.storage.reference
 
     val exercises = mutableListOf<Exercise>()
 
     lateinit var setTakenID: String
-
-    var kcalConsumed = 0;
 
     val setsName: MutableLiveData<String> = MutableLiveData()
 
@@ -61,13 +61,15 @@ class Workout1SharedViewModel : ViewModel() {
     }
 
     fun getSetsFieldsById(id: String) {
+        exercises.clear()
         firestore.collection("Sets")
             .document(id)
             .get()
             .addOnSuccessListener {
-                val numOfExercise = it.get("number_of_exercises").toString()
+                exercises.clear()
+                val numOfExercise = it.get("number_of_exercises")
 
-                val totalCalories = it.get("total_calories").toString()
+                val totalCalories = it.get("total_calories")
 
                 setsName.value = it.getString("name").toString()
 
@@ -172,4 +174,11 @@ class Workout1SharedViewModel : ViewModel() {
         return currentExerciseIndex == 0
     }
 
+    fun changeStateToLoaded(){
+        _state.value = WorkoutDetail1State.LOADED
+    }
+
+    fun changeStateToLoading(){
+        _state.value = WorkoutDetail1State.LOADING
+    }
 }

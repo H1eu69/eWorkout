@@ -1,0 +1,54 @@
+Index: app/src/main/java/com/example/eworkout/training/viewmodel/TrainingViewModel.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.eworkout.training.viewmodel\r\n\r\nimport android.content.ContentValues\r\nimport android.content.ContentValues.TAG\r\nimport android.content.Intent\r\nimport android.os.Bundle\r\nimport android.util.Log\r\nimport androidx.core.content.ContextCompat.startActivity\r\nimport androidx.lifecycle.LiveData\r\nimport androidx.lifecycle.MutableLiveData\r\nimport androidx.lifecycle.ViewModel\r\nimport androidx.recyclerview.widget.RecyclerView\r\nimport com.example.eworkout.login.model.LoginState\r\nimport com.example.eworkout.training.model.Set\r\nimport com.example.eworkout.training.model.TrainingState\r\nimport com.google.firebase.firestore.FieldPath\r\nimport com.google.firebase.firestore.FirebaseFirestore\r\nimport com.google.firebase.firestore.ktx.firestore\r\nimport com.google.firebase.firestore.ktx.toObject\r\nimport com.google.firebase.ktx.Firebase\r\nimport com.google.firebase.storage.ktx.storage\r\n\r\n\r\nclass TrainingViewModel: ViewModel() {\r\n    val firestore = Firebase.firestore\r\n\r\n    val storageRef = Firebase.storage.reference\r\n\r\n    val sets = mutableListOf<Set>()\r\n\r\n    private val _state : MutableLiveData<TrainingState> = MutableLiveData(TrainingState.LOADING)\r\n    val state : LiveData<TrainingState> get() = _state\r\n\r\n\r\n\r\n    fun loadSets(){\r\n        firestore.collection(\"Sets\")\r\n            .document(\"cV4RagVwciBDCqFfdfOi\")\r\n            .get()\r\n            .addOnSuccessListener {data ->\r\n                    val set = com.example.eworkout.training.model.Set(\r\n                        data.id,\r\n                        data.get(\"name\").toString(),\r\n                        data.get(\"total_time\").toString(),\r\n                        data.get(\"total_calories\").toString(),\r\n                        data.get(\"number_of_exercises\").toString(),\r\n                    \"\"\r\n                    )\r\n                    sets.add(set)\r\n                    getUriImageByName(set)\r\n                }\r\n        firestore.collection(\"Sets\")\r\n            .document(\"z9BQfujVcuRKYs4d2DbW\")\r\n            .get()\r\n            .addOnSuccessListener {data ->\r\n                val set = com.example.eworkout.training.model.Set(\r\n                    data.id,\r\n                    data.get(\"name\").toString(),\r\n                    data.get(\"total_time\").toString(),\r\n                    data.get(\"total_calories\").toString(),\r\n                    data.get(\"number_of_exercises\").toString(),\r\n                    \"\"\r\n                )\r\n                sets.add(set)\r\n                getUriImageByName(set)\r\n            }\r\n        firestore.collection(\"Sets\")\r\n            .document(\"bPGOVbrUNAnWf4y7dun1\")\r\n            .get()\r\n            .addOnSuccessListener {data ->\r\n                val set = com.example.eworkout.training.model.Set(\r\n                    data.id,\r\n                    data.get(\"name\").toString(),\r\n                    data.get(\"total_time\").toString(),\r\n                    data.get(\"total_calories\").toString(),\r\n                    data.get(\"number_of_exercises\").toString(),\r\n                    \"\"\r\n                )\r\n                sets.add(set)\r\n                getUriImageByName(set)\r\n            }\r\n        firestore.collection(\"Sets\")\r\n            .document(\"CkU0yD2WlQweVEqqjupN\")\r\n            .get()\r\n            .addOnSuccessListener {data ->\r\n                val set = com.example.eworkout.training.model.Set(\r\n                    data.id,\r\n                    data.get(\"name\").toString(),\r\n                    data.get(\"total_time\").toString(),\r\n                    data.get(\"total_calories\").toString(),\r\n                    data.get(\"number_of_exercises\").toString(),\r\n                    \"\"\r\n                )\r\n                sets.add(set)\r\n                getUriImageByName(set)\r\n            }\r\n\r\n        _state.value = TrainingState.LOADED\r\n    }\r\n\r\n    private fun getUriImageByName(set: com.example.eworkout.training.model.Set)\r\n    {\r\n        val path = \"images/\" + set.setName + \".svg\"\r\n        storageRef.child(path)\r\n            .downloadUrl.addOnSuccessListener {\r\n                set.setImage = it.toString()\r\n                _state.value = TrainingState.IMAGE_LOADED\r\n            }\r\n            .addOnFailureListener {\r\n                Log.d(\"adsa\", it.message.toString())\r\n            }\r\n    }\r\n\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/eworkout/training/viewmodel/TrainingViewModel.kt b/app/src/main/java/com/example/eworkout/training/viewmodel/TrainingViewModel.kt
+--- a/app/src/main/java/com/example/eworkout/training/viewmodel/TrainingViewModel.kt	
++++ b/app/src/main/java/com/example/eworkout/training/viewmodel/TrainingViewModel.kt	
+@@ -44,7 +44,7 @@
+                         data.get("total_time").toString(),
+                         data.get("total_calories").toString(),
+                         data.get("number_of_exercises").toString(),
+-                    ""
++                        setImage = ""
+                     )
+                     sets.add(set)
+                     getUriImageByName(set)
+@@ -59,7 +59,7 @@
+                     data.get("total_time").toString(),
+                     data.get("total_calories").toString(),
+                     data.get("number_of_exercises").toString(),
+-                    ""
++                    setImage = ""
+                 )
+                 sets.add(set)
+                 getUriImageByName(set)
+@@ -74,7 +74,7 @@
+                     data.get("total_time").toString(),
+                     data.get("total_calories").toString(),
+                     data.get("number_of_exercises").toString(),
+-                    ""
++                    setImage = ""
+                 )
+                 sets.add(set)
+                 getUriImageByName(set)
+@@ -89,7 +89,7 @@
+                     data.get("total_time").toString(),
+                     data.get("total_calories").toString(),
+                     data.get("number_of_exercises").toString(),
+-                    ""
++                    setImage = ""
+                 )
+                 sets.add(set)
+                 getUriImageByName(set)
+@@ -98,6 +98,7 @@
+         _state.value = TrainingState.LOADED
+     }
+ 
++
+     private fun getUriImageByName(set: com.example.eworkout.training.model.Set)
+     {
+         val path = "images/" + set.setName + ".svg"
