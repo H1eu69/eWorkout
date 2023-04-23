@@ -1,6 +1,7 @@
 package com.example.eworkout.training.adapter
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -23,6 +24,7 @@ class SetsAdapter(val list: List<Set>, val listener: SetOnClickListener): Recycl
                 binding.texViewTotalTime.text = totalTime.toString() + " mins"
                 binding.buttonViewDetail.setOnClickListener {
                     listener.onClick(bundle)
+                    Log.d("set_id",setId)
                 }
                 if(setImage != ""){
                     Glide.with(binding.root.context).load(setImage)

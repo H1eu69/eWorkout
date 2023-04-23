@@ -31,6 +31,7 @@ class TrainingFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    //private var setId: String? = null
     private var _binding: FragmentTrainingBinding? = null
     val binding get() = _binding!!
     private lateinit var _viewModel: TrainingViewModel
@@ -41,6 +42,7 @@ class TrainingFragment : Fragment() {
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
+            //setId = it.getString("set_id")
         }
     }
 

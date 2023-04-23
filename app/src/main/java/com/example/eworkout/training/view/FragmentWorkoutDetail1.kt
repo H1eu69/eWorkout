@@ -25,6 +25,7 @@ class FragmentWorkoutDetail1 : Fragment() {
     // TODO: Rename and change types of parameters
     private var mParam1: String? = null
     private var mParam2: String? = null
+    private var setId:String? = null
     private var _binding: FragmentWorkoutDetail1Binding? = null
     val binding get() = _binding!!
     private val _viewModel: Workout1SharedViewModel by navGraphViewModels(R.id.training_nav)
@@ -34,6 +35,7 @@ class FragmentWorkoutDetail1 : Fragment() {
         arguments?.let {
             mParam1 = it.getString(ARG_PARAM1)
             mParam2 = it.getString(ARG_PARAM2)
+            setId = it.getString("set_id")
         }
         Log.d("test view state", " create")
     }
@@ -102,7 +104,7 @@ class FragmentWorkoutDetail1 : Fragment() {
             "LOADING" -> {
                 Log.d("hahohi", " LOADING")
                 showLoading()
-                _viewModel.getSetsFieldsById("1iXUMoTZF1MxrQ9ResPr")
+                _viewModel.getSetsFieldsById((setId!!))
             }
             "LOADED" -> {
                 Log.d("hahohi", " LOADED")

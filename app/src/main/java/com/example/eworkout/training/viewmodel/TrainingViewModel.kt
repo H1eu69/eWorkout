@@ -1,35 +1,17 @@
 package com.example.eworkout.training.viewmodel
 
-import android.content.ContentValues
 import android.content.ContentValues.TAG
-import android.content.Intent
-import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
 import android.os.Build
-import android.os.Bundle
 import android.util.Log
-import android.widget.ImageView
 import androidx.annotation.RequiresApi
-import androidx.core.content.ContextCompat.getDrawable
-import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.recyclerview.widget.RecyclerView
-import com.example.eworkout.login.model.LoginState
-import com.example.eworkout.training.model.NumberOfCalories
 import com.example.eworkout.training.model.Set
 import com.example.eworkout.training.model.TrainingState
-import com.example.eworkout.training.model.WorkoutHours
-import com.google.firebase.firestore.FieldPath
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
-import java.time.LocalDate
-import java.time.LocalTime
-import java.time.LocalTime.now
 import java.util.*
 
 class TrainingViewModel: ViewModel() {
