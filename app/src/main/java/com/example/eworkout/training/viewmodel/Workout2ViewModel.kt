@@ -1,13 +1,12 @@
 package com.example.eworkout.training.viewmodel
 
 import android.net.Uri
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.eworkout.training.model.Instruction
 import com.example.eworkout.training.model.WorkoutDetail2State
-import com.example.eworkout.training.util.InstructionAnalyzer
+import com.example.eworkout.training.util.StringUlti
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
@@ -61,7 +60,7 @@ class Workout2ViewModel : ViewModel() {
 
     private fun getInstructionStepByStep()
     {
-        instructionSteps = InstructionAnalyzer.analyze(instructions.value!!)
+        instructionSteps = StringUlti.subInstructionsIntoList(instructions.value!!)
     }
 
 }

@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.eworkout.training.viewmodel.Workout1SharedViewModel" />
+
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/data_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/blue_linear"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/button"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="28.8dp"
+                android:layout_marginTop="57.6dp"
+                android:background="@drawable/btn_navigate_up_background"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/exercise_information_btn"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="28.8dp"
+                android:background="@drawable/white_arrow_right"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/button" />
+
+            <ImageView
+                android:id="@+id/background_imageview"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="28.8dp"
+                android:src="@drawable/jumping_rope"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/button"
+                app:layout_constraintTop_toBottomOf="@+id/button"
+                android:visibility="gone"/>
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/background_animationView"
+                android:layout_width="0dp"
+                android:layout_height="350dp"
+                app:lottie_autoPlay="true"
+                android:layout_marginEnd="28.8dp"
+                app:lottie_loop="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/button"
+                app:layout_constraintTop_toBottomOf="@+id/button" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/left_right_top_corner_background"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/guideline2"
+            app:layout_constraintVertical_bias="0.0">
+
+            <TextView
+                android:id="@+id/set_name_TextView"
+                style="@style/TextView5"
+                android:layout_marginTop="32dp"
+                android:text="@{viewModel.currentExercise.name}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/reps_textview"
+                style="@style/TextView9"
+                android:text="@{viewModel.currentExercise.reps}"
+                app:layout_constraintBottom_toTopOf="@+id/btn_middle"
+                app:layout_constraintEnd_toEndOf="@+id/btn_middle"
+                app:layout_constraintStart_toStartOf="@+id/btn_middle"
+                app:layout_constraintTop_toBottomOf="@+id/set_name_TextView" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_previous"
+                style="@style/Button4"
+                android:background="@drawable/btn_previous_training_background"
+                app:layout_constraintBottom_toBottomOf="@+id/btn_middle"
+                app:layout_constraintEnd_toStartOf="@+id/btn_middle"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/btn_middle" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_middle"
+                style="@style/Button6"
+                android:layout_marginBottom="40dp"
+                android:text="Done"
+                android:background="@drawable/blue_linear_button"
+                android:paddingStart="8dp"
+                android:paddingEnd="0dp"
+                android:drawableStart="@drawable/btn_check_training_background"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_next"
+                style="@style/Button4"
+                android:background="@drawable/btn_next_training_background"
+                app:layout_constraintBottom_toBottomOf="@+id/btn_middle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/btn_middle"
+                app:layout_constraintTop_toTopOf="@+id/btn_middle" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="414dp" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

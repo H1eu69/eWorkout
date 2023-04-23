@@ -5,7 +5,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.eworkout.training.viewmodel.Workout1ViewModel" />
+            type="com.example.eworkout.training.viewmodel.Workout1SharedViewModel" />
         <variable
             name="hideShimmerLayout"
             type="Boolean" />
@@ -35,6 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:isGone="@{hideDataLayout}"
+            android:background="@drawable/blue_linear"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -43,7 +44,6 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/blue_linear"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
