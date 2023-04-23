@@ -9,7 +9,7 @@
 
     <TextView
         android:id="@+id/textView_SetName"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,7 +22,7 @@
 
     <TextView
         android:id="@+id/textView_TotalExercises"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/textView_SetName"
         app:layout_constraintStart_toStartOf="parent"
@@ -34,7 +34,7 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/textView_SetName"
         app:layout_constraintStart_toEndOf="@id/textView_TotalExercises"
@@ -45,7 +45,7 @@
 
     <TextView
         android:id="@+id/texView_TotalTime"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/textView_SetName"
         app:layout_constraintStart_toEndOf="@id/textView"
@@ -64,6 +64,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.1"
         android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
         android:text="View More"
         style="@style/Button5"
         android:background="@drawable/radius_button"/>
@@ -76,13 +77,14 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/texView_TotalTime"
-        android:layout_margin="10dp"
+        android:layout_margin="5dp"
         android:background="@drawable/ellipse"/>
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/Set_imageView"
         android:layout_width="100dp"
         android:layout_height="130dp"
+        android:layout_margin="5dp"
         app:layout_constraintEnd_toEndOf="@id/background"
         app:layout_constraintTop_toTopOf="@id/background"
         app:layout_constraintBottom_toBottomOf="@id/background"

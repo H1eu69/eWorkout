@@ -80,9 +80,11 @@ class TrainingFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        watching()
         _viewModel.loadSets()
+        watching()
+
         observeViewModel()
+
     }
 
    private fun observeViewModel()
@@ -100,7 +102,7 @@ class TrainingFragment : Fragment() {
             }
             "LOADED" -> {
                 setupRecyclerView()
-                //hideLoading()
+                hideLoading()
             }
             "IMAGE_LOADED" -> {
                 notifyDataChange()
