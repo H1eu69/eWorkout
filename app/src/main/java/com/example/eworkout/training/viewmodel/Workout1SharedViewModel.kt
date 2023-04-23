@@ -18,6 +18,8 @@ class Workout1SharedViewModel : ViewModel() {
 
     val auth = Firebase.auth
 
+    var kcalConsumed = 0;
+
     val storageRef = Firebase.storage.reference
 
     val exercises = mutableListOf<Exercise>()
@@ -59,6 +61,7 @@ class Workout1SharedViewModel : ViewModel() {
     }
 
     fun getSetsFieldsById(id: String) {
+        exercises.clear()
         firestore.collection("Sets")
             .document(id)
             .get()
