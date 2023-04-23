@@ -36,8 +36,8 @@ class FragmentWorkoutDetail1 : Fragment() {
             mParam1 = it.getString(ARG_PARAM1)
             mParam2 = it.getString(ARG_PARAM2)
             setId = it.getString("set_id")
+            Log.d("test set id", setId.toString())
         }
-        Log.d("test view state", " create")
     }
 
     override fun onCreateView(
@@ -78,9 +78,15 @@ class FragmentWorkoutDetail1 : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initLoadingState()
         setOnClickListener()
         observeViewModel()
         setupRecyclerView()
+    }
+
+    private fun initLoadingState()
+    {
+        _viewModel.changeStateToLoading()
     }
 
     private fun setOnClickListener()
@@ -89,8 +95,8 @@ class FragmentWorkoutDetail1 : Fragment() {
             _viewModel.addNewSetTaken("1iXUMoTZF1MxrQ9ResPr")
             findNavController().navigate(R.id.action_workoutDetail1_to_fragmentWorkoutReady)
         }
-        binding.button.setOnClickListener {
-            findNavController().navigate(R.id.action_workoutDetail1_to_trainingFragment)
+        binding.backBtn.setOnClickListener {
+            findNavController().popBackStack()
         }
     }
 
@@ -105,7 +111,6 @@ class FragmentWorkoutDetail1 : Fragment() {
     {
         when(state.name){
             "LOADING" -> {
-                Log.d("hahohi", " LOADING")
                 showLoading()
                 _viewModel.getSetsFieldsById((setId!!))
             }
@@ -185,6 +190,5 @@ class FragmentWorkoutDetail1 : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         Log.d("test view state", " destroy view")
-        _viewModel.changeStateToLoaded()
     }
 }

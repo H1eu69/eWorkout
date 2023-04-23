@@ -49,7 +49,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/button"
+                    android:id="@+id/backBtn"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_marginStart="28.8dp"

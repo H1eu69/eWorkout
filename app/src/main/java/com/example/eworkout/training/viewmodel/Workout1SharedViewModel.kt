@@ -63,6 +63,7 @@ class Workout1SharedViewModel : ViewModel() {
             .document(id)
             .get()
             .addOnSuccessListener {
+                exercises.clear()
                 val numOfExercise = it.get("number_of_exercises")
 
                 val totalCalories = it.get("total_calories")
@@ -172,5 +173,9 @@ class Workout1SharedViewModel : ViewModel() {
 
     fun changeStateToLoaded(){
         _state.value = WorkoutDetail1State.LOADED
+    }
+
+    fun changeStateToLoading(){
+        _state.value = WorkoutDetail1State.LOADING
     }
 }

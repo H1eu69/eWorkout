@@ -87,7 +87,9 @@
                 app:exitAnim="@android:anim/slide_out_right" />
             <action
                 android:id="@+id/action_workoutDetail1_to_trainingFragment"
-                app:destination="@id/trainingFragment" />
+                app:destination="@id/trainingFragment"
+                app:popUpTo="@id/trainingFragment"
+                app:popUpToInclusive="true" />
         </fragment>
         <fragment
             android:id="@+id/trainingFragment"
