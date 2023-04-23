@@ -49,11 +49,11 @@ class TrainingViewModel: ViewModel() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun indicatorWatching(id: String) {
-        firestore.collection("Sets")
-            .document("CkU0yD2WlQweVEqqjupN")
+        firestore.collection("Set_Taken")
+            .document(id)
             .get().addOnSuccessListener { data ->
                 numberOfCalories += data.get("total_calories") as Long
-                workoutHours += data.get("total_time") as Long
+                workoutHours += data.get("time") as Long
             }
     }
 

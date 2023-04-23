@@ -82,9 +82,7 @@ class TrainingFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         _viewModel.loadSets()
         watching()
-
         observeViewModel()
-
     }
 
    private fun observeViewModel()
@@ -139,7 +137,7 @@ class TrainingFragment : Fragment() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun watching(){
-        _viewModel.indicatorWatching("CkU0yD2WlQweVEqqjupN")
+        _viewModel.indicatorWatching("ev89TFkqna9mXcRQApy1")
         var num = _viewModel.numberOfCalories
         var hour = _viewModel.workoutHours/60
         var min = _viewModel.workoutHours%60
