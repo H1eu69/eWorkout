@@ -11,6 +11,7 @@ import com.example.eworkout.authentication.signup.model.SignupState
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
 
@@ -23,6 +24,7 @@ class LoginViewModel: ViewModel() {
     val loginState: LiveData<LoginState> get() = _loginState
 
     private val auth: FirebaseAuth = Firebase.auth
+    private val firestore = Firebase.firestore
 
     suspend fun signInWithEmailAndPassword() {
         try {
@@ -37,11 +39,38 @@ class LoginViewModel: ViewModel() {
     suspend fun signInWithCredential(credential: AuthCredential)
     {
         try{
-            if(auth.signInWithCredential(credential).await().user != null)
+            if(auth.signInWithCredential(credential).await().user != null){
+                createInFireStore(false)
                 _loginState.postValue(LoginState.SUCCESS)
+            }
         }
         catch (ex: Exception) {
             Log.d(ContentValues.TAG, ex.toString())
+        }
+    }
+    suspend fun signInAnonymously()
+    {
+        try{
+            if(auth.signInAnonymously().await().user != null) {
+                createInFireStore(true)
+                _loginState.postValue(LoginState.SIGN_IN_ANONYMOUS_SUCCESS)
+            }
+        }
+        catch (ex: Exception) {
+            Log.d(ContentValues.TAG, ex.toString())
+        }
+    }
+
+    private fun createInFireStore(isGuest : Boolean)
+    {
+        val data = mutableMapOf(
+            "email" to auth.currentUser?.email,
+            "is_guest" to isGuest,
+            "first_name" to "",
+            "last_name" to ""
+        )
+        auth.currentUser?.let {
+            firestore.collection("Users").document(it.uid).set(data)
         }
     }
     fun validateText(): Boolean

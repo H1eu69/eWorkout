@@ -116,7 +116,9 @@ class LoginFragment : Fragment() {
         }
 
         binding.textViewAuthAsGuest.setOnClickListener {
-            findNavController().navigate(R.id.action_loginFragment_to_BMIEvaluation)
+            lifecycleScope.launch(Dispatchers.IO){
+                _viewModel.signInAnonymously()
+            }
         }
     }
     private fun observerViewModel()
@@ -157,6 +159,8 @@ class LoginFragment : Fragment() {
             "SUCCESS" -> {
                 findNavController().navigate(R.id.action_loginFragment_to_trainingFragment)
             }
+            "SIGN_IN_ANONYMOUS_SUCCESS" -> findNavController().navigate(R.id.action_loginFragment_to_BMIEvaluation)
+
         }
     }
     private fun setupGoogleSignIn()

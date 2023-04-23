@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.eworkout.R
+import com.example.eworkout.authentication.bmi.model.BMIState
 import com.example.eworkout.authentication.bmi.viewmodel.BMIViewModel
 import com.example.eworkout.authentication.signup.viewmodel.SignupViewModel
 import com.example.eworkout.databinding.FragmentBMIEvaluationBinding
@@ -58,13 +60,56 @@ class BMIEvaluation : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        observeViewModel()
         setListener()
+    }
+
+    private fun observeViewModel()
+    {
+        _viewModel.state.observe(viewLifecycleOwner)
+        {
+            handleState(it)
+        }
+    }
+
+    private fun handleState(bmiState: BMIState) {
+        when(bmiState.name)
+        {
+            "SIGNIN_SUCCESS" -> {
+                findNavController().navigate(R.id.action_BMIEvaluation_to_trainingFragment)
+            }
+            "MISSING_AGE" -> {
+                binding.editTextAge.error = "Please input this"
+                binding.editTextAge.isErrorEnabled = true
+            }
+            "MISSING_WEIGHT" -> {
+                binding.editTextWeight.error = "Please input this"
+                binding.editTextWeight.isErrorEnabled = true
+            }
+            "MISSING_HEIGHT" -> {
+                binding.editTextHeight.error = "Please input this"
+                binding.editTextHeight.isErrorEnabled = true
+            }
+            "NO_AGE_ERROR" -> {
+                binding.editTextAge.isErrorEnabled = false
+            }
+            "NO_WEIGHT_ERROR" -> {
+                binding.editTextWeight.isErrorEnabled = false
+            }
+            "NO_HEIGHT_ERROR" -> {
+                binding.editTextHeight.isErrorEnabled = false
+            }
+        }
     }
 
     private fun setListener()
     {
         binding.textViewSkip.setOnClickListener {
-
+            _viewModel.skipWithDefaultValue()
+        }
+        binding.btnNext.setOnClickListener {
+            if(_viewModel.validateText())
+                _viewModel.signInIfNotSignInPrevious()
         }
     }
 }
