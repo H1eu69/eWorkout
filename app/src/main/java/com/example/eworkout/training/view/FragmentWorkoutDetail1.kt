@@ -89,6 +89,9 @@ class FragmentWorkoutDetail1 : Fragment() {
             _viewModel.addNewSetTaken("1iXUMoTZF1MxrQ9ResPr")
             findNavController().navigate(R.id.action_workoutDetail1_to_fragmentWorkoutReady)
         }
+        binding.button.setOnClickListener {
+            findNavController().navigate(R.id.action_workoutDetail1_to_trainingFragment)
+        }
     }
 
     private fun observeViewModel()
@@ -147,7 +150,7 @@ class FragmentWorkoutDetail1 : Fragment() {
         binding.recyclerView.adapter?.notifyDataSetChanged()
     }
 
-    /*override fun onStart() {
+    override fun onStart() {
         super.onStart()
         Log.d("test view state", " start")
 
@@ -182,6 +185,6 @@ class FragmentWorkoutDetail1 : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         Log.d("test view state", " destroy view")
-        //_viewModel.changeStateToLoaded()
-    }*/
+        _viewModel.changeStateToLoaded()
+    }
 }

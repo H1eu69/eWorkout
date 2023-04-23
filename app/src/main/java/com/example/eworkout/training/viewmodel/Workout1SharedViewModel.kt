@@ -170,4 +170,7 @@ class Workout1SharedViewModel : ViewModel() {
         return currentExerciseIndex == 0
     }
 
+    fun changeStateToLoaded(){
+        _state.value = WorkoutDetail1State.LOADED
+    }
 }

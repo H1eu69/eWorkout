@@ -153,6 +153,20 @@ class TrainingFragment : Fragment() {
     {
         binding.recyclerView.adapter?.notifyDataSetChanged()
     }
+    /*override fun onStop() {
+        super.onStop()
+        setupRecyclerView()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        setupRecyclerView()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        setupRecyclerView()
+    }*/
 }
 
 
