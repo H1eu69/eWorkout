@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.eworkout.authentication.bmi.viewmodel.BMIViewModel"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/app_bg"
+        tools:context=".authentication.bmi.view.BMIEvaluation">
+
+        <TextView
+            android:id="@+id/textView_skip"
+            style="@style/TextView3"
+            android:text="Skip"
+            android:layout_marginTop="48dp"
+            android:layout_marginEnd="28dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView_let_us_know_you_better"
+            style="@style/TextView12"
+            android:layout_marginTop="40dp"
+            android:text="LET US KNOW YOU BETTER"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView_skip" />
+
+        <TextView
+            android:id="@+id/textView_description"
+            style="@style/TextView2"
+            android:layout_width="0dp"
+            android:textAlignment="center"
+            android:layout_marginTop="32dp"
+            android:text="First let us know your better to boost workout result"
+            app:layout_constraintEnd_toEndOf="@+id/textView_let_us_know_you_better"
+            app:layout_constraintStart_toStartOf="@+id/textView_let_us_know_you_better"
+            app:layout_constraintTop_toBottomOf="@+id/textView_let_us_know_you_better" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/editText_age"
+            style="@style/EditText1"
+            android:theme="@style/ThemeEditText1"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView_description">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/age"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:afterTextChanged="@{() -> viewModel.validateAge()}"
+                android:hint="Your age"
+                app:textByNumber="@={viewModel.mainModel.age}" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/editText_weight"
+            style="@style/EditText1"
+            android:theme="@style/ThemeEditText1"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editText_age">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/weight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:afterTextChanged="@{() -> viewModel.validateWeight()}"
+                android:hint="Your weight (kg)"
+                app:textByNumber="@={viewModel.mainModel.weight}" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/editText_height"
+            style="@style/EditText1"
+            android:layout_marginTop="20dp"
+            android:theme="@style/ThemeEditText1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editText_weight">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/height"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:afterTextChanged="@{() -> viewModel.validateHeight()}"
+                android:hint="Your height (cm)"
+                app:textByNumber="@={viewModel.mainModel.height}" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnNext"
+            style="@style/Button1"
+            android:background="@drawable/button1"
+            android:text="@string/next"
+            app:layout_constraintVertical_bias=".6"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editText_height" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

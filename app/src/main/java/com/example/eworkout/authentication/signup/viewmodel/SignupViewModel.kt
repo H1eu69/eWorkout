@@ -1,4 +1,4 @@
-package com.example.eworkout.signup.viewmodel
+package com.example.eworkout.authentication.signup.viewmodel
 
 import android.content.ContentValues.TAG
 import android.util.Log
@@ -6,10 +6,11 @@ import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.eworkout.signup.model.SignupState
+import com.example.eworkout.authentication.signup.model.SignupState
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
 
@@ -29,16 +30,34 @@ class SignupViewModel : ViewModel() {
 
     private val auth: FirebaseAuth = Firebase.auth
 
+    private val firestore = Firebase.firestore
     suspend fun createUserWithEmailAndPassword() {
         try {
             if(auth.createUserWithEmailAndPassword(email.value.toString(), password.value.toString())
                 .await().user != null)
+            {
                 _signupState.postValue(SignupState.SUCCESS)
+                createInFireStore()
+            }
         } catch (ex: Exception) {
             Log.d(TAG, ex.toString())
             _signupState.postValue(SignupState.ERROR_USED_EMAIL)
         }
     }
+
+    private fun createInFireStore()
+    {
+        val data = mutableMapOf(
+            "email" to auth.currentUser?.email,
+            "is_guest" to false,
+            "first_name" to firstName.value,
+            "last_name" to lastName.value
+        )
+        auth.currentUser?.let {
+            firestore.collection("Users").document(it.uid).set(data)
+        }
+    }
+
 
     suspend fun signInWithCredential(credential: AuthCredential)
     {

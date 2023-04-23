@@ -1,4 +1,4 @@
-package com.example.eworkout.login.model
+package com.example.eworkout.authentication.login.model
 
 enum class LoginState {
     SUCCESS,
@@ -9,5 +9,6 @@ enum class LoginState {
     ERROR_PASSWORD_LENGTH,
     ERROR_WRONG_PASSWORD,
     NO_ERROR_EMAIL,
-    NO_ERROR_PASSWORD
+    NO_ERROR_PASSWORD,
+    SIGN_IN_ANONYMOUS_SUCCESS
 }

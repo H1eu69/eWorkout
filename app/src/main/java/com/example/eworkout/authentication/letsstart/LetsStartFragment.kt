@@ -1,4 +1,4 @@
-package com.example.eworkout.letsstart
+package com.example.eworkout.authentication.letsstart
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.example.eworkout.login.viewmodel.LoginViewModel
+import com.example.eworkout.authentication.login.viewmodel.LoginViewModel
 import com.example.eworkout.R
 import com.example.eworkout.databinding.FragmentLetsStartBinding
 import com.example.eworkout.databinding.FragmentLoginBinding

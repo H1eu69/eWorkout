@@ -154,6 +154,13 @@ class FragmentWorkoutStart1 : Fragment() {
             }
         }
 
+        binding.exerciseInformationBtn.setOnClickListener {
+            val bundle = Bundle().apply {
+                putString("exercise_id", _viewModel.getCurrentExercise().id)
+            }
+            findNavController().navigate(R.id.action_fragmentWorkoutStart1_to_workoutDetail2, bundle)
+        }
+
         binding.backgroundAnimationView.setFailureListener {
             binding.backgroundImageview.visibility = View.VISIBLE
             binding.backgroundAnimationView.visibility = View.GONE

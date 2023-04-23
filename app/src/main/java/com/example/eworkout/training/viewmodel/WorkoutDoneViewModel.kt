@@ -28,7 +28,7 @@ class WorkoutDoneViewModel : ViewModel() {
         firestore.collection("Set_Taken")
             .document(setTakenID)
             .get().addOnSuccessListener {
-                val calo = it.getString("total_calories").toString()
+                val calo = it.get("total_calories").toString()
                 val milliseconds = (it.getDate("end_time")?.time!! - (it.getDate("start_time")?.time!!))
 
                 val simpledateformat = SimpleDateFormat("mm:ss")
@@ -47,7 +47,7 @@ class WorkoutDoneViewModel : ViewModel() {
     private fun getExercisesQuantity(set_id: String) {
         firestore.collection("Sets").document(set_id)
             .get().addOnSuccessListener {
-                model.exerciseQuantity = it.getString("number_of_exercises").toString()
+                model.exerciseQuantity = it.get("number_of_exercises").toString()
                 modelLiveData.value = model
                 _state.value = WorkoutDoneState.LOADED
             }

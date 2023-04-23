@@ -1,6 +1,6 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
-        <variable name="viewModel" type="com.example.eworkout.signup.viewmodel.SignupViewModel"/>
+        <variable name="viewModel" type="com.example.eworkout.authentication.signup.viewmodel.SignupViewModel"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/app_bg"
-        tools:context="com.example.eworkout.signup.view.SignupFragment">
+        tools:context="com.example.eworkout.authentication.signup.view.SignupFragment">
 
         <ImageView
             android:id="@+id/imageView"
@@ -199,18 +199,18 @@
             android:fontFamily="@font/montserrat"
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
+            android:layout_marginBottom="16dp"
             android:text="@string/already_have_account"
             android:textSize="12sp"
             android:textColor="@color/line_color"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/textView4"
+            app:layout_constraintEnd_toStartOf="@+id/textView_login_here"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnGoogleSignIn" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/textView_login_here"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat"

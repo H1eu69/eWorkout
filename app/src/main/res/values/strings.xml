@@ -4,7 +4,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="explore_the_app">Explore the App</string>
     <string name="lets_start">Lets Start</string>
-    <string name="app_description">SFDFDGDSGDSGDSGDSADADASDASDDSGSDNGJFSNGFSGIHDSBFIHDSBFHDSBDSDSIDSHIDBFIHBDFHIDSHB</string>
+    <string name="app_description">eWorkout is an application that can be downloaded on any mobile device and used anywhere to get fit. It is designed to help with exercise, other types of physical training and other ways to get fit.</string>
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
     <string name="email">Email</string>
@@ -16,7 +16,7 @@
     <string name="continue_with_google">Continue with Google</string>
     <string name="already_have_account">Already have account?</string>
     <string name="login_here">Login here</string>
-    <string name="fotgot_password">For got Password?</string>
+    <string name="anonymous_auth">Or use app as guest</string>
     <string name="not_register_yet">Not register yet?</string>
     <string name="create_account">Create Account</string>
     <string name="ERROR_FIRST_NAME_EMPTY">First name can not be empty!</string>
