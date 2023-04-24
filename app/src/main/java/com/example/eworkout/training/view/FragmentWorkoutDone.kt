@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import com.example.eworkout.R
 import com.example.eworkout.databinding.FragmentWorkoutDoneBinding
+import com.example.eworkout.training.model.UpdateState
 import com.example.eworkout.training.model.WorkoutDoneState
 import com.example.eworkout.training.viewmodel.SharedViewModel
 import com.example.eworkout.training.viewmodel.WorkoutDoneViewModel
@@ -93,13 +94,30 @@ class FragmentWorkoutDone : Fragment() {
     private fun onClick()
     {
         _sharedViewModel.resetIndexAndCalories()
+        _sharedViewModel.resetUpdateState()
         findNavController().navigate(R.id.action_fragmentWorkoutDone_to_trainingFragment)
     }
 
     private fun observeViewModel()
     {
         _viewModel.state.observe(viewLifecycleOwner){
-            handleState(it)
+            //handleState(it)
+        }
+        _sharedViewModel.updateState.observe(viewLifecycleOwner)
+        {
+            handleUpdateState(it)
+        }
+    }
+
+    private fun handleUpdateState(updateState: UpdateState) {
+        when(updateState.name){
+            "RUNNING" -> {
+                showLoading()
+                _viewModel.getModelData(setTakenID!!)
+            }
+            "DONE" -> {
+                hideLoading()
+            }
         }
     }
 

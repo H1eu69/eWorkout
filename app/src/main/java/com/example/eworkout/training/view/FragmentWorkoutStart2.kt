@@ -124,8 +124,7 @@ class FragmentWorkoutStart2 : Fragment() {
         else{
             val bundle = Bundle()
             bundle.putString("set_taken_id", _sharedViewModel.setTakenID)
-            _sharedViewModel.calculateKcal((SystemClock.elapsedRealtime() - timer.base) / 1000)
-            _sharedViewModel.updateSetTaken()
+            _sharedViewModel.calculateAndUpdate((SystemClock.elapsedRealtime() - timer.base) / 1000)
             findNavController().navigate(R.id.action_fragmentWorkoutStart2_to_fragmentWorkoutDone, bundle)
         }
     }

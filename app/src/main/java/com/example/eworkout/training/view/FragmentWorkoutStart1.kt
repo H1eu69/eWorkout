@@ -121,8 +121,7 @@ class FragmentWorkoutStart1 : Fragment() {
                 }
 
                 else{
-                    _viewModel.calculateKcal((SystemClock.elapsedRealtime() - timer.base) / 1000)
-                    _viewModel.updateSetTaken()
+                    _viewModel.calculateAndUpdate((SystemClock.elapsedRealtime() - timer.base) / 1000)
                     findNavController().navigate(R.id.action_fragmentWorkoutStart1_to_fragmentWorkoutDone)
                 }
             }
@@ -161,8 +160,7 @@ class FragmentWorkoutStart1 : Fragment() {
                 findNavController().navigate(R.id.action_fragmentWorkoutStart1_to_fragmentWorkoutRest)
             }
             else{
-                _viewModel.calculateKcal((SystemClock.elapsedRealtime() - timer.base) / 1000)
-                _viewModel.updateSetTaken()
+                _viewModel.calculateAndUpdate((SystemClock.elapsedRealtime() - timer.base) / 1000)
                 findNavController().navigate(R.id.action_fragmentWorkoutStart1_to_fragmentWorkoutDone)
             }
         }

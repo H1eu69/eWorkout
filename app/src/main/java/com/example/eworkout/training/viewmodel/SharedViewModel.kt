@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.eworkout.training.model.Exercise
+import com.example.eworkout.training.model.UpdateState
 import com.example.eworkout.training.model.WorkoutDetail1State
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.ktx.auth
@@ -28,6 +29,9 @@ class SharedViewModel : ViewModel() {
 
     private var currentWeight = 0.0
 
+    private val _updateState : MutableLiveData<UpdateState> = MutableLiveData(UpdateState.RUNNING)
+    val updateState : LiveData<UpdateState> get() = _updateState
+
     fun calculateKcal(sec: Long)
     {
         firestore.collection("Users").document(auth.currentUser!!.uid)
@@ -35,7 +39,18 @@ class SharedViewModel : ViewModel() {
                 currentWeight = it.getDouble("current_weight")!!
 
                 kcalConsumed += (((getCurrentExercise().MET * currentWeight * 3.5) / 200) / 60) * sec
-                updateTotalCalories()
+            }
+    }
+
+    fun calculateAndUpdate(sec: Long)
+    {
+        firestore.collection("Users").document(auth.currentUser!!.uid)
+            .get().addOnSuccessListener {
+                currentWeight = it.getDouble("current_weight")!!
+
+                kcalConsumed += (((getCurrentExercise().MET * currentWeight * 3.5) / 200) / 60) * sec
+
+                updateSetTaken()
             }
     }
     fun addNewSetTaken(setId: String)
@@ -50,28 +65,27 @@ class SharedViewModel : ViewModel() {
             setTakenID = it.id
         }
     }
-    private fun updateTotalCalories()
-    {
-        val data = hashMapOf<String, Any>(
-            "total_calories" to Math.round(kcalConsumed * 100) / 100.0
-        )
-        firestore.collection("Set_Taken").document(setTakenID)
-            .update(data)
-    }
     fun updateSetTaken()
     {
         val data = hashMapOf<String, Any>(
             "end_time" to Timestamp.now(),
+            "total_calories" to Math.round(kcalConsumed * 100) / 100.0
         )
         firestore.collection("Set_Taken").document(setTakenID)
             .update(data)
+            .addOnSuccessListener {
+                _updateState.postValue(UpdateState.DONE)
+            }
+    }
+
+    fun resetUpdateState()
+    {
+        _updateState.value = UpdateState.RUNNING
     }
 
     fun resetIndexAndCalories()
     {
-        Log.d("reset", currentExerciseIndex.toString())
         currentExerciseIndex = 0
-        Log.d("reset", currentExerciseIndex.toString())
         kcalConsumed = 0.0
     }
 
@@ -82,8 +96,8 @@ class SharedViewModel : ViewModel() {
             .get()
             .addOnSuccessListener {
                 exercises.clear()
-
                 findAllSetInformationBySetId(id)
+
                 Log.d("Workout Detail 1", it.getString("name").toString())
             }
             .addOnFailureListener {
