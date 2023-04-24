@@ -15,9 +15,9 @@ import androidx.navigation.navGraphViewModels
 import com.example.eworkout.R
 import com.example.eworkout.databinding.FragmentWorkoutStart1Binding
 import com.example.eworkout.training.util.StringUlti
-import com.example.eworkout.training.viewmodel.Workout1SharedViewModel
+import com.example.eworkout.training.viewmodel.SharedViewModel
+import com.example.eworkout.training.viewmodel.Workout1ViewModel
 import com.orbitalsonic.sonictimer.SonicCountDownTimer
-import java.io.FileNotFoundException
 
 /**
  * A simple [Fragment] subclass.
@@ -30,7 +30,7 @@ class FragmentWorkoutStart1 : Fragment() {
     private var param2: String? = null
     private var _binding: FragmentWorkoutStart1Binding? = null
     val binding get() = _binding!!
-    private val _viewModel: Workout1SharedViewModel by navGraphViewModels(R.id.training_nav)
+    private val _viewModel: SharedViewModel by navGraphViewModels(R.id.training_nav)
     private lateinit var countDownTimer : SonicCountDownTimer
     private lateinit var animation: ObjectAnimator
     private var isPaused = false

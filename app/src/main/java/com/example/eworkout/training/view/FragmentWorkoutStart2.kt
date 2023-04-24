@@ -1,6 +1,7 @@
 package com.example.eworkout.training.view
 
 import android.os.Bundle
+import android.os.SharedMemory
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,8 +10,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import com.example.eworkout.R
 import com.example.eworkout.databinding.FragmentWorkoutStart2Binding
-import com.example.eworkout.training.viewmodel.Workout1SharedViewModel
-import java.io.FileNotFoundException
+import com.example.eworkout.training.viewmodel.SharedViewModel
+import com.example.eworkout.training.viewmodel.Workout1ViewModel
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -28,7 +29,7 @@ class FragmentWorkoutStart2 : Fragment() {
     private var param2: String? = null
     private var _binding: FragmentWorkoutStart2Binding? = null
     val binding get() = _binding!!
-    private val _viewModel: Workout1SharedViewModel by navGraphViewModels(R.id.training_nav)
+    private val _viewModel: SharedViewModel by navGraphViewModels(R.id.training_nav)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

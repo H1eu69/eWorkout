@@ -1,20 +1,13 @@
 package com.example.eworkout.training.view
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.navigation.navGraphViewModels
-import com.example.eworkout.R
-import com.example.eworkout.databinding.FragmentWorkoutDetail1Binding
 import com.example.eworkout.databinding.FragmentWorkoutDoneBinding
-import com.example.eworkout.databinding.FragmentWorkoutStart1Binding
-import com.example.eworkout.training.model.WorkoutDetail1State
 import com.example.eworkout.training.model.WorkoutDoneState
-import com.example.eworkout.training.viewmodel.Workout1SharedViewModel
 import com.example.eworkout.training.viewmodel.WorkoutDoneViewModel
 
 // TODO: Rename parameter arguments, choose names that match

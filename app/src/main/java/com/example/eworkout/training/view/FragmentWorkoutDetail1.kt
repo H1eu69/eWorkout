@@ -7,14 +7,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import com.example.eworkout.R
 import com.example.eworkout.databinding.FragmentWorkoutDetail1Binding
 import com.example.eworkout.training.adapter.ExercisesAdapter
 import com.example.eworkout.training.listener.ExercisesOnClickListener
-import com.example.eworkout.training.viewmodel.Workout1SharedViewModel
+import com.example.eworkout.training.viewmodel.Workout1ViewModel
 import com.example.eworkout.training.model.WorkoutDetail1State
+import com.example.eworkout.training.viewmodel.SharedViewModel
 
 /**
  * A simple [Fragment] subclass.
@@ -28,7 +30,8 @@ class FragmentWorkoutDetail1 : Fragment() {
     private var setId:String? = null
     private var _binding: FragmentWorkoutDetail1Binding? = null
     val binding get() = _binding!!
-    private val _viewModel: Workout1SharedViewModel by navGraphViewModels(R.id.training_nav)
+    private val _viewModel: Workout1ViewModel by viewModels()
+    private val _sharedViewModel: SharedViewModel by navGraphViewModels(R.id.training_nav)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,21 +81,15 @@ class FragmentWorkoutDetail1 : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initLoadingState()
         setOnClickListener()
         observeViewModel()
         setupRecyclerView()
     }
 
-    private fun initLoadingState()
-    {
-        _viewModel.changeStateToLoading()
-    }
-
     private fun setOnClickListener()
     {
         binding.btnStart.setOnClickListener {
-            _viewModel.addNewSetTaken("1iXUMoTZF1MxrQ9ResPr")
+            _sharedViewModel.addNewSetTaken("1iXUMoTZF1MxrQ9ResPr")
             findNavController().navigate(R.id.action_workoutDetail1_to_fragmentWorkoutReady)
         }
         binding.backBtn.setOnClickListener {
@@ -113,6 +110,7 @@ class FragmentWorkoutDetail1 : Fragment() {
             "LOADING" -> {
                 showLoading()
                 _viewModel.getSetsFieldsById((setId!!))
+                _sharedViewModel.getSetsFieldsById((setId!!))
             }
             "LOADED" -> {
                 Log.d("hahohi", " LOADED")

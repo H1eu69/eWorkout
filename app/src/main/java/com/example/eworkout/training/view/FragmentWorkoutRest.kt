@@ -3,7 +3,6 @@ package com.example.eworkout.training.view
 import android.animation.ObjectAnimator
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,8 +12,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import com.example.eworkout.R
 import com.example.eworkout.databinding.FragmentWorkoutRestBinding
-import com.example.eworkout.training.viewmodel.Workout1SharedViewModel
-import com.orbitalsonic.sonictimer.SonicCountDownTimer
+import com.example.eworkout.training.viewmodel.SharedViewModel
+import com.example.eworkout.training.viewmodel.Workout1ViewModel
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -32,7 +31,7 @@ class FragmentWorkoutRest : Fragment() {
     private var param2: String? = null
     private var _binding: FragmentWorkoutRestBinding? = null
     val binding get() = _binding!!
-    private val _viewModel: Workout1SharedViewModel by navGraphViewModels(R.id.training_nav)
+    private val _viewModel: SharedViewModel by navGraphViewModels(R.id.training_nav)
     private lateinit var countDownTimer : CountDownTimer
     private lateinit var animation: ObjectAnimator
     private var timeRemaining = 0L

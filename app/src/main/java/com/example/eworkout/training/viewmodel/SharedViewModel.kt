@@ -5,33 +5,26 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.eworkout.training.model.Exercise
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 import com.example.eworkout.training.model.WorkoutDetail1State
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FieldPath
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 
-class Workout1SharedViewModel : ViewModel() {
-    val firestore = Firebase.firestore
+class SharedViewModel : ViewModel() {
+    private val firestore = Firebase.firestore
 
-    val auth = Firebase.auth
+    private val auth = Firebase.auth
 
-    var kcalConsumed = 0;
+    private var kcalConsumed = 0;
 
-    val storageRef = Firebase.storage.reference
+    private val storageRef = Firebase.storage.reference
 
-    val exercises = mutableListOf<Exercise>()
+    private val exercises = mutableListOf<Exercise>()
 
     lateinit var setTakenID: String
-
-    val setsName: MutableLiveData<String> = MutableLiveData()
-
-    val setsInformation: MutableLiveData<String> = MutableLiveData()
-
-    private val _state : MutableLiveData<WorkoutDetail1State> = MutableLiveData(WorkoutDetail1State.LOADING)
-    val state : LiveData<WorkoutDetail1State> get() = _state
 
     private var currentExerciseIndex = 0
 
@@ -67,13 +60,6 @@ class Workout1SharedViewModel : ViewModel() {
             .get()
             .addOnSuccessListener {
                 exercises.clear()
-                val numOfExercise = it.get("number_of_exercises")
-
-                val totalCalories = it.get("total_calories")
-
-                setsName.value = it.getString("name").toString()
-
-                setsInformation.value = "$numOfExercise Exercise | $totalCalories Calories Burn"
 
                 findAllSetInformationBySetId(id)
                 Log.d("Workout Detail 1", it.getString("name").toString())
@@ -113,20 +99,8 @@ class Workout1SharedViewModel : ViewModel() {
                         doc.get("instruction").toString(),
                         doc.get("animation_url").toString())
                     exercises.add(exercise)
-                    getUriImageByName(exercise)
                 }
-                _state.value = WorkoutDetail1State.LOADED
                 Log.d("Workout Detail 1","LOADED")
-            }
-    }
-
-    private fun getUriImageByName(exercise: Exercise)
-    {
-        val path = "images/" + exercise.name + ".jpg"
-        storageRef.child(path)
-            .downloadUrl.addOnSuccessListener {
-                exercise.image = it.toString()
-                _state.value = WorkoutDetail1State.IMAGE_LOADED
             }
     }
 
@@ -153,16 +127,6 @@ class Workout1SharedViewModel : ViewModel() {
     fun getCurrentExercise(): Exercise {
         return exercises[currentExerciseIndex]
     }
-    fun getCurrentExerciseAndIncreaseIndex(): Exercise
-    {
-        val current = exercises[currentExerciseIndex]
-        increaseCurrentExerciseIndex()
-        return current
-    }
-
-    fun getNextExercise(): Exercise{
-        return exercises[currentExerciseIndex + 1]
-    }
 
     fun isLastExercise(): Boolean
     {
@@ -174,11 +138,4 @@ class Workout1SharedViewModel : ViewModel() {
         return currentExerciseIndex == 0
     }
 
-    fun changeStateToLoaded(){
-        _state.value = WorkoutDetail1State.LOADED
-    }
-
-    fun changeStateToLoading(){
-        _state.value = WorkoutDetail1State.LOADING
-    }
 }
