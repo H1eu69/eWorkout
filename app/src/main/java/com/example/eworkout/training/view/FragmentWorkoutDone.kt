@@ -94,15 +94,14 @@ class FragmentWorkoutDone : Fragment() {
     private fun onClick()
     {
         _sharedViewModel.resetIndexAndCalories()
-        _sharedViewModel.resetUpdateState()
         findNavController().navigate(R.id.action_fragmentWorkoutDone_to_trainingFragment)
     }
 
     private fun observeViewModel()
     {
-        _viewModel.state.observe(viewLifecycleOwner){
-            //handleState(it)
-        }
+        /*_viewModel.state.observe(viewLifecycleOwner){
+            handleState(it)
+        }*/
         _sharedViewModel.updateState.observe(viewLifecycleOwner)
         {
             handleUpdateState(it)
