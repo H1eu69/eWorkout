@@ -20,8 +20,6 @@ class SharedViewModel : ViewModel() {
 
     private var kcalConsumed = 0.0;
 
-    private val storageRef = Firebase.storage.reference
-
     private val exercises = mutableListOf<Exercise>()
 
     lateinit var setTakenID: String
@@ -58,7 +56,7 @@ class SharedViewModel : ViewModel() {
     private fun updateTotalCalories()
     {
         val data = hashMapOf<String, Any>(
-            "total_calories" to kcalConsumed
+            "total_calories" to Math.round(kcalConsumed * 100) / 100.0
         )
         firestore.collection("Set_Taken").document(setTakenID)
             .update(data)
@@ -67,10 +65,15 @@ class SharedViewModel : ViewModel() {
     {
         val data = hashMapOf<String, Any>(
             "end_time" to Timestamp.now(),
-            "total_calories" to kcalConsumed
         )
         firestore.collection("Set_Taken").document(setTakenID)
             .update(data)
+        resetIndex()
+    }
+
+    private fun resetIndex()
+    {
+        currentExerciseIndex = 0
     }
 
     fun getSetsFieldsById(id: String) {

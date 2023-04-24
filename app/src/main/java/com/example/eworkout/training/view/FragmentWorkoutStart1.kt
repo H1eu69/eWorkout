@@ -71,8 +71,10 @@ class FragmentWorkoutStart1 : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         var timeToCount = (StringUlti.removeRepsPostfix(_viewModel.getCurrentExercise().reps)).toLong()
         timeToCount *= 1000
+
         setAnimation()
 
         startProgressAnimation(timeToCount)
@@ -155,10 +157,12 @@ class FragmentWorkoutStart1 : Fragment() {
         }
         binding.btnNext.setOnClickListener {
             if(_viewModel.increaseCurrentExerciseIndex())
+            {
+                _viewModel.calculateKcal((SystemClock.elapsedRealtime() - timer.base) / 1000)
                 findNavController().navigate(R.id.action_fragmentWorkoutStart1_to_fragmentWorkoutRest)
+            }
             else{
-                val bundle = Bundle()
-                bundle.putString("set_taken_id", _viewModel.setTakenID)
+                _viewModel.calculateKcal((SystemClock.elapsedRealtime() - timer.base) / 1000)
                 _viewModel.updateSetTaken()
                 findNavController().navigate(R.id.action_fragmentWorkoutStart1_to_fragmentWorkoutDone)
             }

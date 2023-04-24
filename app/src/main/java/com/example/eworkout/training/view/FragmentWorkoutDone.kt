@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.example.eworkout.R
 import com.example.eworkout.databinding.FragmentWorkoutDoneBinding
 import com.example.eworkout.training.model.WorkoutDoneState
 import com.example.eworkout.training.viewmodel.WorkoutDoneViewModel
@@ -70,7 +72,18 @@ class FragmentWorkoutDone : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setListener()
         observeViewModel()
+    }
+
+    private fun setListener()
+    {
+        binding.backBtn.setOnClickListener {
+            findNavController().navigate(R.id.action_fragmentWorkoutDone_to_trainingFragment)
+        }
+        binding.btnNext.setOnClickListener {
+            findNavController().navigate(R.id.action_fragmentWorkoutDone_to_trainingFragment)
+        }
     }
 
     private fun observeViewModel()
