@@ -81,7 +81,8 @@ class Workout1ViewModel : ViewModel() {
                         doc.get("description").toString(),
                         doc.get("calories").toString(),
                         doc.get("instruction").toString(),
-                        doc.get("animation_url").toString())
+                        doc.get("animation_url").toString(),
+                        doc.getDouble("MET")!!)
                     exercises.add(exercise)
                     getUriImageByName(exercise)
                 }

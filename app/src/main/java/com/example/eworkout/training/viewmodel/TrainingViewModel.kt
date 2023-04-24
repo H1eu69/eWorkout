@@ -34,8 +34,8 @@ class TrainingViewModel: ViewModel() {
         firestore.collection("Set_Taken")
             .document(id)
             .get().addOnSuccessListener { data ->
-                numberOfCalories += data.get("total_calories") as Long
-                workoutHours += data.get("time") as Long
+//                numberOfCalories += data.get("total_calories") as Long
+                //workoutHours += data.get("time") as Long
             }
     }
 

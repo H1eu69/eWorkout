@@ -18,7 +18,7 @@ class SharedViewModel : ViewModel() {
 
     private val auth = Firebase.auth
 
-    private var kcalConsumed = 0;
+    private var kcalConsumed = 0.0;
 
     private val storageRef = Firebase.storage.reference
 
@@ -28,29 +28,49 @@ class SharedViewModel : ViewModel() {
 
     private var currentExerciseIndex = 0
 
+    private var currentWeight = 0.0
+
+    fun calculateKcal(sec: Long)
+    {
+        firestore.collection("Users").document(auth.currentUser!!.uid)
+            .get().addOnSuccessListener {
+                currentWeight = it.getDouble("current_weight")!!
+
+                kcalConsumed += (((getCurrentExercise().MET * currentWeight * 3.5) / 200) / 60) * sec
+                Log.d("test kcal consume", kcalConsumed.toString())
+                Log.d("test kcal consume", getCurrentExercise().MET.toString())
+                Log.d("test kcal consume", currentWeight.toString())
+                updateTotalCalories()
+            }
+    }
     fun addNewSetTaken(setId: String)
     {
         val data = hashMapOf(
-            "user_id" to "O0PNnHMqAufapue91s5Zhf4TDTg1",
+            "user_id" to auth.currentUser!!.uid,
             "set_id" to setId,
             "start_time" to Timestamp.now(),
             "total_calories" to "0"
         )
-        /*val data = hashMapOf(
-            "user_id" to "auth.currentuser.uid",
-            "set_id" to setId,
-            "start_time" to Timestamp.now(),
-            "total_calories" to "0"
-        )*/
         firestore.collection("Set_Taken").add(data).addOnSuccessListener {
             setTakenID = it.id
         }
     }
-
+    private fun updateTotalCalories()
+    {
+        val data = hashMapOf<String, Any>(
+            "total_calories" to kcalConsumed
+        )
+        firestore.collection("Set_Taken").document(setTakenID)
+            .update(data)
+    }
     fun updateSetTaken()
     {
+        val data = hashMapOf<String, Any>(
+            "end_time" to Timestamp.now(),
+            "total_calories" to kcalConsumed
+        )
         firestore.collection("Set_Taken").document(setTakenID)
-            .update("end_time", Timestamp.now())
+            .update(data)
     }
 
     fun getSetsFieldsById(id: String) {
@@ -97,7 +117,8 @@ class SharedViewModel : ViewModel() {
                         doc.get("description").toString(),
                         doc.get("calories").toString(),
                         doc.get("instruction").toString(),
-                        doc.get("animation_url").toString())
+                        doc.get("animation_url").toString(),
+                        doc.getDouble("MET")!!)
                     exercises.add(exercise)
                 }
                 Log.d("Workout Detail 1","LOADED")
@@ -125,6 +146,7 @@ class SharedViewModel : ViewModel() {
     }
 
     fun getCurrentExercise(): Exercise {
+
         return exercises[currentExerciseIndex]
     }
 

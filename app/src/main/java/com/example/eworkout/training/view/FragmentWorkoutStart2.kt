@@ -2,10 +2,12 @@ package com.example.eworkout.training.view
 
 import android.os.Bundle
 import android.os.SharedMemory
+import android.os.SystemClock
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Chronometer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import com.example.eworkout.R
@@ -29,7 +31,8 @@ class FragmentWorkoutStart2 : Fragment() {
     private var param2: String? = null
     private var _binding: FragmentWorkoutStart2Binding? = null
     val binding get() = _binding!!
-    private val _viewModel: SharedViewModel by navGraphViewModels(R.id.training_nav)
+    private val _sharedViewModel: SharedViewModel by navGraphViewModels(R.id.training_nav)
+    private lateinit var timer : Chronometer
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +48,7 @@ class FragmentWorkoutStart2 : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         _binding = FragmentWorkoutStart2Binding.inflate(inflater, container, false)
-        binding.viewModel = _viewModel
+        binding.viewModel = _sharedViewModel
         binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
     }
@@ -74,16 +77,23 @@ class FragmentWorkoutStart2 : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setAnimation()
         setListener()
+        startCountUp()
+    }
+
+    private fun startCountUp()
+    {
+        timer = Chronometer(context)
+        timer.start()
     }
 
     private fun setAnimation() {
-        binding.backgroundAnimationView.setAnimation(_viewModel.getCurrentExercise().name + ".json")
+        binding.backgroundAnimationView.setAnimation(_sharedViewModel.getCurrentExercise().name + ".json")
     }
 
     private fun setListener()
     {
         binding.btnPrevious.setOnClickListener {
-            _viewModel.decreaseCurrentExerciseIndex()
+            _sharedViewModel.decreaseCurrentExerciseIndex()
             findNavController().navigate(R.id.action_fragmentWorkoutStart2_to_fragmentWorkoutRest)
         }
         binding.btnMiddle.setOnClickListener {
@@ -94,7 +104,7 @@ class FragmentWorkoutStart2 : Fragment() {
         }
         binding.exerciseInformationBtn.setOnClickListener {
             val bundle = Bundle().apply {
-                putString("exercise_id", _viewModel.getCurrentExercise().id)
+                putString("exercise_id", _sharedViewModel.getCurrentExercise().id)
             }
             findNavController().navigate(R.id.action_fragmentWorkoutStart2_to_workoutDetail2, bundle)
         }
@@ -106,12 +116,15 @@ class FragmentWorkoutStart2 : Fragment() {
 
     private fun onClick()
     {
-        if(_viewModel.increaseCurrentExerciseIndex())
+        if(_sharedViewModel.increaseCurrentExerciseIndex()){
+            _sharedViewModel.calculateKcal((SystemClock.elapsedRealtime() - timer.base) / 1000)
             findNavController().navigate(R.id.action_fragmentWorkoutStart2_to_fragmentWorkoutRest)
+        }
         else{
             val bundle = Bundle()
-            bundle.putString("set_taken_id", _viewModel.setTakenID)
-            _viewModel.updateSetTaken()
+            bundle.putString("set_taken_id", _sharedViewModel.setTakenID)
+            _sharedViewModel.calculateKcal((SystemClock.elapsedRealtime() - timer.base) / 1000)
+            _sharedViewModel.updateSetTaken()
             findNavController().navigate(R.id.action_fragmentWorkoutStart2_to_fragmentWorkoutDone, bundle)
         }
     }

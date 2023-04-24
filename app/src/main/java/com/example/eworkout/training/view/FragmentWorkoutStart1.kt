@@ -71,21 +71,27 @@ class FragmentWorkoutStart1 : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        var time = (StringUlti.removeRepsPostfix(_viewModel.getCurrentExercise().reps)).toLong()
-        time *= 1000
+        var timeToCount = (StringUlti.removeRepsPostfix(_viewModel.getCurrentExercise().reps)).toLong()
+        timeToCount *= 1000
         setAnimation()
 
-        startProgressAnimation(time)
+        startProgressAnimation(timeToCount)
 
-        startCountDown(time)
+        startCountDown(timeToCount)
 
         setListener()
+
+        startCountUp()
+    }
+
+    private fun startCountUp()
+    {
         timer = Chronometer(context)
         timer.start()
     }
 
     private fun setAnimation() {
-            binding.backgroundAnimationView.setAnimation(_viewModel.getCurrentExercise().name + ".json")
+        binding.backgroundAnimationView.setAnimation(_viewModel.getCurrentExercise().name + ".json")
     }
 
     private fun startProgressAnimation(millisCountDown: Long)
@@ -108,9 +114,13 @@ class FragmentWorkoutStart1 : Fragment() {
 
             override fun onTimerFinish() {
                 Log.d("navigate", "timer fninish")
-                if(_viewModel.increaseCurrentExerciseIndex())
+                if(_viewModel.increaseCurrentExerciseIndex()){
+                    _viewModel.calculateKcal((SystemClock.elapsedRealtime() - timer.base) / 1000)
                     findNavController().navigate(R.id.action_fragmentWorkoutStart1_to_fragmentWorkoutRest)
+                }
+
                 else{
+                    _viewModel.calculateKcal((SystemClock.elapsedRealtime() - timer.base) / 1000)
                     _viewModel.updateSetTaken()
                     findNavController().navigate(R.id.action_fragmentWorkoutStart1_to_fragmentWorkoutDone)
                 }
