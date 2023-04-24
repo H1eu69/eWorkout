@@ -16,7 +16,7 @@
         android:layout_marginStart="15dp"
         android:layout_marginTop="20dp"
         android:text="FullBody Workout"
-        android:textSize="16sp"
+        android:textSize="14sp"
         android:fontFamily="@font/poppins_medium"
         android:textColor="@color/black"/>
 
@@ -29,7 +29,7 @@
         android:layout_marginStart="15dp"
         android:layout_marginTop="5dp"
         android:text="14"
-        android:textSize="16sp"
+        android:textSize="14sp"
         android:fontFamily="@font/poppins_medium"/>
 
     <TextView
@@ -40,7 +40,7 @@
         app:layout_constraintStart_toEndOf="@id/textView_TotalExercises"
         android:layout_marginTop="5dp"
         android:text=" Exercises | "
-        android:textSize="16sp"
+        android:textSize="14sp"
         android:fontFamily="@font/poppins_medium"/>
 
     <TextView
@@ -52,7 +52,7 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
         android:text="32 mins"
-        android:textSize="16sp"
+        android:textSize="14sp"
         android:fontFamily="@font/poppins_medium"/>
 
     <androidx.appcompat.widget.AppCompatButton
@@ -82,8 +82,8 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/Set_imageView"
-        android:layout_width="100dp"
-        android:layout_height="130dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_margin="5dp"
         app:layout_constraintEnd_toEndOf="@id/background"
         app:layout_constraintTop_toTopOf="@id/background"
