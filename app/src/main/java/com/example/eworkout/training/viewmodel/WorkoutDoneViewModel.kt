@@ -13,32 +13,28 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class WorkoutDoneViewModel : ViewModel() {
-    val firestore = Firebase.firestore
+    private val firestore = Firebase.firestore
 
-    val auth = Firebase.auth
-
-    val _state : MutableLiveData<WorkoutDoneState> = MutableLiveData(WorkoutDoneState.LOADING)
+    private val _state : MutableLiveData<WorkoutDoneState> = MutableLiveData(WorkoutDoneState.LOADING)
     val state : LiveData<WorkoutDoneState> get() = _state
 
-    val modelLiveData: MutableLiveData<WorkoutDoneModel> = MutableLiveData(WorkoutDoneModel("", "", ""))
-    var model: WorkoutDoneModel = WorkoutDoneModel("", "", "")
+    val modelLiveData: MutableLiveData<WorkoutDoneModel> = MutableLiveData()
+    private var model: WorkoutDoneModel = WorkoutDoneModel("", 0.0, "")
 
     fun getModelData(setTakenID: String)
     {
         firestore.collection("Set_Taken")
             .document(setTakenID)
             .get().addOnSuccessListener {
-                val calo = it.get("total_calories").toString()
+                val calo = it.getDouble("total_calories")!!
                 val milliseconds = (it.getDate("end_time")?.time!! - (it.getDate("start_time")?.time!!))
 
                 val simpledateformat = SimpleDateFormat("mm:ss")
                 simpledateformat.timeZone = TimeZone.getTimeZone("UTC")
                 val minutesAndSeconds = simpledateformat.format(Date(milliseconds))
-                
-                model = WorkoutDoneModel("",
-                    calo,
-                    minutesAndSeconds
-                )
+
+                model.duration = minutesAndSeconds
+                model.kcal = calo
 
                 getExercisesQuantity(it.getString("set_id").toString())
             }

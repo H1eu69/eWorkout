@@ -35,9 +35,6 @@ class SharedViewModel : ViewModel() {
                 currentWeight = it.getDouble("current_weight")!!
 
                 kcalConsumed += (((getCurrentExercise().MET * currentWeight * 3.5) / 200) / 60) * sec
-                Log.d("test kcal consume", kcalConsumed.toString())
-                Log.d("test kcal consume", getCurrentExercise().MET.toString())
-                Log.d("test kcal consume", currentWeight.toString())
                 updateTotalCalories()
             }
     }
@@ -47,7 +44,7 @@ class SharedViewModel : ViewModel() {
             "user_id" to auth.currentUser!!.uid,
             "set_id" to setId,
             "start_time" to Timestamp.now(),
-            "total_calories" to "0"
+            "total_calories" to 0
         )
         firestore.collection("Set_Taken").add(data).addOnSuccessListener {
             setTakenID = it.id
@@ -68,12 +65,14 @@ class SharedViewModel : ViewModel() {
         )
         firestore.collection("Set_Taken").document(setTakenID)
             .update(data)
-        resetIndex()
     }
 
-    private fun resetIndex()
+    fun resetIndexAndCalories()
     {
+        Log.d("reset", currentExerciseIndex.toString())
         currentExerciseIndex = 0
+        Log.d("reset", currentExerciseIndex.toString())
+        kcalConsumed = 0.0
     }
 
     fun getSetsFieldsById(id: String) {
@@ -149,7 +148,7 @@ class SharedViewModel : ViewModel() {
     }
 
     fun getCurrentExercise(): Exercise {
-
+        //Log.d("current", currentExerciseIndex.toString())
         return exercises[currentExerciseIndex]
     }
 

@@ -36,7 +36,6 @@ class FragmentWorkoutStart1 : Fragment() {
     private var isPaused = false
     private lateinit var timer : Chronometer
 
-    private var millisLeft = 0L
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

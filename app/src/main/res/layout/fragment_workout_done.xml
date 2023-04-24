@@ -106,7 +106,7 @@
                     style="@style/TextView6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@={viewModel.modelLiveData.kcal}"
+                    textByNumber="@={viewModel.modelLiveData.kcal}"
                     app:layout_constraintEnd_toEndOf="@+id/textView_kcal"
                     app:layout_constraintStart_toStartOf="@+id/textView_kcal"
                     app:layout_constraintTop_toTopOf="@+id/textView_num_exercises" />
@@ -212,11 +212,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:orientation="horizontal"
-                    app:layout_constraintVertical_bias="0"
-                    app:layout_constraintBottom_toTopOf="@+id/btn_start"
+                    app:layout_constraintBottom_toTopOf="@+id/btn_next"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView_easy">
+                    app:layout_constraintTop_toBottomOf="@+id/textView_easy"
+                    app:layout_constraintVertical_bias="0">
                     <!-- Ta dao -->
                     <RadioButton
                         android:layout_width="0dp"

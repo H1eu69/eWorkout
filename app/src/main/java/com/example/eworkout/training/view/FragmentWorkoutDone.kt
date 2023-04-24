@@ -1,15 +1,18 @@
 package com.example.eworkout.training.view
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.navGraphViewModels
 import com.example.eworkout.R
 import com.example.eworkout.databinding.FragmentWorkoutDoneBinding
 import com.example.eworkout.training.model.WorkoutDoneState
+import com.example.eworkout.training.viewmodel.SharedViewModel
 import com.example.eworkout.training.viewmodel.WorkoutDoneViewModel
 
 // TODO: Rename parameter arguments, choose names that match
@@ -29,6 +32,8 @@ class FragmentWorkoutDone : Fragment() {
     private var _binding: FragmentWorkoutDoneBinding? = null
     val binding get() = _binding!!
     private val _viewModel: WorkoutDoneViewModel by viewModels()
+    private val _sharedViewModel: SharedViewModel by navGraphViewModels(R.id.training_nav)
+
     private var setTakenID: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,7 +64,6 @@ class FragmentWorkoutDone : Fragment() {
          * @param param2 Parameter 2.
          * @return A new instance of fragment FragmentWorkoutDone.
          */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
             FragmentWorkoutDone().apply {
@@ -79,11 +83,17 @@ class FragmentWorkoutDone : Fragment() {
     private fun setListener()
     {
         binding.backBtn.setOnClickListener {
-            findNavController().navigate(R.id.action_fragmentWorkoutDone_to_trainingFragment)
+            onClick()
         }
         binding.btnNext.setOnClickListener {
-            findNavController().navigate(R.id.action_fragmentWorkoutDone_to_trainingFragment)
+            onClick()
         }
+    }
+
+    private fun onClick()
+    {
+        _sharedViewModel.resetIndexAndCalories()
+        findNavController().navigate(R.id.action_fragmentWorkoutDone_to_trainingFragment)
     }
 
     private fun observeViewModel()
