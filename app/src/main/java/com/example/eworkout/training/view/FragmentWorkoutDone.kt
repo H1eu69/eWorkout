@@ -143,5 +143,13 @@ class FragmentWorkoutDone : Fragment() {
         binding.hideDataLayout = true
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _sharedViewModel.resetUpdateState()
+    }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("Destroy", "on destroy")
+    }
 }

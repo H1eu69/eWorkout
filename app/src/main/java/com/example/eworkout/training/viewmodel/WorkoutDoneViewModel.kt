@@ -38,6 +38,9 @@ class WorkoutDoneViewModel : ViewModel() {
 
                 getExercisesQuantity(it.getString("set_id").toString())
             }
+            .addOnFailureListener {
+                Log.d("workout done failed", it.localizedMessage)
+            }
     }
 
     private fun getExercisesQuantity(set_id: String) {
