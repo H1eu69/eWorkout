@@ -38,8 +38,13 @@ class TrainingViewModel: ViewModel() {
     fun getCurrentUserEmail(){
         if (user != null)
         {
-            userEmail = user.email.toString()
+            userEmail = user.email!!.substringBefore('@',userEmail)
         }
+    }
+
+    fun String.substringBefore(delimiter: Char, missingDelimiterValue: String = this): String {
+        val index = indexOf(delimiter)
+        return if (index == -1) missingDelimiterValue else substring(0, index)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)

@@ -83,7 +83,7 @@ class TrainingFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         //_viewModel.loadSets()
         _viewModel.getCurrentUserEmail()
-
+        //binding.textView2.text = _viewModel.userEmail.substringBefore('@',_viewModel.userEmail)
         watching()
         observeViewModel()
         setupRecyclerView()
@@ -101,11 +101,10 @@ class TrainingFragment : Fragment() {
         when(state.name){
             "LOADING" -> {
                 _viewModel.loadSets()
-
                 showLoading()
             }
             "LOADED" -> {
-                binding.textView2.text = _viewModel.userEmail.substringBefore('@',_viewModel.userEmail)
+                binding.textView2.text = _viewModel.userEmail
                 setupRecyclerView()
                 hideLoading()
             }
@@ -117,24 +116,17 @@ class TrainingFragment : Fragment() {
     }
 
 
-    fun String.substringBefore(delimiter: Char, missingDelimiterValue: String = this): String {
-        val index = indexOf(delimiter)
-        return if (index == -1) missingDelimiterValue else substring(0, index)
-    }
+
 
     private fun showLoading()
     {
         binding.shimmerLayout.visibility = View.VISIBLE
         binding.dataLayout.visibility = View.GONE
-        //binding.hideShimmerLayout = false
-        //binding.hideDataLayout = true
     }
     private fun hideLoading()
     {
         binding.shimmerLayout.visibility = View.GONE
         binding.dataLayout.visibility = View.VISIBLE
-        //binding.hideShimmerLayout = true
-        //binding.hideDataLayout = false
     }
 
     private fun setupRecyclerView()
