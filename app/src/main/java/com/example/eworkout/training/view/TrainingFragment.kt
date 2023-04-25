@@ -81,9 +81,7 @@ class TrainingFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //_viewModel.loadSets()
         _viewModel.getCurrentUserEmail()
-        //binding.textView2.text = _viewModel.userEmail.substringBefore('@',_viewModel.userEmail)
         watching()
         observeViewModel()
         setupRecyclerView()
@@ -142,7 +140,7 @@ class TrainingFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.O)
     private fun watching(){
 
-        _viewModel.indicatorWatching("46c2shrXeD5BuPMADEcZ")
+        _viewModel.indicatorWatching("7pOsKxeeo7J93xNQtTQ0")
         var num = _viewModel.numberOfCalories
         var hour = _viewModel.workoutHours/60
         var min = _viewModel.workoutHours%60
