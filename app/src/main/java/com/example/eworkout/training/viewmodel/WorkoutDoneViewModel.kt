@@ -21,6 +21,8 @@ class WorkoutDoneViewModel : ViewModel() {
     val modelLiveData: MutableLiveData<WorkoutDoneModel> = MutableLiveData()
     private var model: WorkoutDoneModel = WorkoutDoneModel("", 0.0, "")
 
+    var currentSetId: String? = null
+
     fun getModelData(setTakenID: String)
     {
         firestore.collection("Set_Taken")
@@ -36,7 +38,12 @@ class WorkoutDoneViewModel : ViewModel() {
                 model.duration = minutesAndSeconds
                 model.kcal = calo
 
+                currentSetId = it.getString("set_id").toString()
+
                 getExercisesQuantity(it.getString("set_id").toString())
+            }
+            .addOnFailureListener {
+                Log.d("workout done failed", it.localizedMessage)
             }
     }
 

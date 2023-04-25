@@ -109,6 +109,7 @@ class FragmentWorkoutDetail1 : Fragment() {
         when(state.name){
             "LOADING" -> {
                 showLoading()
+                Log.d("set id", setId.toString())
                 _viewModel.getSetsFieldsById((setId!!))
                 _sharedViewModel.getSetsFieldsById((setId!!))
             }

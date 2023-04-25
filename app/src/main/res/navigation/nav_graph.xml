@@ -182,7 +182,12 @@
             <action
                 android:id="@+id/action_fragmentWorkoutDone_to_trainingFragment"
                 app:destination="@id/trainingFragment"
-                app:popUpTo="@id/fragmentWorkoutDone"
+                app:popUpTo="@id/trainingFragment"
+                app:popUpToInclusive="true"/>
+            <action
+                android:id="@+id/action_fragmentWorkoutDone_to_workoutDetail1"
+                app:destination="@id/workoutDetail1"
+                app:popUpTo="@id/workoutDetail1"
                 app:popUpToInclusive="true"/>
         </fragment>
     </navigation>

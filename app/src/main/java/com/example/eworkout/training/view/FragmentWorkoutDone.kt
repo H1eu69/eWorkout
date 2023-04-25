@@ -89,12 +89,26 @@ class FragmentWorkoutDone : Fragment() {
         binding.btnNext.setOnClickListener {
             onClick()
         }
+        binding.textViewNext.setOnClickListener {
+            onClick()
+        }
+        binding.textViewDoItAgain.setOnClickListener {
+            doExerciseAgain()
+        }
     }
 
     private fun onClick()
     {
         _sharedViewModel.resetIndexAndCalories()
         findNavController().navigate(R.id.action_fragmentWorkoutDone_to_trainingFragment)
+    }
+
+    private fun doExerciseAgain()
+    {
+        val bundle = Bundle()
+        bundle.putString("set_id", _viewModel.currentSetId)
+        _sharedViewModel.resetIndexAndCalories()
+        findNavController().navigate(R.id.action_fragmentWorkoutDone_to_workoutDetail1, bundle)
     }
 
     private fun observeViewModel()
@@ -143,5 +157,13 @@ class FragmentWorkoutDone : Fragment() {
         binding.hideDataLayout = true
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _sharedViewModel.resetUpdateState()
+    }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("Destroy", "on destroy")
+    }
 }
