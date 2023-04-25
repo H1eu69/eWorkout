@@ -27,7 +27,6 @@ class TrainingViewModel: ViewModel() {
 
     var numberOfCalories: Double = 0.0
 
-    //var milliseconds: String = ""
     var workoutHours: Long = 0
 
     private val _state: MutableLiveData<TrainingState> = MutableLiveData(TrainingState.LOADING)
@@ -35,7 +34,10 @@ class TrainingViewModel: ViewModel() {
 
     private val auth: FirebaseAuth = Firebase.auth
     private val user:FirebaseUser? = auth.currentUser
-    var userEmail:String = ""
+
+    var userEmail: String = ""
+    var num: Double = 0.0
+    var min: Double = 0.0
 
     fun getCurrentUserEmail(){
         if (user != null)
@@ -49,18 +51,13 @@ class TrainingViewModel: ViewModel() {
         return if (index == -1) missingDelimiterValue else substring(0, index)
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     fun indicatorWatching(id: String) {
         firestore.collection("Set_Taken")
             .document(id)
-            .get().addOnSuccessListener { data ->
-                numberOfCalories += data.get("total_calories") as Double
-                val milliseconds = (data.getDate("end_time")?.time!! - (data.getDate("start_time")?.time!!))
-
-                workoutHours += milliseconds
-                /*val simpledateformat = SimpleDateFormat("mm:ss")
-                simpledateformat.timeZone = TimeZone.getTimeZone("UTC")
-                val minutesAndSeconds = simpledateformat.format(Date(milliseconds))*/
+            .get().addOnSuccessListener {
+                num += it.getDouble("total_calories")!!
+                val milliseconds = (it.getDate("end_time")?.time!! - (it.getDate("start_time")?.time!!))
+                min += ((milliseconds/1000)/60)
             }
     }
 

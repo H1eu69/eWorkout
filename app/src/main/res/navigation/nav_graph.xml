@@ -136,6 +136,9 @@
                 app:exitAnim="@android:anim/fade_out"
                 app:popEnterAnim="@anim/nav_default_pop_enter_anim"
                 app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+            <action
+                android:id="@+id/action_fragmentWorkoutStart2_to_trainingFragment"
+                app:destination="@id/trainingFragment" />
         </fragment>
         <fragment
             android:id="@+id/fragmentWorkoutRest"

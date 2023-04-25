@@ -144,7 +144,7 @@
                         android:fontFamily="@font/poppins_medium"
                         android:text="@string/calories"
                         android:textColor="@color/black"
-                        android:textSize="15sp"
+                        android:textSize="14sp"
                         android:layout_marginStart="50dp"
                         app:layout_constraintStart_toEndOf="@+id/imageBg"
                         app:layout_constraintTop_toTopOf="parent"/>
@@ -154,12 +154,23 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins_medium"
-                        android:text="107 kCal"
+                        textByNumber="@{viewModel.num}"
                         android:textColor="#92A3FD"
-                        android:textSize="16sp"
+                        android:textSize="15sp"
                         android:layout_marginStart="50dp"
                         app:layout_constraintTop_toBottomOf="@+id/textView7"
                         app:layout_constraintStart_toEndOf="@+id/imageBg" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text=" kCal"
+                        android:textColor="#92A3FD"
+                        android:textSize="15sp"
+                        android:layout_marginStart="5dp"
+                        app:layout_constraintTop_toBottomOf="@+id/textView7"
+                        app:layout_constraintStart_toEndOf="@+id/textViewCalories"/>
 
                     <TextView
                         android:id="@+id/textViewWorkoutHours"
@@ -168,7 +179,7 @@
                         android:fontFamily="@font/poppins_medium"
                         android:text="@string/workout_hours"
                         android:textColor="@color/black"
-                        android:textSize="15sp"
+                        android:textSize="14sp"
                         android:layout_marginStart="50dp"
                         app:layout_constraintTop_toBottomOf="@id/textViewCalories"
                         app:layout_constraintStart_toEndOf="@+id/imageBg"/>
@@ -178,12 +189,22 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins_medium"
-                        android:text="8h 32min"
+                        textByNumber="@{viewModel.min}"
                         android:textColor="#92A3FD"
-                        android:textSize="16sp"
+                        android:textSize="15sp"
                         android:layout_marginStart="50dp"
                         app:layout_constraintTop_toBottomOf="@+id/textViewWorkoutHours"
                         app:layout_constraintStart_toEndOf="@+id/imageBg"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" mins"
+                        android:textColor="#92A3FD"
+                        android:textSize="15sp"
+                        android:layout_marginStart="5dp"
+                        app:layout_constraintTop_toBottomOf="@+id/textViewWorkoutHours"
+                        app:layout_constraintStart_toEndOf="@+id/textViewHours"/>
 
                     <ImageView
                         android:id="@+id/imageBg"
@@ -202,8 +223,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins_medium"
-                        android:text="107 kCal"
-                        android:textSize="17sp"
+                        textByNumber="@{viewModel.num}"
+                        android:textSize="18sp"
                         android:textColor="@color/white"
                         app:layout_constraintTop_toTopOf="@+id/imageBg"
                         app:layout_constraintStart_toStartOf="@+id/imageBg"

@@ -42,7 +42,7 @@ class TrainingFragment : Fragment() {
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
-            setTakenID = it.getString("set_taken_id")
+            setTakenID = it.getString("setTakenId")
         }
     }
 
@@ -83,10 +83,35 @@ class TrainingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _viewModel.getCurrentUserEmail()
-        watching()
+        if (setTakenID.isNullOrEmpty()) {
+            binding.textViewCaloriesNumber.text = "0.0"
+            binding.textViewCalories.text = "0.0"
+            binding.textViewHours.text = "0"
+        }
+        else{
+            _viewModel.indicatorWatching(setTakenID.toString())
+        }
         observeViewModel()
         setupRecyclerView()
     }
+
+    /*@RequiresApi(Build.VERSION_CODES.O)
+    private fun watching() {
+        var num = _viewModel.numberOfCalories
+        var min = (_viewModel.workoutHours/1000)/60
+        if (setTakenID.isNullOrBlank()){
+            binding.textViewCalories.text = "0 kCal"
+            binding.textViewCaloriesNumber.text = "0 kCal"
+            binding.textViewHours.text = "0 mins"
+        }
+        else{
+            _viewModel.indicatorWatching(setTakenID!!)
+
+            binding.textViewCalories.text = "$num kCal"
+            binding.textViewCaloriesNumber.text = "$num kCal"
+            binding.textViewHours.text = min.toString() + " mins"
+        }
+    }*/
 
    private fun observeViewModel()
     {
@@ -104,6 +129,9 @@ class TrainingFragment : Fragment() {
             }
             "LOADED" -> {
                 binding.textView2.text = _viewModel.userEmail
+                binding.textViewCalories.text = _viewModel.num.toString()
+                binding.textViewCaloriesNumber.text = _viewModel.num.toString()
+                binding.textViewHours.text = _viewModel.min.toString()
                 setupRecyclerView()
                 hideLoading()
             }
@@ -113,9 +141,6 @@ class TrainingFragment : Fragment() {
             }
         }
     }
-
-
-
 
     private fun showLoading()
     {
@@ -137,18 +162,7 @@ class TrainingFragment : Fragment() {
         binding.recyclerView.adapter = SetsAdapter(list, listener)
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun watching(){
 
-        _viewModel.indicatorWatching("TvcMFUAi8BIcDhNRqPyU")
-        var num = _viewModel.numberOfCalories
-        //var hour = _viewModel.workoutHours/60
-        var min = (_viewModel.workoutHours/1000)/60
-        binding.textViewCalories.text = "$num kCal"
-        binding.textViewCaloriesNumber.text = "$num kCal"
-        //binding.textViewHours.text = hour.toString() + "h " + min.toString() + "mins"
-        binding.textViewHours.text = min.toString() + " mins"
-    }
 
     @SuppressLint("NotifyDataSetChanged")
     private fun notifyDataChange()
