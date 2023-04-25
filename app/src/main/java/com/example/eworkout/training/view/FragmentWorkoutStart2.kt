@@ -1,5 +1,6 @@
 package com.example.eworkout.training.view
 
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.SharedMemory
 import android.os.SystemClock
@@ -34,6 +35,7 @@ class FragmentWorkoutStart2 : Fragment() {
     val binding get() = _binding!!
     private val _sharedViewModel: SharedViewModel by navGraphViewModels(R.id.training_nav)
     private lateinit var timer : Chronometer
+    private lateinit var mediaPlayer : MediaPlayer
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,11 +78,16 @@ class FragmentWorkoutStart2 : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        startSoundEffect()
         setAnimation()
         setListener()
         startCountUp()
     }
-
+    private fun startSoundEffect()
+    {
+        mediaPlayer = MediaPlayer.create(context, R.raw.trumpet_sound_effect)
+        mediaPlayer.start() // no need to call prepare(); create() does that for you
+    }
     private fun startCountUp()
     {
         timer = Chronometer(context)
@@ -127,5 +134,10 @@ class FragmentWorkoutStart2 : Fragment() {
             _sharedViewModel.calculateAndUpdate((SystemClock.elapsedRealtime() - timer.base) / 1000)
             findNavController().navigate(R.id.action_fragmentWorkoutStart2_to_fragmentWorkoutDone, bundle)
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        mediaPlayer.stop()
     }
 }

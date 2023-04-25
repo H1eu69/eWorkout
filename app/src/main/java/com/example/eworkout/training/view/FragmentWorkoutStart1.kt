@@ -1,6 +1,7 @@
 package com.example.eworkout.training.view
 
 import android.animation.ObjectAnimator
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.SystemClock
 import android.util.Log
@@ -35,7 +36,7 @@ class FragmentWorkoutStart1 : Fragment() {
     private lateinit var animation: ObjectAnimator
     private var isPaused = false
     private lateinit var timer : Chronometer
-
+    private lateinit var mediaPlayer : MediaPlayer
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -70,6 +71,7 @@ class FragmentWorkoutStart1 : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        startSoundEffect()
 
         var timeToCount = (StringUlti.removeRepsPostfix(_viewModel.getCurrentExercise().reps)).toLong()
         timeToCount *= 1000
@@ -84,7 +86,11 @@ class FragmentWorkoutStart1 : Fragment() {
 
         startCountUp()
     }
-
+    private fun startSoundEffect()
+    {
+        mediaPlayer = MediaPlayer.create(context, R.raw.trumpet_sound_effect)
+        mediaPlayer.start() // no need to call prepare(); create() does that for you
+    }
     private fun startCountUp()
     {
         timer = Chronometer(context)
@@ -204,5 +210,6 @@ class FragmentWorkoutStart1 : Fragment() {
         Log.d("navigate", "destroyview")
         countDownTimer.cancelCountDownTimer()
         timer.stop()
+        mediaPlayer.stop()
     }
 }
