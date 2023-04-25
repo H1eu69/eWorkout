@@ -29,7 +29,7 @@
         android:layout_marginStart="15dp"
         android:layout_marginTop="5dp"
         android:text="14"
-        android:textSize="16sp"
+        android:textSize="14sp"
         android:fontFamily="@font/poppins_medium"/>
 
     <TextView
@@ -40,7 +40,7 @@
         app:layout_constraintStart_toEndOf="@id/textView_TotalExercises"
         android:layout_marginTop="5dp"
         android:text=" Exercises | "
-        android:textSize="16sp"
+        android:textSize="14sp"
         android:fontFamily="@font/poppins_medium"/>
 
     <TextView
@@ -52,7 +52,7 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
         android:text="32 mins"
-        android:textSize="16sp"
+        android:textSize="14sp"
         android:fontFamily="@font/poppins_medium"/>
 
     <androidx.appcompat.widget.AppCompatButton

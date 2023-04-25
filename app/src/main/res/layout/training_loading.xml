@@ -256,6 +256,77 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/radius_shape"
+                    android:padding="5dp">
+
+                    <TextView
+                        android:id="@+id/textView_SetName1"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/loading_background"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/textView_TotalExercises1"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/loading_background"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView_SetName1" />
+
+                    <TextView
+                        android:id="@+id/texView_TotalTime1"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/loading_background"
+                        app:layout_constraintStart_toEndOf="@id/textView_TotalExercises1"
+                        app:layout_constraintTop_toBottomOf="@+id/textView_SetName1" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/buttonViewDetail1"
+                        style="@style/Button5"
+                        android:layout_width="100dp"
+                        android:layout_height="35dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/radius_button"
+                        android:text="View More"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView_TotalExercises1" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/background1"
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/ellipse"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/texView_TotalTime1"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/Set_imageView1"
+                        android:layout_width="100dp"
+                        android:layout_height="130dp"
+                        app:layout_constraintBottom_toBottomOf="@id/background1"
+                        app:layout_constraintEnd_toEndOf="@id/background1"
+                        app:layout_constraintStart_toStartOf="@id/background1"
+                        app:layout_constraintTop_toTopOf="@id/background1" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

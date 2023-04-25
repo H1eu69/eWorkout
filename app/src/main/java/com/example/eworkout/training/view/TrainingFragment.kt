@@ -31,7 +31,6 @@ class TrainingFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    //private var setId: String? = null
     private var _binding: FragmentTrainingBinding? = null
     val binding get() = _binding!!
     private lateinit var _viewModel: TrainingViewModel
@@ -82,9 +81,12 @@ class TrainingFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        _viewModel.loadSets()
+        //_viewModel.loadSets()
+        _viewModel.getCurrentUserEmail()
+
         watching()
         observeViewModel()
+        setupRecyclerView()
     }
 
    private fun observeViewModel()
@@ -98,9 +100,12 @@ class TrainingFragment : Fragment() {
     {
         when(state.name){
             "LOADING" -> {
+                _viewModel.loadSets()
+
                 showLoading()
             }
             "LOADED" -> {
+                binding.textView2.text = _viewModel.userEmail.substringBefore('@',_viewModel.userEmail)
                 setupRecyclerView()
                 hideLoading()
             }
@@ -112,17 +117,22 @@ class TrainingFragment : Fragment() {
     }
 
 
+    fun String.substringBefore(delimiter: Char, missingDelimiterValue: String = this): String {
+        val index = indexOf(delimiter)
+        return if (index == -1) missingDelimiterValue else substring(0, index)
+    }
+
     private fun showLoading()
     {
         binding.shimmerLayout.visibility = View.VISIBLE
-        binding.recyclerView.visibility = View.GONE
+        binding.dataLayout.visibility = View.GONE
         //binding.hideShimmerLayout = false
         //binding.hideDataLayout = true
     }
     private fun hideLoading()
     {
         binding.shimmerLayout.visibility = View.GONE
-        binding.recyclerView.visibility = View.VISIBLE
+        binding.dataLayout.visibility = View.VISIBLE
         //binding.hideShimmerLayout = true
         //binding.hideDataLayout = false
     }
@@ -139,7 +149,8 @@ class TrainingFragment : Fragment() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun watching(){
-        _viewModel.indicatorWatching("ev89TFkqna9mXcRQApy1")
+
+        _viewModel.indicatorWatching("46c2shrXeD5BuPMADEcZ")
         var num = _viewModel.numberOfCalories
         var hour = _viewModel.workoutHours/60
         var min = _viewModel.workoutHours%60
