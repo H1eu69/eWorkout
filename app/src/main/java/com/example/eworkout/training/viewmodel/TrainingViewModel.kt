@@ -9,6 +9,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.eworkout.training.model.Set
 import com.example.eworkout.training.model.TrainingState
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
@@ -21,20 +24,35 @@ class TrainingViewModel: ViewModel() {
 
     val sets = mutableListOf<Set>()
 
-    var numberOfCalories: Long = 0
+    var numberOfCalories: Double = 0.0
 
     var workoutHours: Long = 0
 
     private val _state: MutableLiveData<TrainingState> = MutableLiveData(TrainingState.LOADING)
     val state: LiveData<TrainingState> get() = _state
 
+    private val auth: FirebaseAuth = Firebase.auth
+    private val user:FirebaseUser? = auth.currentUser
+    var userEmail:String = ""
+
+    fun getCurrentUserEmail(){
+        if (user != null)
+        {
+            userEmail = user.email!!.substringBefore('@',userEmail)
+        }
+    }
+
+    fun String.substringBefore(delimiter: Char, missingDelimiterValue: String = this): String {
+        val index = indexOf(delimiter)
+        return if (index == -1) missingDelimiterValue else substring(0, index)
+    }
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun indicatorWatching(id: String) {
         firestore.collection("Set_Taken")
             .document(id)
             .get().addOnSuccessListener { data ->
-//                numberOfCalories += data.get("total_calories") as Long
+                numberOfCalories += data.get("total_calories") as Double
                 //workoutHours += data.get("time") as Long
             }
     }
