@@ -15,6 +15,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
+import java.text.SimpleDateFormat
 import java.util.*
 
 class TrainingViewModel: ViewModel() {
@@ -26,6 +27,7 @@ class TrainingViewModel: ViewModel() {
 
     var numberOfCalories: Double = 0.0
 
+    //var milliseconds: String = ""
     var workoutHours: Long = 0
 
     private val _state: MutableLiveData<TrainingState> = MutableLiveData(TrainingState.LOADING)
@@ -53,9 +55,16 @@ class TrainingViewModel: ViewModel() {
             .document(id)
             .get().addOnSuccessListener { data ->
                 numberOfCalories += data.get("total_calories") as Double
-                //workoutHours += data.get("time") as Long
+                val milliseconds = (data.getDate("end_time")?.time!! - (data.getDate("start_time")?.time!!))
+
+                workoutHours += milliseconds
+                /*val simpledateformat = SimpleDateFormat("mm:ss")
+                simpledateformat.timeZone = TimeZone.getTimeZone("UTC")
+                val minutesAndSeconds = simpledateformat.format(Date(milliseconds))*/
             }
     }
+
+
 
     fun loadSets() {
         /*firestore.collection("Sets")

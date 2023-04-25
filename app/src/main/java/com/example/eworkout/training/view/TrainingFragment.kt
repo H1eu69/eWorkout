@@ -35,13 +35,14 @@ class TrainingFragment : Fragment() {
     val binding get() = _binding!!
     private lateinit var _viewModel: TrainingViewModel
 
+    private var setTakenID: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
-            //setId = it.getString("set_id")
+            setTakenID = it.getString("set_taken_id")
         }
     }
 
@@ -130,7 +131,6 @@ class TrainingFragment : Fragment() {
     private fun setupRecyclerView()
     {
         val listener = SetOnClickListener {
-            Log.d(TAG,"setId")
             findNavController().navigate(R.id.action_trainingFragment_to_workoutDetail1, it)
         }
         val list = _viewModel.sets
@@ -140,13 +140,14 @@ class TrainingFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.O)
     private fun watching(){
 
-        _viewModel.indicatorWatching("7pOsKxeeo7J93xNQtTQ0")
+        _viewModel.indicatorWatching("TvcMFUAi8BIcDhNRqPyU")
         var num = _viewModel.numberOfCalories
-        var hour = _viewModel.workoutHours/60
-        var min = _viewModel.workoutHours%60
+        //var hour = _viewModel.workoutHours/60
+        var min = (_viewModel.workoutHours/1000)/60
         binding.textViewCalories.text = "$num kCal"
         binding.textViewCaloriesNumber.text = "$num kCal"
-        binding.textViewHours.text = hour.toString() + "h " + min.toString() + "mins"
+        //binding.textViewHours.text = hour.toString() + "h " + min.toString() + "mins"
+        binding.textViewHours.text = min.toString() + " mins"
     }
 
     @SuppressLint("NotifyDataSetChanged")
