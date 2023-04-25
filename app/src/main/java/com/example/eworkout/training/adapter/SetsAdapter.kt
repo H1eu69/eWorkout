@@ -28,7 +28,7 @@ class SetsAdapter(val list: List<Set>, val listener: SetOnClickListener): Recycl
                 }
                 if(setImage != ""){
                     Glide.with(binding.root.context).load(setImage)
-                        .centerCrop()
+                        .fitCenter()
                         .into(binding.SetImageView)
                 }
 

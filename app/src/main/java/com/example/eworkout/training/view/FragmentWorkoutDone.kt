@@ -7,14 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import com.example.eworkout.R
-import com.example.eworkout.databinding.FragmentWorkoutDetail1Binding
 import com.example.eworkout.databinding.FragmentWorkoutDoneBinding
-import com.example.eworkout.databinding.FragmentWorkoutStart1Binding
-import com.example.eworkout.training.model.WorkoutDetail1State
+import com.example.eworkout.training.model.UpdateState
 import com.example.eworkout.training.model.WorkoutDoneState
-import com.example.eworkout.training.viewmodel.Workout1SharedViewModel
+import com.example.eworkout.training.viewmodel.SharedViewModel
 import com.example.eworkout.training.viewmodel.WorkoutDoneViewModel
 
 // TODO: Rename parameter arguments, choose names that match
@@ -34,6 +33,8 @@ class FragmentWorkoutDone : Fragment() {
     private var _binding: FragmentWorkoutDoneBinding? = null
     val binding get() = _binding!!
     private val _viewModel: WorkoutDoneViewModel by viewModels()
+    private val _sharedViewModel: SharedViewModel by navGraphViewModels(R.id.training_nav)
+
     private var setTakenID: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,7 +65,6 @@ class FragmentWorkoutDone : Fragment() {
          * @param param2 Parameter 2.
          * @return A new instance of fragment FragmentWorkoutDone.
          */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
             FragmentWorkoutDone().apply {
@@ -77,13 +77,46 @@ class FragmentWorkoutDone : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setListener()
         observeViewModel()
+    }
+
+    private fun setListener()
+    {
+        binding.backBtn.setOnClickListener {
+            onClick()
+        }
+        binding.btnNext.setOnClickListener {
+            onClick()
+        }
+    }
+
+    private fun onClick()
+    {
+        _sharedViewModel.resetIndexAndCalories()
+        findNavController().navigate(R.id.action_fragmentWorkoutDone_to_trainingFragment)
     }
 
     private fun observeViewModel()
     {
-        _viewModel.state.observe(viewLifecycleOwner){
+        /*_viewModel.state.observe(viewLifecycleOwner){
             handleState(it)
+        }*/
+        _sharedViewModel.updateState.observe(viewLifecycleOwner)
+        {
+            handleUpdateState(it)
+        }
+    }
+
+    private fun handleUpdateState(updateState: UpdateState) {
+        when(updateState.name){
+            "RUNNING" -> {
+                showLoading()
+                _viewModel.getModelData(setTakenID!!)
+            }
+            "DONE" -> {
+                hideLoading()
+            }
         }
     }
 

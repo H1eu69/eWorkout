@@ -50,7 +50,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/button"
+                    android:id="@+id/backBtn"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_marginStart="28.8dp"
@@ -67,8 +67,8 @@
                     android:layout_marginEnd="28.8dp"
                     android:src="@drawable/trophy"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/button"
-                    app:layout_constraintTop_toBottomOf="@+id/button" />
+                    app:layout_constraintStart_toStartOf="@+id/backBtn"
+                    app:layout_constraintTop_toBottomOf="@+id/backBtn" />
 
                 <TextView
                     android:id="@+id/textView_congrats"
@@ -106,7 +106,7 @@
                     style="@style/TextView6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@={viewModel.modelLiveData.kcal}"
+                    textByNumber="@={viewModel.modelLiveData.kcal}"
                     app:layout_constraintEnd_toEndOf="@+id/textView_kcal"
                     app:layout_constraintStart_toStartOf="@+id/textView_kcal"
                     app:layout_constraintTop_toTopOf="@+id/textView_num_exercises" />
@@ -212,11 +212,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:orientation="horizontal"
-                    app:layout_constraintVertical_bias="0"
-                    app:layout_constraintBottom_toTopOf="@+id/btn_start"
+                    app:layout_constraintBottom_toTopOf="@+id/btn_next"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView_easy">
+                    app:layout_constraintTop_toBottomOf="@+id/textView_easy"
+                    app:layout_constraintVertical_bias="0">
                     <!-- Ta dao -->
                     <RadioButton
                         android:layout_width="0dp"
@@ -277,7 +277,7 @@
                 </RadioGroup>
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btn_start"
+                    android:id="@+id/btn_next"
                     style="@style/Button3"
                     android:layout_marginBottom="40dp"
                     android:background="@drawable/blue_linear_button"

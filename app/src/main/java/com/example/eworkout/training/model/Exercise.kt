@@ -8,5 +8,6 @@ data class Exercise(
     val description: String,
     val calo: String,
     val instruction: String,
-    val animation_url: String
+    val animation_url: String,
+    val MET: Double
 )

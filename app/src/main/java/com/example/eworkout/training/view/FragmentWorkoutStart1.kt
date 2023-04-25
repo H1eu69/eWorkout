@@ -15,9 +15,9 @@ import androidx.navigation.navGraphViewModels
 import com.example.eworkout.R
 import com.example.eworkout.databinding.FragmentWorkoutStart1Binding
 import com.example.eworkout.training.util.StringUlti
-import com.example.eworkout.training.viewmodel.Workout1SharedViewModel
+import com.example.eworkout.training.viewmodel.SharedViewModel
+import com.example.eworkout.training.viewmodel.Workout1ViewModel
 import com.orbitalsonic.sonictimer.SonicCountDownTimer
-import java.io.FileNotFoundException
 
 /**
  * A simple [Fragment] subclass.
@@ -30,13 +30,12 @@ class FragmentWorkoutStart1 : Fragment() {
     private var param2: String? = null
     private var _binding: FragmentWorkoutStart1Binding? = null
     val binding get() = _binding!!
-    private val _viewModel: Workout1SharedViewModel by navGraphViewModels(R.id.training_nav)
+    private val _viewModel: SharedViewModel by navGraphViewModels(R.id.training_nav)
     private lateinit var countDownTimer : SonicCountDownTimer
     private lateinit var animation: ObjectAnimator
     private var isPaused = false
     private lateinit var timer : Chronometer
 
-    private var millisLeft = 0L
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -71,21 +70,29 @@ class FragmentWorkoutStart1 : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        var time = (StringUlti.removeRepsPostfix(_viewModel.getCurrentExercise().reps)).toLong()
-        time *= 1000
+
+        var timeToCount = (StringUlti.removeRepsPostfix(_viewModel.getCurrentExercise().reps)).toLong()
+        timeToCount *= 1000
+
         setAnimation()
 
-        startProgressAnimation(time)
+        startProgressAnimation(timeToCount)
 
-        startCountDown(time)
+        startCountDown(timeToCount)
 
         setListener()
+
+        startCountUp()
+    }
+
+    private fun startCountUp()
+    {
         timer = Chronometer(context)
         timer.start()
     }
 
     private fun setAnimation() {
-            binding.backgroundAnimationView.setAnimation(_viewModel.getCurrentExercise().name + ".json")
+        binding.backgroundAnimationView.setAnimation(_viewModel.getCurrentExercise().name + ".json")
     }
 
     private fun startProgressAnimation(millisCountDown: Long)
@@ -108,10 +115,13 @@ class FragmentWorkoutStart1 : Fragment() {
 
             override fun onTimerFinish() {
                 Log.d("navigate", "timer fninish")
-                if(_viewModel.increaseCurrentExerciseIndex())
+                if(_viewModel.increaseCurrentExerciseIndex()){
+                    _viewModel.calculateKcal((SystemClock.elapsedRealtime() - timer.base) / 1000)
                     findNavController().navigate(R.id.action_fragmentWorkoutStart1_to_fragmentWorkoutRest)
+                }
+
                 else{
-                    _viewModel.updateSetTaken()
+                    _viewModel.calculateAndUpdate((SystemClock.elapsedRealtime() - timer.base) / 1000)
                     findNavController().navigate(R.id.action_fragmentWorkoutStart1_to_fragmentWorkoutDone)
                 }
             }
@@ -145,11 +155,12 @@ class FragmentWorkoutStart1 : Fragment() {
         }
         binding.btnNext.setOnClickListener {
             if(_viewModel.increaseCurrentExerciseIndex())
+            {
+                _viewModel.calculateKcal((SystemClock.elapsedRealtime() - timer.base) / 1000)
                 findNavController().navigate(R.id.action_fragmentWorkoutStart1_to_fragmentWorkoutRest)
+            }
             else{
-                val bundle = Bundle()
-                bundle.putString("set_taken_id", _viewModel.setTakenID)
-                _viewModel.updateSetTaken()
+                _viewModel.calculateAndUpdate((SystemClock.elapsedRealtime() - timer.base) / 1000)
                 findNavController().navigate(R.id.action_fragmentWorkoutStart1_to_fragmentWorkoutDone)
             }
         }

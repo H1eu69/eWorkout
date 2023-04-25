@@ -13,12 +13,8 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FieldPath
 import com.google.firebase.storage.ktx.storage
 
-class Workout1SharedViewModel : ViewModel() {
+class Workout1ViewModel : ViewModel() {
     val firestore = Firebase.firestore
-
-    val auth = Firebase.auth
-
-    var kcalConsumed = 0;
 
     val storageRef = Firebase.storage.reference
 
@@ -33,32 +29,6 @@ class Workout1SharedViewModel : ViewModel() {
     private val _state : MutableLiveData<WorkoutDetail1State> = MutableLiveData(WorkoutDetail1State.LOADING)
     val state : LiveData<WorkoutDetail1State> get() = _state
 
-    private var currentExerciseIndex = 0
-
-    fun addNewSetTaken(setId: String)
-    {
-        val data = hashMapOf(
-            "user_id" to "O0PNnHMqAufapue91s5Zhf4TDTg1",
-            "set_id" to setId,
-            "start_time" to Timestamp.now(),
-            "total_calories" to "0"
-        )
-        /*val data = hashMapOf(
-            "user_id" to "auth.currentuser.uid",
-            "set_id" to setId,
-            "start_time" to Timestamp.now(),
-            "total_calories" to "0"
-        )*/
-        firestore.collection("Set_Taken").add(data).addOnSuccessListener {
-            setTakenID = it.id
-        }
-    }
-
-    fun updateSetTaken()
-    {
-        firestore.collection("Set_Taken").document(setTakenID)
-            .update("end_time", Timestamp.now())
-    }
 
     fun getSetsFieldsById(id: String) {
         exercises.clear()
@@ -111,7 +81,8 @@ class Workout1SharedViewModel : ViewModel() {
                         doc.get("description").toString(),
                         doc.get("calories").toString(),
                         doc.get("instruction").toString(),
-                        doc.get("animation_url").toString())
+                        doc.get("animation_url").toString(),
+                        doc.getDouble("MET")!!)
                     exercises.add(exercise)
                     getUriImageByName(exercise)
                 }
@@ -128,57 +99,5 @@ class Workout1SharedViewModel : ViewModel() {
                 exercise.image = it.toString()
                 _state.value = WorkoutDetail1State.IMAGE_LOADED
             }
-    }
-
-    fun increaseCurrentExerciseIndex(): Boolean
-    {
-        if(!isLastExercise())
-        {
-            currentExerciseIndex += 1
-            return true
-        }
-        return false
-    }
-    fun decreaseCurrentExerciseIndex()
-    {
-        if(!isFirstExercise())
-            currentExerciseIndex -= 1
-    }
-
-    fun showExercisesUntilFinish(): String
-    {
-        return "Next " + (currentExerciseIndex + 1).toString() + "/" + exercises.size
-    }
-
-    fun getCurrentExercise(): Exercise {
-        return exercises[currentExerciseIndex]
-    }
-    fun getCurrentExerciseAndIncreaseIndex(): Exercise
-    {
-        val current = exercises[currentExerciseIndex]
-        increaseCurrentExerciseIndex()
-        return current
-    }
-
-    fun getNextExercise(): Exercise{
-        return exercises[currentExerciseIndex + 1]
-    }
-
-    fun isLastExercise(): Boolean
-    {
-        return currentExerciseIndex == exercises.size - 1
-    }
-
-    fun isFirstExercise(): Boolean
-    {
-        return currentExerciseIndex == 0
-    }
-
-    fun changeStateToLoaded(){
-        _state.value = WorkoutDetail1State.LOADED
-    }
-
-    fun changeStateToLoading(){
-        _state.value = WorkoutDetail1State.LOADING
     }
 }

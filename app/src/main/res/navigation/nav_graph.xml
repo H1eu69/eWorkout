@@ -181,7 +181,9 @@
             android:label="FragmentWorkoutDone" >
             <action
                 android:id="@+id/action_fragmentWorkoutDone_to_trainingFragment"
-                app:destination="@id/trainingFragment" />
+                app:destination="@id/trainingFragment"
+                app:popUpTo="@id/fragmentWorkoutDone"
+                app:popUpToInclusive="true"/>
         </fragment>
     </navigation>
 

@@ -12,7 +12,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import com.example.eworkout.R
 import com.example.eworkout.databinding.FragmentWorkoutReadyBinding
-import com.example.eworkout.training.viewmodel.Workout1SharedViewModel
+import com.example.eworkout.training.viewmodel.SharedViewModel
+import com.example.eworkout.training.viewmodel.Workout1ViewModel
 
 
 /**
@@ -29,7 +30,7 @@ class FragmentWorkoutReady : Fragment() {
     private var param2: String? = null
     private var _binding: FragmentWorkoutReadyBinding? = null
     val binding get() = _binding!!
-    private val _viewModel: Workout1SharedViewModel by navGraphViewModels(R.id.training_nav)
+    private val _viewModel: SharedViewModel by navGraphViewModels(R.id.training_nav)
     private lateinit var countDownTimer : CountDownTimer
     private lateinit var animation: ObjectAnimator
     override fun onCreate(savedInstanceState: Bundle?) {
