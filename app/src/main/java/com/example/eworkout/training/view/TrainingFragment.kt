@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.eworkout.R
@@ -83,37 +84,20 @@ class TrainingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _viewModel.getCurrentUserEmail()
-        if (setTakenID.isNullOrEmpty()) {
+        /*if (setTakenID.isNullOrEmpty()) {
             binding.textViewCaloriesNumber.text = "0.0"
             binding.textViewCalories.text = "0.0"
             binding.textViewHours.text = "0"
         }
         else{
-            _viewModel.indicatorWatching(setTakenID.toString())
-        }
+            _viewModel.indicatorWatching()
+        }*/
         observeViewModel()
         setupRecyclerView()
+        setOnlistener()
     }
 
-    /*@RequiresApi(Build.VERSION_CODES.O)
-    private fun watching() {
-        var num = _viewModel.numberOfCalories
-        var min = (_viewModel.workoutHours/1000)/60
-        if (setTakenID.isNullOrBlank()){
-            binding.textViewCalories.text = "0 kCal"
-            binding.textViewCaloriesNumber.text = "0 kCal"
-            binding.textViewHours.text = "0 mins"
-        }
-        else{
-            _viewModel.indicatorWatching(setTakenID!!)
-
-            binding.textViewCalories.text = "$num kCal"
-            binding.textViewCaloriesNumber.text = "$num kCal"
-            binding.textViewHours.text = min.toString() + " mins"
-        }
-    }*/
-
-   private fun observeViewModel()
+    private fun observeViewModel()
     {
         _viewModel.state.observe(viewLifecycleOwner){
             handleState(it)
@@ -125,13 +109,10 @@ class TrainingFragment : Fragment() {
         when(state.name){
             "LOADING" -> {
                 _viewModel.loadSets()
+                _viewModel.indicatorWatching()
                 showLoading()
             }
             "LOADED" -> {
-                binding.textView2.text = _viewModel.userEmail
-                binding.textViewCalories.text = _viewModel.num.toString()
-                binding.textViewCaloriesNumber.text = _viewModel.num.toString()
-                binding.textViewHours.text = _viewModel.min.toString()
                 setupRecyclerView()
                 hideLoading()
             }
@@ -160,29 +141,23 @@ class TrainingFragment : Fragment() {
         }
         val list = _viewModel.sets
         binding.recyclerView.adapter = SetsAdapter(list, listener)
+        binding.textView2.text = _viewModel.userEmail
+        binding.textViewCalories.text = _viewModel.num.toString()
+        binding.textViewCaloriesNumber.text = _viewModel.num.toString()
+        binding.textViewHours.text = _viewModel.min.toString()
     }
 
-
+    private fun setOnlistener(){
+        binding.buttonCheck.setOnClickListener(){
+            //findNavController().navigate(R.id.action_train)
+        }
+    }
 
     @SuppressLint("NotifyDataSetChanged")
     private fun notifyDataChange()
     {
         binding.recyclerView.adapter?.notifyDataSetChanged()
     }
-    /*override fun onStop() {
-        super.onStop()
-        setupRecyclerView()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        setupRecyclerView()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        setupRecyclerView()
-    }*/
 }
 
 

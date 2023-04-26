@@ -87,6 +87,7 @@ class FragmentWorkoutDone : Fragment() {
             onClick()
         }
         binding.btnNext.setOnClickListener {
+            _viewModel.addToCalendar(setTakenID.toString())
             onClick()
         }
         binding.textViewNext.setOnClickListener {

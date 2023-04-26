@@ -1,9 +1,7 @@
 package com.example.eworkout.training.viewmodel
 
 import android.content.ContentValues.TAG
-import android.os.Build
 import android.util.Log
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -15,19 +13,17 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
-import java.text.SimpleDateFormat
+import java.text.DateFormat
+import java.text.DecimalFormat
+import java.text.DecimalFormatSymbols
+import java.text.NumberFormat
 import java.util.*
 
 class TrainingViewModel: ViewModel() {
     val firestore = Firebase.firestore
-
     val storageRef = Firebase.storage.reference
 
     val sets = mutableListOf<Set>()
-
-    var numberOfCalories: Double = 0.0
-
-    var workoutHours: Long = 0
 
     private val _state: MutableLiveData<TrainingState> = MutableLiveData(TrainingState.LOADING)
     val state: LiveData<TrainingState> get() = _state
@@ -51,7 +47,7 @@ class TrainingViewModel: ViewModel() {
         return if (index == -1) missingDelimiterValue else substring(0, index)
     }
 
-    fun indicatorWatching(id: String) {
+    /*fun indicatorWatching(id: String) {
         firestore.collection("Set_Taken")
             .document(id)
             .get().addOnSuccessListener {
@@ -59,10 +55,52 @@ class TrainingViewModel: ViewModel() {
                 val milliseconds = (it.getDate("end_time")?.time!! - (it.getDate("start_time")?.time!!))
                 min += ((milliseconds/1000)/60)
             }
+    }*/
+
+    val calendar = Calendar.getInstance().time
+    val dateFormat = DateFormat.getDateInstance().format(calendar)
+    fun indicatorWatching(){
+        firestore.collection("Calendar")
+            .whereEqualTo("user_id", auth.currentUser!!.uid)
+            .whereEqualTo("date", dateFormat)
+            .get().addOnSuccessListener { documents ->
+                for(it in documents){
+                    val calo = it.get("total_calories") as Double
+                    num += calo
+                    num.toString()
+
+                    val milliseconds = it.get("total_time") as Double
+                    min += (milliseconds/1000)/60
+                    min.toString()
+
+                    _state.value = TrainingState.LOADED
+                }
+            }.addOnFailureListener {
+                Log.d(TAG, "load failed", it)
+            }
+    }
+    val formatSymbols = DecimalFormatSymbols.getInstance().apply {
+        decimalSeparator = ','
     }
 
+    val twoDecimalDigitsFormat = DecimalFormat("#.##").apply {
+        decimalFormatSymbols = formatSymbols
+    }
 
+    val twoTrailingZerosFormat = DecimalFormat("#.00").apply {
+        decimalFormatSymbols = formatSymbols
+    }
 
+    fun formatPrice(price: Double, withDecimalZeros: Boolean) = if (withDecimalZeros) {
+        twoTrailingZerosFormat
+    } else {
+        // Is number still the same after discarding places?
+        if (price.toInt().toDouble() == price) {
+            twoDecimalDigitsFormat
+        } else {
+            twoTrailingZerosFormat
+        }
+    }.format(price)
     fun loadSets() {
         /*firestore.collection("Sets")
             .document("cV4RagVwciBDCqFfdfOi")
@@ -81,61 +119,8 @@ class TrainingViewModel: ViewModel() {
             }
             .addOnFailureListener { exception ->
                 Log.d(TAG, "get failed with ", exception)
-            }
-        firestore.collection("Sets")
-            .document("z9BQfujVcuRKYs4d2DbW")
-            .get()
-            .addOnSuccessListener { data ->
-                val set = Set(
-                    data.id,
-                    data.get("name").toString(),
-                    data.get("total_time") as Long,
-                    data.get("total_calories") as Long,
-                    data.get("number_of_exercises") as Long,
-                    ""
-                )
-                sets.add(set)
-                getUriImageByName(set)
-            }
-            .addOnFailureListener { exception ->
-                Log.d(TAG, "get failed with ", exception)
-            }
-        firestore.collection("Sets")
-            .document("bPGOVbrUNAnWf4y7dun1")
-            .get()
-            .addOnSuccessListener { data ->
-                val set = Set(
-                    data.id,
-                    data.get("name").toString(),
-                    data.get("total_time") as Long,
-                    data.get("total_calories")as Long,
-                    data.get("number_of_exercises") as Long,
-                    ""
-                )
-                sets.add(set)
-                getUriImageByName(set)
-            }
-            .addOnFailureListener { exception ->
-                Log.d(TAG, "get failed with ", exception)
-            }
-        firestore.collection("Sets")
-            .document("CkU0yD2WlQweVEqqjupN")
-            .get()
-            .addOnSuccessListener { data ->
-                val set = Set(
-                    data.id,
-                    data.get("name").toString(),
-                    data.get("total_time") as Long,
-                    data.get("total_calories") as Long,
-                    data.get("number_of_exercises") as Long,
-                    ""
-                )
-                sets.add(set)
-                getUriImageByName(set)
-            }
-            .addOnFailureListener { exception ->
-                Log.d(TAG, "get failed with ", exception)
             }*/
+
         firestore.collection("Sets")
             .get()
             .addOnSuccessListener { documents ->
@@ -155,7 +140,6 @@ class TrainingViewModel: ViewModel() {
             .addOnFailureListener { exception ->
                 Log.d(TAG, "get failed with ", exception)
             }
-
     }
 
     private fun getUriImageByName(set: Set) {
