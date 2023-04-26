@@ -31,18 +31,18 @@ class TrainingFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    //private var setId: String? = null
     private var _binding: FragmentTrainingBinding? = null
     val binding get() = _binding!!
     private lateinit var _viewModel: TrainingViewModel
 
+    private var setTakenID: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
-            //setId = it.getString("set_id")
+            setTakenID = it.getString("setTakenId")
         }
     }
 
@@ -82,10 +82,36 @@ class TrainingFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        _viewModel.loadSets()
-        watching()
+        _viewModel.getCurrentUserEmail()
+        if (setTakenID.isNullOrEmpty()) {
+            binding.textViewCaloriesNumber.text = "0.0"
+            binding.textViewCalories.text = "0.0"
+            binding.textViewHours.text = "0"
+        }
+        else{
+            _viewModel.indicatorWatching(setTakenID.toString())
+        }
         observeViewModel()
+        setupRecyclerView()
     }
+
+    /*@RequiresApi(Build.VERSION_CODES.O)
+    private fun watching() {
+        var num = _viewModel.numberOfCalories
+        var min = (_viewModel.workoutHours/1000)/60
+        if (setTakenID.isNullOrBlank()){
+            binding.textViewCalories.text = "0 kCal"
+            binding.textViewCaloriesNumber.text = "0 kCal"
+            binding.textViewHours.text = "0 mins"
+        }
+        else{
+            _viewModel.indicatorWatching(setTakenID!!)
+
+            binding.textViewCalories.text = "$num kCal"
+            binding.textViewCaloriesNumber.text = "$num kCal"
+            binding.textViewHours.text = min.toString() + " mins"
+        }
+    }*/
 
    private fun observeViewModel()
     {
@@ -98,9 +124,14 @@ class TrainingFragment : Fragment() {
     {
         when(state.name){
             "LOADING" -> {
+                _viewModel.loadSets()
                 showLoading()
             }
             "LOADED" -> {
+                binding.textView2.text = _viewModel.userEmail
+                binding.textViewCalories.text = _viewModel.num.toString()
+                binding.textViewCaloriesNumber.text = _viewModel.num.toString()
+                binding.textViewHours.text = _viewModel.min.toString()
                 setupRecyclerView()
                 hideLoading()
             }
@@ -111,42 +142,27 @@ class TrainingFragment : Fragment() {
         }
     }
 
-
     private fun showLoading()
     {
         binding.shimmerLayout.visibility = View.VISIBLE
-        binding.recyclerView.visibility = View.GONE
-        //binding.hideShimmerLayout = false
-        //binding.hideDataLayout = true
+        binding.dataLayout.visibility = View.GONE
     }
     private fun hideLoading()
     {
         binding.shimmerLayout.visibility = View.GONE
-        binding.recyclerView.visibility = View.VISIBLE
-        //binding.hideShimmerLayout = true
-        //binding.hideDataLayout = false
+        binding.dataLayout.visibility = View.VISIBLE
     }
 
     private fun setupRecyclerView()
     {
         val listener = SetOnClickListener {
-            Log.d(TAG,"setId")
             findNavController().navigate(R.id.action_trainingFragment_to_workoutDetail1, it)
         }
         val list = _viewModel.sets
         binding.recyclerView.adapter = SetsAdapter(list, listener)
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun watching(){
-        _viewModel.indicatorWatching("ev89TFkqna9mXcRQApy1")
-        var num = _viewModel.numberOfCalories
-        var hour = _viewModel.workoutHours/60
-        var min = _viewModel.workoutHours%60
-        binding.textViewCalories.text = "$num kCal"
-        binding.textViewCaloriesNumber.text = "$num kCal"
-        binding.textViewHours.text = hour.toString() + "h " + min.toString() + "mins"
-    }
+
 
     @SuppressLint("NotifyDataSetChanged")
     private fun notifyDataChange()

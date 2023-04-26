@@ -108,7 +108,9 @@ class FragmentWorkoutDone : Fragment() {
     private fun onClick()
     {
         _sharedViewModel.resetIndexAndCalories()
-        findNavController().navigate(R.id.action_fragmentWorkoutDone_to_trainingFragment)
+        val bundle = Bundle()
+        bundle.putString("setTakenId",setTakenID)
+        findNavController().navigate(R.id.action_fragmentWorkoutDone_to_trainingFragment, bundle)
     }
 
     private fun doExerciseAgain()

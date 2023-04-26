@@ -8,8 +8,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="10dp">
+        android:layout_height="match_parent">
 
         <com.facebook.shimmer.ShimmerFrameLayout
             android:id="@+id/shimmer_layout"
@@ -23,6 +22,15 @@
             <include layout="@layout/training_loading" />
 
         </com.facebook.shimmer.ShimmerFrameLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/data_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:padding="10dp">
 
         <TextView
             android:id="@+id/textView1"
@@ -41,9 +49,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:fontFamily="@font/poppins_bold"
-            android:text="@string/user_name"
+            android:text="@{viewModel.userEmail}"
             android:textColor="@color/black"
-            android:textSize="30sp"
+            android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textView1" />
 
@@ -67,7 +75,7 @@
                 android:fontFamily="@font/poppins"
                 android:text="@string/daily_workout_schedule"
                 android:textColor="@color/black"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@+id/frame1"
                 app:layout_constraintStart_toStartOf="@id/frame1"
                 app:layout_constraintTop_toTopOf="@+id/frame1" />
@@ -78,11 +86,12 @@
                 style="@style/Button4"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginEnd="15dp"
                 android:layout_marginStart="10dp"
                 android:background="@drawable/gradient_shape"
                 android:text="@string/check"
-                android:textSize="16sp"
+                android:textSize="14sp"
+                app:layout_constraintHorizontal_bias="1"
                 app:layout_constraintBottom_toBottomOf="@+id/frame1"
                 app:layout_constraintEnd_toEndOf="@id/frame1"
                 app:layout_constraintStart_toEndOf="@+id/textView3"
@@ -98,7 +107,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/frame1"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="10dp"
                 app:layout_constraintVertical_bias="0">
 
                 <TextView
@@ -135,7 +144,7 @@
                         android:fontFamily="@font/poppins_medium"
                         android:text="@string/calories"
                         android:textColor="@color/black"
-                        android:textSize="15sp"
+                        android:textSize="14sp"
                         android:layout_marginStart="50dp"
                         app:layout_constraintStart_toEndOf="@+id/imageBg"
                         app:layout_constraintTop_toTopOf="parent"/>
@@ -145,12 +154,23 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins_medium"
-                        android:text="107 kCal"
+                        textByNumber="@{viewModel.num}"
                         android:textColor="#92A3FD"
-                        android:textSize="20sp"
+                        android:textSize="15sp"
                         android:layout_marginStart="50dp"
                         app:layout_constraintTop_toBottomOf="@+id/textView7"
                         app:layout_constraintStart_toEndOf="@+id/imageBg" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text=" kCal"
+                        android:textColor="#92A3FD"
+                        android:textSize="15sp"
+                        android:layout_marginStart="5dp"
+                        app:layout_constraintTop_toBottomOf="@+id/textView7"
+                        app:layout_constraintStart_toEndOf="@+id/textViewCalories"/>
 
                     <TextView
                         android:id="@+id/textViewWorkoutHours"
@@ -159,7 +179,7 @@
                         android:fontFamily="@font/poppins_medium"
                         android:text="@string/workout_hours"
                         android:textColor="@color/black"
-                        android:textSize="15sp"
+                        android:textSize="14sp"
                         android:layout_marginStart="50dp"
                         app:layout_constraintTop_toBottomOf="@id/textViewCalories"
                         app:layout_constraintStart_toEndOf="@+id/imageBg"/>
@@ -169,20 +189,30 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins_medium"
-                        android:text="8h 32min"
+                        textByNumber="@{viewModel.min}"
                         android:textColor="#92A3FD"
-                        android:textSize="20sp"
+                        android:textSize="15sp"
                         android:layout_marginStart="50dp"
                         app:layout_constraintTop_toBottomOf="@+id/textViewWorkoutHours"
                         app:layout_constraintStart_toEndOf="@+id/imageBg"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" mins"
+                        android:textColor="#92A3FD"
+                        android:textSize="15sp"
+                        android:layout_marginStart="5dp"
+                        app:layout_constraintTop_toBottomOf="@+id/textViewWorkoutHours"
+                        app:layout_constraintStart_toEndOf="@+id/textViewHours"/>
 
                     <ImageView
                         android:id="@+id/imageBg"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/circle_shape"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginBottom="15dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
                         android:layout_marginStart="20dp"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -193,8 +223,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins_medium"
-                        android:text="107 kCal"
-                        android:textSize="20sp"
+                        textByNumber="@{viewModel.num}"
+                        android:textSize="18sp"
                         android:textColor="@color/white"
                         app:layout_constraintTop_toTopOf="@+id/imageBg"
                         app:layout_constraintStart_toStartOf="@+id/imageBg"
@@ -241,5 +271,5 @@
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
