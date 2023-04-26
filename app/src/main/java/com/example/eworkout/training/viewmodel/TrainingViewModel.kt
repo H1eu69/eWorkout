@@ -35,6 +35,9 @@ class TrainingViewModel: ViewModel() {
     var num: Double = 0.0
     var min: Double = 0.0
 
+    val calendar = Calendar.getInstance().time
+    val dateFormat = DateFormat.getDateInstance().format(calendar)
+
     fun getCurrentUserEmail(){
         if (user != null)
         {
@@ -47,18 +50,6 @@ class TrainingViewModel: ViewModel() {
         return if (index == -1) missingDelimiterValue else substring(0, index)
     }
 
-    /*fun indicatorWatching(id: String) {
-        firestore.collection("Set_Taken")
-            .document(id)
-            .get().addOnSuccessListener {
-                num += it.getDouble("total_calories")!!
-                val milliseconds = (it.getDate("end_time")?.time!! - (it.getDate("start_time")?.time!!))
-                min += ((milliseconds/1000)/60)
-            }
-    }*/
-
-    val calendar = Calendar.getInstance().time
-    val dateFormat = DateFormat.getDateInstance().format(calendar)
     fun indicatorWatching(){
         firestore.collection("Calendar")
             .whereEqualTo("user_id", auth.currentUser!!.uid)
@@ -79,28 +70,7 @@ class TrainingViewModel: ViewModel() {
                 Log.d(TAG, "load failed", it)
             }
     }
-    val formatSymbols = DecimalFormatSymbols.getInstance().apply {
-        decimalSeparator = ','
-    }
 
-    val twoDecimalDigitsFormat = DecimalFormat("#.##").apply {
-        decimalFormatSymbols = formatSymbols
-    }
-
-    val twoTrailingZerosFormat = DecimalFormat("#.00").apply {
-        decimalFormatSymbols = formatSymbols
-    }
-
-    fun formatPrice(price: Double, withDecimalZeros: Boolean) = if (withDecimalZeros) {
-        twoTrailingZerosFormat
-    } else {
-        // Is number still the same after discarding places?
-        if (price.toInt().toDouble() == price) {
-            twoDecimalDigitsFormat
-        } else {
-            twoTrailingZerosFormat
-        }
-    }.format(price)
     fun loadSets() {
         /*firestore.collection("Sets")
             .document("cV4RagVwciBDCqFfdfOi")
