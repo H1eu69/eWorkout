@@ -1,6 +1,7 @@
 package com.example.eworkout.training.view
 
 import android.animation.ObjectAnimator
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.CountDownTimer
 import androidx.fragment.app.Fragment
@@ -34,6 +35,7 @@ class FragmentWorkoutRest : Fragment() {
     private val _viewModel: SharedViewModel by navGraphViewModels(R.id.training_nav)
     private lateinit var countDownTimer : CountDownTimer
     private lateinit var animation: ObjectAnimator
+    private lateinit var mediaPlayer : MediaPlayer
     private var timeRemaining = 0L
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,10 +78,17 @@ class FragmentWorkoutRest : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        startSoundEffect()
         setListener()
         setAnimation()
         startProgressAnimation(30000)
         startCountDown(30000)
+    }
+
+    private fun startSoundEffect()
+    {
+        mediaPlayer = MediaPlayer.create(context, R.raw.ting_sound_effect)
+        mediaPlayer.start() // no need to call prepare(); create() does that for you
     }
 
     private fun setAnimation() {
@@ -144,5 +153,6 @@ class FragmentWorkoutRest : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         countDownTimer.cancel()
+        mediaPlayer.stop()
     }
 }

@@ -1,5 +1,6 @@
 package com.example.eworkout.training.view
 
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -36,7 +37,7 @@ class FragmentWorkoutDone : Fragment() {
     private val _sharedViewModel: SharedViewModel by navGraphViewModels(R.id.training_nav)
 
     private var setTakenID: String? = null
-
+    private lateinit var mediaPlayer : MediaPlayer
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -77,8 +78,15 @@ class FragmentWorkoutDone : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        startSoundEffect()
         setListener()
         observeViewModel()
+    }
+
+    private fun startSoundEffect()
+    {
+        mediaPlayer = MediaPlayer.create(context, R.raw.congrats_sound)
+        mediaPlayer.start() // no need to call prepare(); create() does that for you
     }
 
     private fun setListener()
@@ -163,6 +171,7 @@ class FragmentWorkoutDone : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _sharedViewModel.resetUpdateState()
+        mediaPlayer.stop()
     }
 
     override fun onDestroy() {
