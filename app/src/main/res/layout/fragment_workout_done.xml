@@ -291,7 +291,7 @@
                     android:id="@+id/btn_next"
                     style="@style/Button3"
                     android:layout_marginBottom="40dp"
-                    android:background="@drawable/blue_linear_button"
+                    android:background="@drawable/blue_linear_button_enable"
                     android:text="@string/next"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

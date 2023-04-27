@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/login_nav">
+    app:startDestination="@id/custom_set">
 
 
     <navigation android:id="@+id/login_nav"
@@ -193,6 +193,23 @@
                 app:popUpTo="@id/workoutDetail1"
                 app:popUpToInclusive="true"/>
         </fragment>
+    </navigation>
+    <navigation android:id="@+id/custom_set"
+        app:startDestination="@id/createSetFragment">
+        <fragment
+            android:id="@+id/customSetFragment"
+            android:name="com.example.eworkout.custom_workout.CustomSetFragment"
+            android:label="fragment_custom_set"
+            tools:layout="@layout/fragment_custom_set" >
+            <action
+                android:id="@+id/action_customSetFragment_to_createSetFragment"
+                app:destination="@id/createSetFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/createSetFragment"
+            android:name="com.example.eworkout.custom_workout.CreateSetFragment"
+            android:label="fragment_create_set"
+            tools:layout="@layout/fragment_create_set" />
     </navigation>
 
 
