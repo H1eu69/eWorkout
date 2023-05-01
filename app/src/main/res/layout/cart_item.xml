@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="160dp"
+    android:layout_height="wrap_content"
     android:layout_marginBottom="20dp"
     android:background="@drawable/full_corner_rounded_background">
 
@@ -19,9 +19,8 @@
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="105dp"
-        android:layout_height="0dp"
+        android:layout_height="105dp"
         android:src="@drawable/pink_linear_button"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/appCompatButton3" />
 
@@ -45,12 +44,13 @@
         app:layout_constraintVertical_bias=".9" />
 
     <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/appCompatButton5"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/button3"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:text="Edit"
         app:layout_constraintEnd_toEndOf="@+id/appCompatButton3"
-        app:layout_constraintStart_toStartOf="@+id/textView11"
-        app:layout_constraintTop_toBottomOf="@+id/textView11" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 </androidx.constraintlayout.widget.ConstraintLayout>
