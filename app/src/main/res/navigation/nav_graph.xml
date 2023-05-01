@@ -195,7 +195,7 @@
         </fragment>
     </navigation>
     <navigation android:id="@+id/custom_set"
-        app:startDestination="@id/customCreateSetDetailFragment">
+        app:startDestination="@id/customSetChooseImageFragment">
         <fragment
             android:id="@+id/customSetFragment"
             android:name="com.example.eworkout.custom_workout.CustomSetFragment"
@@ -220,6 +220,16 @@
             android:name="com.example.eworkout.custom_workout.CustomCreateSetDetailFragment"
             android:label="fragment_custom_create_set_detail"
             tools:layout="@layout/fragment_custom_create_set_detail" />
+        <fragment
+            android:id="@+id/customSetChooseImageFragment"
+            android:name="com.example.eworkout.custom_workout.CustomSetChooseImageFragment"
+            android:label="fragment_custom_set_choose_image"
+            tools:layout="@layout/fragment_custom_set_choose_image" />
+        <fragment
+            android:id="@+id/customCartFragment"
+            android:name="com.example.eworkout.custom_workout.CustomCartFragment"
+            android:label="fragment_custom_cart"
+            tools:layout="@layout/fragment_custom_cart" />
     </navigation>
 
 
