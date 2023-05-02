@@ -13,10 +13,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
-import java.text.DateFormat
-import java.text.DecimalFormat
-import java.text.DecimalFormatSymbols
-import java.text.NumberFormat
+import java.text.*
 import java.util.*
 
 class TrainingViewModel: ViewModel() {
@@ -50,6 +47,7 @@ class TrainingViewModel: ViewModel() {
         return if (index == -1) missingDelimiterValue else substring(0, index)
     }
 
+
     fun indicatorWatching(){
         firestore.collection("Calendar")
             .whereEqualTo("user_id", auth.currentUser!!.uid)
@@ -58,11 +56,12 @@ class TrainingViewModel: ViewModel() {
                 for(it in documents){
                     val calo = it.get("total_calories") as Double
                     num += calo
-                    num.toString()
+                    num.toInt()
 
                     val milliseconds = it.get("total_time") as Double
-                    min += (milliseconds/1000)/60
-                    min.toString()
+                    min += milliseconds/60000
+                    min = Math.round(min * 100) / 100.0
+
 
                     _state.value = TrainingState.LOADED
                 }

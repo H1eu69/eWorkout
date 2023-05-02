@@ -1,11 +1,16 @@
 package com.example.eworkout.training.view
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.eworkout.R
+import com.example.eworkout.databinding.FragmentDailyScheduleBinding
+import com.example.eworkout.training.model.ScheduleState
+import com.example.eworkout.training.viewmodel.DailyScheduleViewModel
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -21,6 +26,9 @@ class DailyScheduleFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private var _binding: FragmentDailyScheduleBinding? = null
+    val binding get() = _binding!!
+    private lateinit var _viewModel: DailyScheduleViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,9 +41,14 @@ class DailyScheduleFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_daily_schedule, container, false)
+        _binding = FragmentDailyScheduleBinding.inflate(inflater,container,false)
+        val viewModel: DailyScheduleViewModel by viewModels()
+        _viewModel = viewModel
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = this@DailyScheduleFragment
+        return binding.root
     }
 
     companion object {
@@ -57,4 +70,75 @@ class DailyScheduleFragment : Fragment() {
                 }
             }
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        observeViewModel()
+        setOnClick()
+        pickDate()
+    }
+
+    private fun observeViewModel()
+    {
+        _viewModel.state.observe(viewLifecycleOwner){
+            handleState(it)
+        }
+    }
+
+    private fun handleState(state: ScheduleState)
+    {
+        when(state.name){
+            "LOADING" -> {
+                _viewModel.watching()
+            }
+            "LOADED" -> {
+                binding.numOfKcal.text = _viewModel.num.toString()
+                binding.numOfTime.text = _viewModel.min.toString()
+            }
+        }
+    }
+
+    private fun setOnClick() {
+        binding.buttonBackToHome.setOnClickListener {
+            findNavController().navigate(R.id.action_dailyScheduleFragment_to_trainingFragment)
+        }
+    }
+
+    private fun pickDate(){
+        binding.calendarView.setOnDateChangeListener{
+            calendarView, i, i1, i2 ->
+            val year = i
+            val month = i1
+            val day = i2
+            val date = formatDateChange(i,i1,i2)
+            //_viewModel.date = formatDateChange(i,i1,i2)
+            //_viewModel.indicator(_viewModel.date.toString())
+            val bundle = Bundle().apply {
+                putString("date", date)
+            }
+            findNavController().navigate(R.id.action_dailyScheduleFragment_to_historyFragment, bundle)
+        }
+    }
+
+    private fun formatDateChange(i: Int, i1: Int, i2: Int): String{
+        val day: String = i2.toString()
+        var month = ""
+        val year: String = i.toString()
+        when(i1+1){
+            1 -> month = "Jan"
+            2 -> month = "Feb"
+            3 -> month = "Mar"
+            4 -> month = "Apr"
+            5 -> month = "May"
+            6 -> month = "Jun"
+            7 -> month = "Jul"
+            8 -> month = "Aug"
+            9 -> month = "Sep"
+            10 -> month = "Oct"
+            11 -> month = "Nov"
+            12 -> month = "Dec"
+        }
+        return month + " " + day + ", " + year
+    }
+
 }

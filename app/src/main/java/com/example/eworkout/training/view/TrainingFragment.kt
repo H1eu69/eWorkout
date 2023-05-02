@@ -36,14 +36,14 @@ class TrainingFragment : Fragment() {
     val binding get() = _binding!!
     private lateinit var _viewModel: TrainingViewModel
 
-    private var setTakenID: String? = null
+    //private var setTakenID: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
-            setTakenID = it.getString("setTakenId")
+            //setTakenID = it.getString("setTakenId")
         }
     }
 
@@ -80,21 +80,12 @@ class TrainingFragment : Fragment() {
             }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _viewModel.getCurrentUserEmail()
-        /*if (setTakenID.isNullOrEmpty()) {
-            binding.textViewCaloriesNumber.text = "0.0"
-            binding.textViewCalories.text = "0.0"
-            binding.textViewHours.text = "0"
-        }
-        else{
-            _viewModel.indicatorWatching()
-        }*/
+        setOnClick()
         observeViewModel()
         setupRecyclerView()
-        setOnlistener()
     }
 
     private fun observeViewModel()
@@ -147,9 +138,9 @@ class TrainingFragment : Fragment() {
         binding.textViewHours.text = _viewModel.min.toString()
     }
 
-    private fun setOnlistener(){
-        binding.buttonCheck.setOnClickListener(){
-            //findNavController().navigate(R.id.action_train)
+    private fun setOnClick(){
+        binding.buttonSchedule.setOnClickListener{
+            findNavController().navigate(R.id.action_trainingFragment_to_dailyScheduleFragment)
         }
     }
 
