@@ -56,7 +56,7 @@ class TrainingViewModel: ViewModel() {
                 for(it in documents){
                     val calo = it.get("total_calories") as Double
                     num += calo
-                    num.toInt()
+                    num = Math.round(num * 100) / 100.0
 
                     val milliseconds = it.get("total_time") as Double
                     min += milliseconds/60000
