@@ -209,11 +209,6 @@
         </fragment>
 
         <fragment
-            android:id="@+id/customCreateSetFragment"
-            android:name="com.example.eworkout.custom_workout.CustomCreateSetFragmentPickExercises"
-            android:label="fragment_custom_create_set"
-            tools:layout="@layout/fragment_custom_create_set_pick_exercises" />
-        <fragment
             android:id="@+id/customCreateSetDetailFragment"
             android:name="com.example.eworkout.custom_workout.CustomCreateSetDetailFragment"
             android:label="fragment_custom_create_set_detail"
@@ -233,8 +228,16 @@
             android:name="com.example.eworkout.custom_workout.CustomCreateSetChooseName"
             android:label="CustomCreateSetChooseName" >
             <action
-                android:id="@+id/action_customCreateSetChooseName_to_customCreateSetFragment"
-                app:destination="@id/customCreateSetFragment" />
+                android:id="@+id/action_customCreateSetChooseName_to_customCreateSetFragmentPickExercises"
+                app:destination="@id/customCreateSetFragmentPickExercises" />
+        </fragment>
+        <fragment
+            android:id="@+id/customCreateSetFragmentPickExercises"
+            android:name="com.example.eworkout.custom_workout.CustomCreateSetFragmentPickExercises"
+            android:label="CustomCreateSetFragmentPickExercises" >
+            <action
+                android:id="@+id/action_customCreateSetFragmentPickExercises_to_customCreateSetDetailFragment"
+                app:destination="@id/customCreateSetDetailFragment" />
         </fragment>
     </navigation>
 

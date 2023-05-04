@@ -5,6 +5,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.example.eworkout.R
+import com.example.eworkout.custom_workout.adapter.PickExercisesAdapter
+import com.example.eworkout.custom_workout.listener.PickExercisesOnClickListener
+import com.example.eworkout.custom_workout.model.ChooseNameState
+import com.example.eworkout.custom_workout.model.PickExercisesState
+import com.example.eworkout.custom_workout.viewModel.PickExercisesViewModel
 import com.example.eworkout.databinding.FragmentCustomCreateSetPickExercisesBinding
 
 // TODO: Rename parameter arguments, choose names that match
@@ -23,6 +31,7 @@ class CustomCreateSetFragmentPickExercises : Fragment() {
     private var param2: String? = null
     private var _binding: FragmentCustomCreateSetPickExercisesBinding? = null
     private val binding: FragmentCustomCreateSetPickExercisesBinding get() = _binding!!
+    private val viewModel : PickExercisesViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -36,6 +45,8 @@ class CustomCreateSetFragmentPickExercises : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentCustomCreateSetPickExercisesBinding.inflate(inflater, container, false)
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
     }
 
@@ -61,11 +72,41 @@ class CustomCreateSetFragmentPickExercises : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        observeViewModel()
         setupSearchView()
+        setupRecyclerView()
+    }
+    private fun observeViewModel() {
+        viewModel.state.observe(viewLifecycleOwner)
+        {
+            handleState(it)
+        }
     }
 
+    private fun handleState(state: PickExercisesState) {
+        when(state.name)
+        {
+            "LOADING" -> {
+                viewModel.getExercise()
+            }
+            "LOADED" -> {
+                setupRecyclerView()
+            }
+        }
+    }
     private fun setupSearchView()
     {
         binding.searchView.setupWithSearchBar(binding.searchBar)
+    }
+
+    private fun setupRecyclerView()
+    {
+        val listener = object : PickExercisesOnClickListener
+        {
+            override fun onClick(bundle: Bundle) {
+                findNavController().navigate(R.id.action_customCreateSetFragmentPickExercises_to_customCreateSetDetailFragment, bundle)
+            }
+        }
+        binding.recyclerView2.adapter = PickExercisesAdapter(viewModel.list.value!!, listener)
     }
 }

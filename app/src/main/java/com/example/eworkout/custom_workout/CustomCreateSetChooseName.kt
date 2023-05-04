@@ -98,7 +98,7 @@ class CustomCreateSetChooseName : Fragment() {
             if(viewModel.validateText()){
                 val bundle = Bundle()
                 bundle.putString("set_name", viewModel.setName.value)
-                findNavController().navigate(R.id.action_customCreateSetChooseName_to_customCreateSetFragment, bundle)
+                findNavController().navigate(R.id.action_customCreateSetChooseName_to_customCreateSetFragmentPickExercises, bundle)
             }
         }
     }
