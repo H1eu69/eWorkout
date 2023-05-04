@@ -5,8 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.eworkout.R
-import com.example.eworkout.databinding.FragmentCreateSetBinding
+import com.example.eworkout.databinding.FragmentCustomCreateSetPickExercisesBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -15,16 +14,15 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [CreateSetFragment.newInstance] factory method to
+ * Use the [CustomCreateSetFragmentPickExercises.newInstance] factory method to
  * create an instance of this fragment.
  */
-class CreateSetFragment : Fragment() {
+class CustomCreateSetFragmentPickExercises : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private var _binding : FragmentCreateSetBinding? = null
-    val binding : FragmentCreateSetBinding get() = _binding!!
-
+    private var _binding: FragmentCustomCreateSetPickExercisesBinding? = null
+    private val binding: FragmentCustomCreateSetPickExercisesBinding get() = _binding!!
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -37,7 +35,7 @@ class CreateSetFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentCreateSetBinding.inflate(inflater, container, false)
+        _binding = FragmentCustomCreateSetPickExercisesBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -48,16 +46,26 @@ class CreateSetFragment : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment CreateSetFragment.
+         * @return A new instance of fragment CustomCreateSetFragment.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            CreateSetFragment().apply {
+            CustomCreateSetFragmentPickExercises().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)
                 }
             }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupSearchView()
+    }
+
+    private fun setupSearchView()
+    {
+        binding.searchView.setupWithSearchBar(binding.searchBar)
     }
 }

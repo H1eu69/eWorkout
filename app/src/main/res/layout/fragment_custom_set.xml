@@ -35,8 +35,8 @@
             app:showMotionSpec="@anim/nav_default_pop_enter_anim"
             app:icon="@drawable/baseline_add_24"
             android:text="Create"
-            android:layout_marginBottom="16dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginEnd="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 

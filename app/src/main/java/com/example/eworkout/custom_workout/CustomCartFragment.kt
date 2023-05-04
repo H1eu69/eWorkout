@@ -35,7 +35,7 @@ class CustomCartFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_custom_cart, container, false)
+        return inflater.inflate(R.layout.fragment_custom_set_cart, container, false)
     }
 
     companion object {
