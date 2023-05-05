@@ -77,7 +77,18 @@ class CustomCreateSetFragmentPickExercises : Fragment() {
         setupSearchView()
         setupRecyclerView()
     }
-
+    private fun showLoading()
+    {
+        //binding.shimmerLayout.visibility = View.VISIBLE
+        //binding.dataLayout.visibility = View.GONE
+        binding.hideShimmer = false
+    }
+    private fun hideLoading()
+    {
+        //binding.shimmerLayout.visibility = View.GONE
+        //binding.dataLayout.visibility = View.VISIBLE
+        binding.hideShimmer = true
+    }
     private fun setListener() {
         binding.filterBtn.setOnClickListener {
             if(modalBottomSheet == null){
@@ -95,9 +106,7 @@ class CustomCreateSetFragmentPickExercises : Fragment() {
                 binding.searchView.hide()
                 return false
             }
-
         })
-
     }
 
     private fun observeViewModel() {
@@ -111,9 +120,11 @@ class CustomCreateSetFragmentPickExercises : Fragment() {
         when(state.name)
         {
             "LOADING" -> {
+                showLoading()
                 viewModel.getExercise()
             }
             "LOADED" -> {
+                hideLoading()
                 setupRecyclerView()
             }
         }
