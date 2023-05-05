@@ -10,10 +10,10 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".custom_workout.CustomCreateSetFragmentPickExercises">
+        tools:context=".custom_workout.view.CustomCreateSetFragmentPickExercises">
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/appCompatButton"
+            android:id="@+id/backBtn"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_marginStart="20dp"
@@ -26,11 +26,11 @@
             android:id="@+id/appBarLayout"
             android:layout_width="0dp"
             android:layout_height="75dp"
-            android:layout_marginEnd="20dp"
-            app:layout_constraintBottom_toBottomOf="@+id/appCompatButton"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/appCompatButton"
-            app:layout_constraintTop_toTopOf="@+id/appCompatButton">
+            android:layout_marginEnd="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/backBtn"
+            app:layout_constraintEnd_toStartOf="@+id/filterBtn"
+            app:layout_constraintStart_toEndOf="@+id/backBtn"
+            app:layout_constraintTop_toTopOf="@+id/backBtn">
 
             <com.google.android.material.search.SearchBar
                 android:id="@+id/searchBar"
@@ -38,41 +38,24 @@
                 android:layout_height="match_parent" />
         </com.google.android.material.appbar.AppBarLayout>
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabLayout2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="@id/appBarLayout"
-            app:layout_constraintStart_toStartOf="@id/appBarLayout"
-            app:layout_constraintTop_toBottomOf="@+id/appBarLayout">
-            <!--<com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="All"/>
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Fullbody"/>
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Lower"/>
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Upper"/> -->
-        </com.google.android.material.tabs.TabLayout>
-
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/filterBtn"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/filter_alt"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/backBtn" />
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView2"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             android:layout_marginBottom="8dp"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintBottom_toTopOf="@+id/appCompatButton6"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tabLayout2"
+            app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
             app:spanCount="2"
             tools:listitem="@layout/create_set_pick_exercises_item" />
 
@@ -95,10 +78,13 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/appCompatButton2"
             app:layout_constraintTop_toTopOf="@+id/appCompatButton2" />
+
         <com.google.android.material.search.SearchView
             android:id="@+id/searchView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            tools:layout_editor_absoluteX="-120dp"
+            tools:layout_editor_absoluteY="194dp">
 
         </com.google.android.material.search.SearchView>
 

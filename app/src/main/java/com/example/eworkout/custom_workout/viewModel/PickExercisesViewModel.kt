@@ -26,9 +26,11 @@ class PickExercisesViewModel : ViewModel() {
     private val _list : MutableLiveData<List<PickExercise>> = MutableLiveData(ArrayList())
     val list : LiveData<List<PickExercise>> get() = _list
 
-    val storageRef = Firebase.storage.reference
+    val exercises = mutableListOf<PickExercise>()
 
-    val getExerciseTask = firestore.collection("Exercises").get()
+    val filterExercises = mutableListOf<PickExercise>()
+
+    val storageRef = Firebase.storage.reference
 
     private val defaultDispatcher: CoroutineDispatcher = Dispatchers.IO
 
@@ -38,13 +40,14 @@ class PickExercisesViewModel : ViewModel() {
              val docs = firestore.collection("Exercises")
                  .get().await()
 
-             val exercises = ArrayList<PickExercise>()
              for (doc in docs.documents) {
                  exercises.add(
                      PickExercise(
                          doc.id,
                          "",
-                         doc.get("name").toString()
+                         doc.get("name").toString(),
+                         doc.get("level").toString(),
+                         doc.get("muscle").toString()
                      )
                  )
                  Log.d("test coroutine", "2")
@@ -64,4 +67,43 @@ class PickExercisesViewModel : ViewModel() {
          }
     }
 
+    fun filter(filterTypes: List<String>)
+    {
+        filterExercises.clear()
+
+        if(filterTypes.isEmpty())
+        {
+            _list.value = exercises
+            _state.value = PickExercisesState.LOADED
+        }
+        else
+        {
+            for (type in filterTypes)
+            {
+                if(!isExist(type)){
+                    filterExercises.addAll(exercises.filter {
+                        it.muscle == type || it.level == type
+                    })
+                }
+            }
+            _list.value = filterExercises
+            _state.value = PickExercisesState.LOADED
+        }
+
+    }
+
+    fun isExist(muscleOrLevel: String): Boolean
+    {
+        for (filter in filterExercises)
+        {
+            if(filter.muscle == muscleOrLevel || filter.level == muscleOrLevel)
+                return true
+        }
+        return false
+    }
+
+    fun changeStateToLoading()
+    {
+        _state.value = PickExercisesState.LOADING
+    }
 }

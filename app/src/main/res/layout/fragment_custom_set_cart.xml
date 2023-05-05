@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".custom_workout.CustomCartFragment">
+    tools:context=".custom_workout.view.CustomCartFragment">
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_navigate_up"

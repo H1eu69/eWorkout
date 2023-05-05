@@ -1,24 +1,19 @@
-package com.example.eworkout.custom_workout
+package com.example.eworkout.custom_workout.view
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.eworkout.R
 import com.example.eworkout.custom_workout.adapter.PickExercisesAdapter
 import com.example.eworkout.custom_workout.listener.PickExercisesOnClickListener
-import com.example.eworkout.custom_workout.model.ChooseNameState
 import com.example.eworkout.custom_workout.model.PickExercisesState
 import com.example.eworkout.custom_workout.viewModel.PickExercisesViewModel
 import com.example.eworkout.databinding.FragmentCustomCreateSetPickExercisesBinding
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
@@ -32,11 +27,10 @@ class CustomCreateSetFragmentPickExercises : Fragment() {
     private var _binding: FragmentCustomCreateSetPickExercisesBinding? = null
     private val binding: FragmentCustomCreateSetPickExercisesBinding get() = _binding!!
     private val viewModel : PickExercisesViewModel by viewModels()
+    private var modalBottomSheet: PickExercisesFilterModalBottomSheet? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
         }
     }
 
@@ -64,18 +58,29 @@ class CustomCreateSetFragmentPickExercises : Fragment() {
         fun newInstance(param1: String, param2: String) =
             CustomCreateSetFragmentPickExercises().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+
                 }
             }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Log.d("bottomsheet", viewModel.toString())
         observeViewModel()
+        setOnClick()
         setupSearchView()
         setupRecyclerView()
     }
+
+    private fun setOnClick() {
+        binding.filterBtn.setOnClickListener {
+            if(modalBottomSheet == null){
+                modalBottomSheet = PickExercisesFilterModalBottomSheet()
+            }
+            modalBottomSheet?.show(childFragmentManager, PickExercisesFilterModalBottomSheet.TAG)
+        }
+    }
+
     private fun observeViewModel() {
         viewModel.state.observe(viewLifecycleOwner)
         {
