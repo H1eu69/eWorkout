@@ -1,10 +1,15 @@
 package com.example.eworkout.custom_workout.view
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -14,6 +19,7 @@ import com.example.eworkout.custom_workout.listener.PickExercisesOnClickListener
 import com.example.eworkout.custom_workout.model.PickExercisesState
 import com.example.eworkout.custom_workout.viewModel.PickExercisesViewModel
 import com.example.eworkout.databinding.FragmentCustomCreateSetPickExercisesBinding
+import com.example.eworkout.generated.callback.AfterTextChanged
 
 /**
  * A simple [Fragment] subclass.
@@ -67,18 +73,31 @@ class CustomCreateSetFragmentPickExercises : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         Log.d("bottomsheet", viewModel.toString())
         observeViewModel()
-        setOnClick()
+        setListener()
         setupSearchView()
         setupRecyclerView()
     }
 
-    private fun setOnClick() {
+    private fun setListener() {
         binding.filterBtn.setOnClickListener {
             if(modalBottomSheet == null){
                 modalBottomSheet = PickExercisesFilterModalBottomSheet()
             }
             modalBottomSheet?.show(childFragmentManager, PickExercisesFilterModalBottomSheet.TAG)
         }
+
+        binding.searchView.editText.setOnEditorActionListener(object : TextView.OnEditorActionListener
+        {
+            override fun onEditorAction(p0: TextView?, p1: Int, p2: KeyEvent?): Boolean {
+                Log.d("searchview filter",p0?.text.toString().lowercase())
+                viewModel.filterByName(p0?.text.toString().lowercase())
+                binding.searchBar.text = binding.searchView.text
+                binding.searchView.hide()
+                return false
+            }
+
+        })
+
     }
 
     private fun observeViewModel() {

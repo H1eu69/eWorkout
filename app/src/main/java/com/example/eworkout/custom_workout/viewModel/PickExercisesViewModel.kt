@@ -67,6 +67,27 @@ class PickExercisesViewModel : ViewModel() {
          }
     }
 
+    fun filterByName(nameToFilter: String)
+    {
+        filterExercises.clear()
+        if(nameToFilter.isEmpty())
+        {
+            _list.value = exercises
+            _state.value = PickExercisesState.LOADED
+        }
+        else
+        {
+            if(!isExist(nameToFilter))
+            {
+                filterExercises.addAll(exercises.filter {
+                    it.muscle.lowercase().contains(nameToFilter) || it.level.lowercase().contains(nameToFilter) || it.name.lowercase().contains(nameToFilter)
+                })
+            }
+            _list.value = filterExercises
+            _state.value = PickExercisesState.LOADED
+        }
+    }
+
     fun filter(filterTypes: List<String>)
     {
         filterExercises.clear()
@@ -92,11 +113,11 @@ class PickExercisesViewModel : ViewModel() {
 
     }
 
-    fun isExist(muscleOrLevel: String): Boolean
+    fun isExist(s: String): Boolean
     {
         for (filter in filterExercises)
         {
-            if(filter.muscle == muscleOrLevel || filter.level == muscleOrLevel)
+            if(filter.muscle.lowercase().contains(s) || filter.level.lowercase().contains(s) || filter.name.lowercase().contains(s))
                 return true
         }
         return false
