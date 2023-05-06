@@ -5,5 +5,7 @@ data class PickExercise(
     var image: String,
     var name: String,
     var level: String,
-    var muscle: String
+    var muscle: String,
+    var description: String,
+    var video: String
 )

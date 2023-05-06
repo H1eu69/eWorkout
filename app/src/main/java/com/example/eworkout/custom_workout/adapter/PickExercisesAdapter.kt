@@ -33,13 +33,17 @@ class PickExercisesAdapter(
                 }
                 val bundle = Bundle().apply {
                     putString("exercise_id", id)
+                    putString("name", name)
+                    putString("image", image)
+                    putString("description", description)
+                    putString("video", video)
                 }
                 binding.exerciseInformationBtn.setOnClickListener {
                     listener.navigateToDetail(bundle)
                 }
 
                 binding.root.setOnClickListener {
-                    listener.addToCart(bundle)
+                    listener.showAddToCartBottomSheet(bundle)
                 }
             }
 

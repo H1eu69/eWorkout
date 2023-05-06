@@ -1,10 +1,12 @@
 package com.example.eworkout.custom_workout.viewModel
 
+import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.eworkout.custom_workout.model.ExerciseInCart
 import com.example.eworkout.custom_workout.model.PickExercise
 import com.example.eworkout.custom_workout.model.PickExercisesState
 import com.google.android.gms.tasks.Task
@@ -23,12 +25,17 @@ class PickExercisesViewModel : ViewModel() {
     private val _state : MutableLiveData<PickExercisesState> = MutableLiveData(PickExercisesState.LOADING)
     val state: LiveData<PickExercisesState> get() = _state
 
-    private val _list : MutableLiveData<List<PickExercise>> = MutableLiveData(ArrayList())
+    private val _list : MutableLiveData<List<PickExercise>> = MutableLiveData()
     val list : LiveData<List<PickExercise>> get() = _list
 
     val exercises = mutableListOf<PickExercise>()
 
     val filterExercises = mutableListOf<PickExercise>()
+
+    val exerciseInCart: MutableLiveData<ExerciseInCart> = MutableLiveData()
+
+    private val _exercisesInCart : MutableLiveData<List<PickExercise>> = MutableLiveData()
+    val exercisesInCart : LiveData<List<PickExercise>> get() = _exercisesInCart
 
     val storageRef = Firebase.storage.reference
 
@@ -47,7 +54,9 @@ class PickExercisesViewModel : ViewModel() {
                          "",
                          doc.get("name").toString(),
                          doc.get("level").toString(),
-                         doc.get("muscle").toString()
+                         doc.get("muscle").toString(),
+                         doc.get("description").toString(),
+                         ""
                      )
                  )
                  Log.d("test coroutine", "2")
@@ -57,8 +66,11 @@ class PickExercisesViewModel : ViewModel() {
 
              for(exercise in exercises)
              {
-                 val path = "images/" + exercise.name + ".jpg"
+                 var path = "images/" + exercise.name + ".jpg"
                  exercise.image = storageRef.child(path)
+                     .downloadUrl.await().toString()
+                 path = "videos/" + exercise.name + ".mp4"
+                 exercise.video = storageRef.child(path)
                      .downloadUrl.await().toString()
              }
 
@@ -126,5 +138,15 @@ class PickExercisesViewModel : ViewModel() {
     fun changeStateToLoading()
     {
         _state.value = PickExercisesState.LOADING
+    }
+
+    fun getExerciseInCart(bundle: Bundle) {
+        val exercise = ExerciseInCart(
+            bundle.getString("name").toString(),
+            bundle.getString("image").toString(),
+            "15",
+            "Reps"
+        )
+        exerciseInCart.value = exercise
     }
 }

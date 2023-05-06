@@ -1,15 +1,12 @@
 package com.example.eworkout.custom_workout.view
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -19,7 +16,6 @@ import com.example.eworkout.custom_workout.listener.PickExercisesOnClickListener
 import com.example.eworkout.custom_workout.model.PickExercisesState
 import com.example.eworkout.custom_workout.viewModel.PickExercisesViewModel
 import com.example.eworkout.databinding.FragmentCustomCreateSetPickExercisesBinding
-import com.example.eworkout.generated.callback.AfterTextChanged
 
 /**
  * A simple [Fragment] subclass.
@@ -144,18 +140,19 @@ class CustomCreateSetFragmentPickExercises : Fragment() {
                 findNavController().navigate(R.id.action_customCreateSetFragmentPickExercises_to_customCreateSetDetailFragment, bundle)
             }
 
-            override fun addToCart(bundle: Bundle) {
-                openAddToCartBottomSheet()
+            override fun showAddToCartBottomSheet(bundle: Bundle) {
+                openAddToCartBottomSheet(bundle)
             }
         }
-        binding.recyclerView2.adapter = PickExercisesAdapter(viewModel.list.value!!, listener)
+        viewModel.list.value?.let {
+            binding.recyclerView2.adapter = PickExercisesAdapter(it, listener)
+        }
+
     }
 
-    fun openAddToCartBottomSheet()
+    fun openAddToCartBottomSheet(bundle: Bundle)
     {
-        if(addBottomSheet == null){
-            addBottomSheet = AddToCartModalBottomSheet()
-        }
+        addBottomSheet = AddToCartModalBottomSheet(bundle)
         addBottomSheet?.show(childFragmentManager, AddToCartModalBottomSheet.TAG)
     }
 }

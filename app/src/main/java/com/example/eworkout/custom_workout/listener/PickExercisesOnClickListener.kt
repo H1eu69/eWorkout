@@ -5,5 +5,5 @@ import android.os.Bundle
 interface PickExercisesOnClickListener {
     fun navigateToDetail(bundle: Bundle)
 
-    fun addToCart(bundle: Bundle)
+    fun showAddToCartBottomSheet(bundle: Bundle)
 }
