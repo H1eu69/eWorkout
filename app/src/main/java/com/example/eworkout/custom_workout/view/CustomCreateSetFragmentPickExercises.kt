@@ -33,7 +33,9 @@ class CustomCreateSetFragmentPickExercises : Fragment() {
     private var _binding: FragmentCustomCreateSetPickExercisesBinding? = null
     private val binding: FragmentCustomCreateSetPickExercisesBinding get() = _binding!!
     private val viewModel : PickExercisesViewModel by viewModels()
-    private var modalBottomSheet: PickExercisesFilterModalBottomSheet? = null
+    private var filterBottomSheet: PickExercisesFilterModalBottomSheet? = null
+    private var addBottomSheet: AddToCartModalBottomSheet? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -91,10 +93,10 @@ class CustomCreateSetFragmentPickExercises : Fragment() {
     }
     private fun setListener() {
         binding.filterBtn.setOnClickListener {
-            if(modalBottomSheet == null){
-                modalBottomSheet = PickExercisesFilterModalBottomSheet()
+            if(filterBottomSheet == null){
+                filterBottomSheet = PickExercisesFilterModalBottomSheet()
             }
-            modalBottomSheet?.show(childFragmentManager, PickExercisesFilterModalBottomSheet.TAG)
+            filterBottomSheet?.show(childFragmentManager, PickExercisesFilterModalBottomSheet.TAG)
         }
 
         binding.searchView.editText.setOnEditorActionListener(object : TextView.OnEditorActionListener
@@ -138,10 +140,22 @@ class CustomCreateSetFragmentPickExercises : Fragment() {
     {
         val listener = object : PickExercisesOnClickListener
         {
-            override fun onClick(bundle: Bundle) {
+            override fun navigateToDetail(bundle: Bundle) {
                 findNavController().navigate(R.id.action_customCreateSetFragmentPickExercises_to_customCreateSetDetailFragment, bundle)
+            }
+
+            override fun addToCart(bundle: Bundle) {
+                openAddToCartBottomSheet()
             }
         }
         binding.recyclerView2.adapter = PickExercisesAdapter(viewModel.list.value!!, listener)
+    }
+
+    fun openAddToCartBottomSheet()
+    {
+        if(addBottomSheet == null){
+            addBottomSheet = AddToCartModalBottomSheet()
+        }
+        addBottomSheet?.show(childFragmentManager, AddToCartModalBottomSheet.TAG)
     }
 }

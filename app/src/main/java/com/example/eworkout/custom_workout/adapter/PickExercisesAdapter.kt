@@ -27,7 +27,6 @@ class PickExercisesAdapter(
             item.apply {
                 binding.textViewExerciseName.text = item.name
                 if(image != ""){
-                    val radius = binding.root.context.resources.getDimensionPixelSize(R.dimen.corner_radius)
                     Glide.with(binding.root.context).load(image)
                         .apply(RequestOptions.bitmapTransform(RoundedCorners(40))) // round
                         .into(binding.imageView);
@@ -36,7 +35,11 @@ class PickExercisesAdapter(
                     putString("exercise_id", id)
                 }
                 binding.exerciseInformationBtn.setOnClickListener {
-                    listener.onClick(bundle)
+                    listener.navigateToDetail(bundle)
+                }
+
+                binding.root.setOnClickListener {
+                    listener.addToCart(bundle)
                 }
             }
 

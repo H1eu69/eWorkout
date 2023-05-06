@@ -109,11 +109,9 @@
                 android:id="@+id/searchView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:layout_editor_absoluteX="-120dp"
-                tools:layout_editor_absoluteY="194dp">
+                app:suggestionRowLayout="@layout/cart_item">
 
             </com.google.android.material.search.SearchView>
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
