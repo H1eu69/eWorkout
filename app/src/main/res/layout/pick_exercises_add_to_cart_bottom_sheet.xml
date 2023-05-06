@@ -4,7 +4,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.eworkout.custom_workout.viewModel.PickExercisesViewModel" />
+            type="com.example.eworkout.custom_workout.viewModel.AddToCartViewModel" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -43,7 +43,7 @@
             android:id="@+id/time_rep_count_textView"
             style="@style/TextView1"
             android:layout_marginStart="24dp"
-            android:text="@={viewModel.exerciseInCart.reps}"
+            app:textByNumber="@={viewModel.exerciseInCart.reps}"
             app:layout_constraintBottom_toBottomOf="@+id/btnMinus"
             app:layout_constraintEnd_toStartOf="@+id/btnAdd"
             app:layout_constraintHorizontal_bias="0.5"

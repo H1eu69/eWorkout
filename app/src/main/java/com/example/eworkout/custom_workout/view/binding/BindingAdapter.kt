@@ -16,3 +16,4 @@ fun setSrcByString(view: ShapeableImageView, imageString: String?) {
         .apply(RequestOptions.bitmapTransform(RoundedCorners(40))) // round
         .into(view);
 }
+

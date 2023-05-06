@@ -140,13 +140,5 @@ class PickExercisesViewModel : ViewModel() {
         _state.value = PickExercisesState.LOADING
     }
 
-    fun getExerciseInCart(bundle: Bundle) {
-        val exercise = ExerciseInCart(
-            bundle.getString("name").toString(),
-            bundle.getString("image").toString(),
-            "15",
-            "Reps"
-        )
-        exerciseInCart.value = exercise
-    }
+
 }
