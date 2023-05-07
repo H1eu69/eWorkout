@@ -1,19 +1,30 @@
 package com.example.eworkout.training.view
 
+import android.annotation.SuppressLint
+import android.content.ContentValues.TAG
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.eworkout.R
 import com.example.eworkout.databinding.FragmentHistoryBinding
+import com.example.eworkout.databinding.FragmentSetsItemBinding
 import com.example.eworkout.databinding.FragmentTrainingBinding
+import com.example.eworkout.training.adapter.HistoryAdapter
 import com.example.eworkout.training.model.HistoryState
 import com.example.eworkout.training.model.ScheduleState
+import com.example.eworkout.training.model.Set
 import com.example.eworkout.training.viewmodel.HistoryViewModel
 import com.example.eworkout.training.viewmodel.TrainingViewModel
+import org.checkerframework.checker.units.qual.Length
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -81,6 +92,12 @@ class HistoryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         onClick()
         observeViewModel()
+        setUpReyclerView()
+    }
+
+    private fun setUpReyclerView() {
+        val list = _viewModel.sets
+        binding.recyclerHistory.adapter = HistoryAdapter(list)
     }
 
     private fun observeViewModel()
@@ -95,17 +112,40 @@ class HistoryFragment : Fragment() {
         when(state.name){
             "LOADING" -> {
                 _viewModel.indicator(date.toString())
+                _viewModel.getSetTakenId(date.toString())
+                showLoading()
             }
             "LOADED" -> {
                 binding.num.text = _viewModel.num.toString()
                 binding.min.text = _viewModel.min.toString()
             }
+            "SET_LOADED" -> {
+                setUpReyclerView()
+                hideLoading()
+            }
+            "IMAGE_LOADED" -> {
+                notifyDataChange()
+                hideLoading()
+            }
         }
     }
 
+    private fun showLoading()
+    {
+        binding.historyLayout.visibility = View.GONE
+    }
+    private fun hideLoading()
+    {
+        binding.historyLayout.visibility = View.VISIBLE
+    }
     private fun onClick() {
         binding.buttonBack.setOnClickListener {
             findNavController().navigate(R.id.action_historyFragment_to_dailyScheduleFragment)
         }
+    }
+    @SuppressLint("NotifyDataSetChanged")
+    private fun notifyDataChange()
+    {
+        binding.recyclerHistory.adapter?.notifyDataSetChanged()
     }
 }

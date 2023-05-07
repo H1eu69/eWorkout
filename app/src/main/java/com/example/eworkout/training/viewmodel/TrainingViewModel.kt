@@ -103,7 +103,8 @@ class TrainingViewModel: ViewModel() {
                     ""
                 )
                 sets.add(set)
-                getUriImageByName(set)}
+                getUriImageByName(set)
+                }
                 _state.value = TrainingState.LOADED
             }
             .addOnFailureListener { exception ->

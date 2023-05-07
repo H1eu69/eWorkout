@@ -2,5 +2,7 @@ package com.example.eworkout.training.model
 
 enum class HistoryState {
     LOADING,
-    LOADED
+    LOADED,
+    SET_LOADED,
+    IMAGE_LOADED
 }

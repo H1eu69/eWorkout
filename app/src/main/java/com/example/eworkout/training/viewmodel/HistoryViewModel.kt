@@ -7,22 +7,96 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.eworkout.training.model.HistoryState
 import com.example.eworkout.training.model.ScheduleState
+import com.example.eworkout.training.model.Set
+import com.example.eworkout.training.model.TrainingState
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 import java.text.DateFormat
 import java.util.*
 
 class HistoryViewModel: ViewModel() {
     val auth: FirebaseAuth = Firebase.auth
     val firestore = Firebase.firestore
+    val storageRef = Firebase.storage.reference
+
     var num: Double = 0.0
     var min: Double = 0.0
     var exercises: String = ""
+
+    val sets = mutableListOf<Set>()
+    val list_settakenid = mutableListOf<String>()
+    val list_setid = mutableListOf<String>()
+
     private val _state: MutableLiveData<HistoryState> = MutableLiveData(HistoryState.LOADING)
     val state: LiveData<HistoryState> get() = _state
 
+
+    fun loadSets(list: MutableList<String>){
+        firestore.collection("Sets")
+            .whereIn(FieldPath.documentId(), list)
+            .get()
+            .addOnSuccessListener { documents ->
+                for(doc in documents){
+                    val set = Set(
+                        doc.id,
+                        doc.get("name").toString(),
+                        doc.get("total_time") as Long,
+                        doc.get("total_calories") as Long,
+                        doc.get("number_of_exercises") as Long,
+                        ""
+                    )
+                    sets.add(set)
+                    getUriImageByName(set)
+                }
+                _state.value = HistoryState.SET_LOADED
+            }
+    }
+
+    private fun getSetId(list: MutableList<String>){
+        firestore.collection("Set_Taken")
+            .whereIn(FieldPath.documentId(), list)
+            .get()
+            .addOnSuccessListener {
+                for(data in it.documents){
+                    list_setid.add(data.get("set_id").toString())
+                    Log.d("_setid", data.get("set_id").toString())
+                }
+                loadSets(list_setid)
+            }
+
+    }
+
+    fun getSetTakenId(date: String) {
+        firestore.collection("Calendar")
+            .whereEqualTo("user_id", auth.currentUser!!.uid)
+            .whereEqualTo("date", date)
+            .get()
+            .addOnSuccessListener {
+                for(it in it.documents){
+                    //val _setTakenId =
+                    list_settakenid.add(it.get("set_taken_id").toString())
+                    Log.d("History", it.getString("set_taken_id").toString())
+                }
+                getSetId(list_settakenid)
+                Log.d("list_settakenid",list_settakenid.toString())
+            }
+    }
+
+    private fun getUriImageByName(set: Set) {
+        val path = "images/" + set.setName + ".png"
+        storageRef.child(path)
+            .downloadUrl.addOnSuccessListener {
+                set.setImage = it.toString()
+                _state.value = HistoryState.IMAGE_LOADED
+            }
+            .addOnFailureListener {
+                Log.d("IMAGE", it.message.toString())
+            }
+    }
 
     fun indicator(date: String){
         firestore.collection("Calendar")
