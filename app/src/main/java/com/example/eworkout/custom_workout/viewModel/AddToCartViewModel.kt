@@ -5,13 +5,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.eworkout.custom_workout.model.AddToCartState
-import com.example.eworkout.custom_workout.model.ExerciseInCart
+import com.example.eworkout.custom_workout.model.ExerciseToAdd
 
 class AddToCartViewModel : ViewModel() {
     private val _state : MutableLiveData<AddToCartState> = MutableLiveData(AddToCartState.REPS_CHOOSE)
     val state: LiveData<AddToCartState> get() = _state
 
-    val exerciseInCart: MutableLiveData<ExerciseInCart> = MutableLiveData()
+    val exerciseInCart: MutableLiveData<ExerciseToAdd> = MutableLiveData()
 
     fun changeState(stateToChange: AddToCartState)
     {
@@ -19,13 +19,22 @@ class AddToCartViewModel : ViewModel() {
     }
 
     fun initExerciseInCart(bundle: Bundle) {
-        val exercise = ExerciseInCart(
+        val exercise = ExerciseToAdd(
             bundle.getString("name").toString(),
             bundle.getString("image").toString(),
             15,
             "Reps"
         )
         exerciseInCart.value = exercise
+    }
+
+    fun changeRepType()
+    {
+        when(_state.value)
+        {
+            AddToCartState.REPS_CHOOSE -> exerciseInCart.value!!.repType = "Reps"
+            else -> exerciseInCart.value!!.repType = "Time"
+        }
     }
 
     fun increaseRepByOne()

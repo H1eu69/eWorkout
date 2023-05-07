@@ -1,6 +1,6 @@
 package com.example.eworkout.custom_workout.model
 
-data class ExerciseInCart(
+data class ExerciseToAdd(
     var name: String,
     var image: String,
     var reps: Int,

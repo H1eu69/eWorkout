@@ -67,9 +67,11 @@ class AddToCartModalBottomSheet(
         {
             "REPS_CHOOSE" -> {
                 binding.timeRepCountTextView.text = "x" + viewModel.exerciseInCart.value?.reps.toString()
+                viewModel.changeRepType()
             }
             "TIME_CHOOSE" -> {
                 binding.timeRepCountTextView.text = viewModel.exerciseInCart.value?.reps.toString() + "s"
+                viewModel.changeRepType()
             }
         }
     }
