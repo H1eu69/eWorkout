@@ -11,35 +11,36 @@ class AddToCartViewModel : ViewModel() {
     private val _state : MutableLiveData<AddToCartState> = MutableLiveData(AddToCartState.REPS_CHOOSE)
     val state: LiveData<AddToCartState> get() = _state
 
-    val exerciseInCart: MutableLiveData<ExerciseToAdd> = MutableLiveData()
+    val exerciseToAdd: MutableLiveData<ExerciseToAdd> = MutableLiveData()
 
     fun changeState(stateToChange: AddToCartState)
     {
         _state.value = stateToChange
     }
 
-    fun initExerciseInCart(bundle: Bundle) {
+    fun initExerciseToAdd(bundle: Bundle) {
         val exercise = ExerciseToAdd(
+            bundle.getString("id").toString(),
             bundle.getString("name").toString(),
             bundle.getString("image").toString(),
             15,
             "Reps"
         )
-        exerciseInCart.value = exercise
+        exerciseToAdd.value = exercise
     }
 
     fun changeRepType()
     {
         when(_state.value)
         {
-            AddToCartState.REPS_CHOOSE -> exerciseInCart.value!!.repType = "Reps"
-            else -> exerciseInCart.value!!.repType = "Time"
+            AddToCartState.REPS_CHOOSE -> exerciseToAdd.value!!.repType = "Reps"
+            else -> exerciseToAdd.value!!.repType = "Time"
         }
     }
 
     fun increaseRepByOne()
     {
-        exerciseInCart.value!!.reps += 1
+        exerciseToAdd.value!!.reps += 1
         when(_state.value)
         {
             AddToCartState.REPS_CHOOSE -> _state.value = AddToCartState.REPS_CHOOSE
@@ -49,8 +50,8 @@ class AddToCartViewModel : ViewModel() {
 
     fun decreaseRepByOne()
     {
-        if(exerciseInCart.value!!.reps > 0)
-            exerciseInCart.value!!.reps -= 1
+        if(exerciseToAdd.value!!.reps > 0)
+            exerciseToAdd.value!!.reps -= 1
         when(_state.value) //To refresh UI
         {
             AddToCartState.REPS_CHOOSE -> _state.value = AddToCartState.REPS_CHOOSE

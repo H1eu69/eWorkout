@@ -66,11 +66,11 @@ class AddToCartModalBottomSheet(
         when(state.name)
         {
             "REPS_CHOOSE" -> {
-                binding.timeRepCountTextView.text = "x" + viewModel.exerciseInCart.value?.reps.toString()
+                binding.timeRepCountTextView.text = "x" + viewModel.exerciseToAdd.value?.reps.toString()
                 viewModel.changeRepType()
             }
             "TIME_CHOOSE" -> {
-                binding.timeRepCountTextView.text = viewModel.exerciseInCart.value?.reps.toString() + "s"
+                binding.timeRepCountTextView.text = viewModel.exerciseToAdd.value?.reps.toString() + "s"
                 viewModel.changeRepType()
             }
         }
@@ -79,7 +79,7 @@ class AddToCartModalBottomSheet(
     private fun getBundle()
     {
         Log.d("Test bundle", bundle.toString())
-        viewModel.initExerciseInCart(bundle)
+        viewModel.initExerciseToAdd(bundle)
     }
 
     private fun setListener()
@@ -95,6 +95,11 @@ class AddToCartModalBottomSheet(
         }
         binding.btnAdd.setOnClickListener {
             viewModel.increaseRepByOne()
+        }
+        binding.btnAddToCart.setOnClickListener {
+            val exercises = viewModel.exerciseToAdd.value!!
+            shareViewModel.addExerciseToCart(exercises)
+            dismiss()
         }
     }
 

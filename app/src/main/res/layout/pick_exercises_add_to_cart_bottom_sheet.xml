@@ -17,14 +17,14 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
             app:srcCompat="@drawable/jumping_rope"
-            app:srcByString="@{viewModel.exerciseInCart.image}"
+            app:srcByString="@{viewModel.exerciseToAdd.image}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/exercisesNameTextView"
             style="@style/TextView3"
-            android:text="@{viewModel.exerciseInCart.name}"
+            android:text="@{viewModel.exerciseToAdd.name}"
             app:layout_constraintStart_toStartOf="@+id/btnMinus"
             app:layout_constraintTop_toTopOf="@+id/imageView" />
 
@@ -43,7 +43,7 @@
             android:id="@+id/time_rep_count_textView"
             style="@style/TextView1"
             android:layout_marginStart="24dp"
-            app:textByNumber="@={viewModel.exerciseInCart.reps}"
+            app:textByNumber="@={viewModel.exerciseToAdd.reps}"
             app:layout_constraintBottom_toBottomOf="@+id/btnMinus"
             app:layout_constraintEnd_toStartOf="@+id/btnAdd"
             app:layout_constraintHorizontal_bias="0.5"
@@ -92,7 +92,7 @@
         </com.google.android.material.button.MaterialButtonToggleGroup>
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/appCompatButton6"
+            android:id="@+id/btnAddToCart"
             style="@style/Button1"
             android:layout_height="40dp"
             android:layout_marginTop="20dp"
