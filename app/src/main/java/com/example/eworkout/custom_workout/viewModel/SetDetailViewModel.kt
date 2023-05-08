@@ -8,28 +8,15 @@ import com.example.eworkout.custom_workout.model.AddToCartState
 import com.example.eworkout.custom_workout.model.ExerciseToAdd
 import com.example.eworkout.custom_workout.model.ExerciseToAddDetail
 
-class AddToCartViewModel : ViewModel() {
+class SetDetailViewModel : ViewModel() {
     private val _state : MutableLiveData<AddToCartState> = MutableLiveData(AddToCartState.REPS_CHOOSE)
     val state: LiveData<AddToCartState> get() = _state
-
-    val exerciseToAdd: MutableLiveData<ExerciseToAdd> = MutableLiveData()
 
     val exerciseToAddDetail: MutableLiveData<ExerciseToAddDetail> = MutableLiveData()
 
     fun changeState(stateToChange: AddToCartState)
     {
         _state.value = stateToChange
-    }
-
-    fun initExerciseToAdd(bundle: Bundle) {
-        val exercise = ExerciseToAdd(
-            bundle.getString("id").toString(),
-            bundle.getString("name").toString(),
-            bundle.getString("image").toString(),
-            15,
-            "Reps"
-        )
-        exerciseToAdd.value = exercise
     }
 
     fun initExerciseToAddDetail(bundle: Bundle?) {
@@ -45,14 +32,7 @@ class AddToCartViewModel : ViewModel() {
         )
         exerciseToAddDetail.value = exercise
     }
-    fun changeRepType()
-    {
-        when(_state.value)
-        {
-            AddToCartState.REPS_CHOOSE -> exerciseToAdd.value!!.repType = "Reps"
-            else -> exerciseToAdd.value!!.repType = "Time"
-        }
-    }
+
     fun changeRepTypeDetail()
     {
         when(_state.value)
@@ -61,9 +41,10 @@ class AddToCartViewModel : ViewModel() {
             else -> exerciseToAddDetail.value!!.repType = "Time"
         }
     }
+
     fun increaseRepByOne()
     {
-        exerciseToAdd.value!!.reps += 1
+        exerciseToAddDetail.value!!.reps += 1
         when(_state.value)
         {
             AddToCartState.REPS_CHOOSE -> _state.value = AddToCartState.REPS_CHOOSE
@@ -73,12 +54,13 @@ class AddToCartViewModel : ViewModel() {
 
     fun decreaseRepByOne()
     {
-        if(exerciseToAdd.value!!.reps > 0)
-            exerciseToAdd.value!!.reps -= 1
+        if(exerciseToAddDetail.value!!.reps > 0)
+            exerciseToAddDetail.value!!.reps -= 1
         when(_state.value) //To refresh UI
         {
             AddToCartState.REPS_CHOOSE -> _state.value = AddToCartState.REPS_CHOOSE
             else -> _state.value = AddToCartState.TIME_CHOOSE
         }
     }
+
 }

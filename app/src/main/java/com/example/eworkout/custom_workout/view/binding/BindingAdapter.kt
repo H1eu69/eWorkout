@@ -1,7 +1,11 @@
 package com.example.eworkout.custom_workout.view.binding
 
 import android.content.Context
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
+import androidx.media3.common.MediaItem
+import androidx.media3.exoplayer.ExoPlayer
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions

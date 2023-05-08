@@ -6,4 +6,6 @@ data class ExerciseToAdd(
     var image: String,
     var reps: Int,
     var repType: String
-)
+){
+    constructor(exercise: ExerciseToAddDetail) : this(exercise.id, exercise.name, exercise.image, exercise.reps, exercise.repType)
+}

@@ -6,9 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import com.example.eworkout.R
-import com.example.eworkout.custom_workout.viewModel.PickExercisesViewModel
-import com.example.eworkout.databinding.FragmentCustomCreateSetPickExercisesBinding
+import com.example.eworkout.custom_workout.viewModel.PickExercisesSharedViewModel
 import com.example.eworkout.databinding.PickExercisesFilterBottomSheetBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
@@ -17,7 +15,7 @@ class PickExercisesFilterModalBottomSheet : BottomSheetDialogFragment() {
     private var _binding: PickExercisesFilterBottomSheetBinding? = null
     private val binding: PickExercisesFilterBottomSheetBinding get() = _binding!!
     private val filterTypes = mutableListOf<String>()
-    private val viewModel: PickExercisesViewModel by viewModels(
+    private val viewModel: PickExercisesSharedViewModel by viewModels(
         {requireParentFragment()}
     )
 

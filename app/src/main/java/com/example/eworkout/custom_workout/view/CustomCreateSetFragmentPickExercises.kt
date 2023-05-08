@@ -14,7 +14,7 @@ import com.example.eworkout.R
 import com.example.eworkout.custom_workout.adapter.PickExercisesAdapter
 import com.example.eworkout.custom_workout.listener.PickExercisesOnClickListener
 import com.example.eworkout.custom_workout.model.PickExercisesState
-import com.example.eworkout.custom_workout.viewModel.PickExercisesViewModel
+import com.example.eworkout.custom_workout.viewModel.PickExercisesSharedViewModel
 import com.example.eworkout.databinding.FragmentCustomCreateSetPickExercisesBinding
 
 /**
@@ -28,7 +28,7 @@ class CustomCreateSetFragmentPickExercises : Fragment() {
     private var param2: String? = null
     private var _binding: FragmentCustomCreateSetPickExercisesBinding? = null
     private val binding: FragmentCustomCreateSetPickExercisesBinding get() = _binding!!
-    private val viewModel : PickExercisesViewModel by viewModels()
+    private val viewModel : PickExercisesSharedViewModel by viewModels()
     private var filterBottomSheet: PickExercisesFilterModalBottomSheet? = null
     private var addBottomSheet: AddToCartModalBottomSheet? = null
 

@@ -6,13 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.bumptech.glide.request.RequestOptions
+import androidx.navigation.navGraphViewModels
+import com.example.eworkout.R
 import com.example.eworkout.custom_workout.model.AddToCartState
-import com.example.eworkout.custom_workout.model.PickExercise
 import com.example.eworkout.custom_workout.viewModel.AddToCartViewModel
-import com.example.eworkout.custom_workout.viewModel.PickExercisesViewModel
+import com.example.eworkout.custom_workout.viewModel.PickExercisesSharedViewModel
 import com.example.eworkout.databinding.PickExercisesAddToCartBottomSheetBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
@@ -22,9 +20,7 @@ class AddToCartModalBottomSheet(
 
     private var _binding: PickExercisesAddToCartBottomSheetBinding? = null
     private val binding: PickExercisesAddToCartBottomSheetBinding get() = _binding!!
-    private val shareViewModel: PickExercisesViewModel by viewModels(
-        {requireParentFragment()}
-    )
+    private val shareViewModel: PickExercisesSharedViewModel by navGraphViewModels(R.id.custom_set)
     private val viewModel: AddToCartViewModel by viewModels()
         override fun onCreateView(
         inflater: LayoutInflater,

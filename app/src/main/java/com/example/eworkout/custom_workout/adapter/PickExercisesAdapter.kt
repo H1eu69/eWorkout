@@ -37,6 +37,7 @@ class PickExercisesAdapter(
                     putString("image", image)
                     putString("description", description)
                     putString("video", video)
+                    putString("level", level)
                 }
                 binding.exerciseInformationBtn.setOnClickListener {
                     listener.navigateToDetail(bundle)

@@ -1,21 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".custom_workout.view.CustomCreateSetDetailFragment">
-
-   <!-- <com.facebook.shimmer.ShimmerFrameLayout
-        android:id="@+id/shimmerFrameLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <include layout="@layout/workout_detail2_loading" />
-    </com.facebook.shimmer.ShimmerFrameLayout> -->
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.eworkout.custom_workout.viewModel.SetDetailViewModel" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/data_layout"
         android:layout_marginStart="28.8dp"
         android:layout_marginEnd="28.8dp"
         android:layout_width="match_parent"
@@ -111,7 +104,7 @@
             android:id="@+id/exercises_name_textview"
             style="@style/TextView1"
             android:layout_marginTop="16dp"
-            android:text="@={viewModel.exerciseName}"
+            android:text="@={viewModel.exerciseToAddDetail.name}"
             app:layout_constraintStart_toStartOf="@+id/btn_navigate_up"
             app:layout_constraintTop_toBottomOf="@+id/cardview" />
 
@@ -119,7 +112,7 @@
             android:id="@+id/exercises_information_textview"
             style="@style/TextView2"
             android:layout_marginTop="8dp"
-            android:text="@={viewModel.exerciseInfo}"
+            android:text="@={viewModel.exerciseToAddDetail.level}"
             app:layout_constraintStart_toStartOf="@+id/exercises_name_textview"
             app:layout_constraintTop_toBottomOf="@+id/exercises_name_textview" />
 
@@ -131,27 +124,41 @@
             app:layout_constraintStart_toStartOf="@+id/exercises_information_textview"
             app:layout_constraintTop_toBottomOf="@+id/exercises_information_textview" />
 
-        <TextView
-            android:id="@+id/description_textview"
-            style="@style/TextView2"
-            android:layout_marginTop="16dp"
-            android:text="@={viewModel.exerciseDescription}"
-            app:layout_constraintStart_toStartOf="@+id/description_hardcode_textview"
-            app:layout_constraintTop_toBottomOf="@+id/description_hardcode_textview" />
+        <ScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constrainedHeight="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_max="200dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/description_hardcode_textview"
+            app:layout_constraintVertical_bias="0">
+
+            <TextView
+                android:id="@+id/description_textview"
+                style="@style/TextView2"
+                android:text="@={viewModel.exerciseToAddDetail.description}"
+                app:layout_constraintStart_toStartOf="@+id/description_hardcode_textview"
+                app:layout_constraintTop_toBottomOf="@+id/description_hardcode_textview" />
+        </ScrollView>
+
 
         <TextView
             android:id="@+id/htdi_textview"
             style="@style/TextView1"
-            android:layout_marginTop="16dp"
             android:text="How many reps or time do you want"
-            app:layout_constraintStart_toStartOf="@+id/description_textview"
-            app:layout_constraintTop_toBottomOf="@+id/description_textview" />
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="@+id/scrollView"
+            app:layout_constraintTop_toBottomOf="@+id/scrollView" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnMinus"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginTop="20dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="16dp"
             android:background="@drawable/remove_circle"
             app:layout_constraintStart_toStartOf="@+id/htdi_textview"
             app:layout_constraintTop_toBottomOf="@+id/htdi_textview" />
@@ -160,15 +167,15 @@
             android:id="@+id/time_rep_count_textView"
             style="@style/TextView1"
             android:layout_marginStart="24dp"
-            android:text="15"
+            textByNumber="@={viewModel.exerciseToAddDetail.reps}"
             app:layout_constraintBottom_toBottomOf="@+id/btnMinus"
             app:layout_constraintStart_toEndOf="@+id/btnMinus"
             app:layout_constraintTop_toTopOf="@+id/btnMinus" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnAdd"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_marginStart="24dp"
             android:background="@drawable/add_circle"
             app:layout_constraintBottom_toBottomOf="@+id/time_rep_count_textView"
@@ -188,29 +195,30 @@
             app:layout_constraintTop_toTopOf="@+id/btnAdd">
 
             <Button
-                android:id="@+id/button1"
+                android:id="@+id/btnRep"
                 style="?attr/materialButtonOutlinedStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
+                android:textSize="12sp"
                 android:text="Reps" />
 
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/btnTime"
                 style="?attr/materialButtonOutlinedStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
+                android:textSize="12sp"
                 android:text="Time" />
         </com.google.android.material.button.MaterialButtonToggleGroup>
 
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnAddToCart"
             style="@style/Button1"
-            android:background="@drawable/pink_linear_button"
-            android:text="@string/next"
             android:layout_marginBottom="40dp"
+            android:background="@drawable/pink_linear_button"
+            android:text="@string/add_to_cart"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-</FrameLayout>
+</layout>

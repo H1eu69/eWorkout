@@ -12,7 +12,7 @@
             type="Boolean" />
         <variable
             name="viewModel"
-            type="com.example.eworkout.custom_workout.viewModel.PickExercisesViewModel" />
+            type="com.example.eworkout.custom_workout.viewModel.PickExercisesSharedViewModel" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
 
