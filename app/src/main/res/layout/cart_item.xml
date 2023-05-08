@@ -7,28 +7,28 @@
     android:background="@drawable/full_corner_rounded_background">
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/appCompatButton3"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:id="@+id/btnDelete"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:background="@drawable/remove_icon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/imageView"
         android:layout_width="105dp"
         android:layout_height="105dp"
         android:src="@drawable/pink_linear_button"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/appCompatButton3" />
+        app:layout_constraintTop_toTopOf="@+id/btnDelete" />
 
     <TextView
-        android:id="@+id/textView12"
-        style="@style/TextView4"
-        android:layout_marginStart="8dp"
-        android:maxWidth="200dp"
+        android:id="@+id/textViewName"
+        style="@style/TextView1"
+        android:layout_marginStart="16dp"
+        android:maxWidth="150dp"
         android:text="Diamond Push-ups Advanced"
         app:layout_constraintBottom_toBottomOf="@+id/imageView"
         app:layout_constraintStart_toEndOf="@+id/imageView"
@@ -36,21 +36,21 @@
         app:layout_constraintVertical_bias=".1" />
 
     <TextView
-        android:id="@+id/textView11"
-        style="@style/TextView1"
+        android:id="@+id/textViewRep"
+        style="@style/TextView3"
         android:text="x12"
-        app:layout_constraintStart_toStartOf="@+id/textView12"
-        app:layout_constraintTop_toBottomOf="@+id/textView12"
+        app:layout_constraintStart_toStartOf="@+id/textViewName"
+        app:layout_constraintTop_toBottomOf="@+id/textViewName"
         app:layout_constraintVertical_bias=".9" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/appCompatButton5"
+        android:id="@+id/btnEdit"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:background="@drawable/button3"
         android:layout_marginTop="16dp"
         android:text="Edit"
-        app:layout_constraintEnd_toEndOf="@+id/appCompatButton3"
+        app:layout_constraintEnd_toEndOf="@+id/btnDelete"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 </androidx.constraintlayout.widget.ConstraintLayout>

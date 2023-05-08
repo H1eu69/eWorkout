@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.eworkout.custom_workout.model.ExerciseInCart
 import com.example.eworkout.custom_workout.model.ExerciseToAdd
 import com.example.eworkout.custom_workout.model.ExerciseToAddDetail
 import com.example.eworkout.custom_workout.model.PickExercise
@@ -38,6 +39,8 @@ class PickExercisesSharedViewModel : ViewModel() {
     val storageRef = Firebase.storage.reference
 
     private val defaultDispatcher: CoroutineDispatcher = Dispatchers.IO
+
+    var itemChangePosition = -1
 
     fun getExercise(){
          viewModelScope.launch(defaultDispatcher) {
@@ -149,5 +152,19 @@ class PickExercisesSharedViewModel : ViewModel() {
         exerciseInCart.add(exercise)
         _exercisesInCartLiveData.value = exerciseInCart
         Log.d("TEst add exercise in cart", _exercisesInCartLiveData.value!!.size.toString())
+    }
+
+    fun editExerciseInCart(exercise: ExerciseInCart?) {
+        if (exercise != null) {
+            val updateExercise = exerciseInCart.find {
+                it.name == exercise.name
+            }?.apply {
+                reps = exercise.reps
+                repType = exercise.repType
+            }
+            _exercisesInCartLiveData.value = exerciseInCart
+            itemChangePosition = exerciseInCart.indexOf(updateExercise)
+            _state.value = PickExercisesState.ELEMENT_UPDATED
+        }
     }
 }

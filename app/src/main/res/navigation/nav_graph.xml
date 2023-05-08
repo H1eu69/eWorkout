@@ -219,11 +219,6 @@
             android:label="fragment_custom_set_choose_image"
             tools:layout="@layout/fragment_custom_set_choose_image" />
         <fragment
-            android:id="@+id/customCartFragment"
-            android:name="com.example.eworkout.custom_workout.view.CustomCartFragment"
-            android:label="fragment_custom_cart"
-            tools:layout="@layout/fragment_custom_set_cart" />
-        <fragment
             android:id="@+id/customCreateSetChooseName"
             android:name="com.example.eworkout.custom_workout.view.CustomCreateSetChooseName"
             android:label="CustomCreateSetChooseName" >
@@ -238,6 +233,17 @@
             <action
                 android:id="@+id/action_customCreateSetFragmentPickExercises_to_customCreateSetDetailFragment"
                 app:destination="@id/customCreateSetDetailFragment" />
+            <action
+                android:id="@+id/action_customCreateSetFragmentPickExercises_to_customCreateSetCartFragment"
+                app:destination="@id/customCreateSetCartFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/customCreateSetCartFragment"
+            android:name="com.example.eworkout.custom_workout.view.CustomCreateSetCartFragment"
+            android:label="CustomCreateSetCartFragment" >
+            <action
+                android:id="@+id/action_customCreateSetCartFragment_to_customSetChooseImageFragment"
+                app:destination="@id/customSetChooseImageFragment" />
         </fragment>
     </navigation>
 
