@@ -74,7 +74,7 @@ class WorkoutDoneViewModel : ViewModel() {
             "set_taken_id" to setTakenId,
             "date" to dateFormat,
             "total_calories" to model.kcal,
-            "number_of_exercise" to model.exerciseQuantity,
+            "number_of_exercise" to model.exerciseQuantity.toDouble(),
             "total_time" to min
         )
         firestore.collection("Calendar").add(data).addOnSuccessListener {

@@ -23,7 +23,7 @@ class DailyScheduleViewModel: ViewModel() {
     val dateFormat = DateFormat.getDateInstance().format(calendar)
     var num: Double = 0.0
     var min: Double = 0.0
-    var exercises: String = ""
+    var exercises: Double = 0.0
     private val _state: MutableLiveData<ScheduleState> = MutableLiveData(ScheduleState.LOADING)
     val state: LiveData<ScheduleState> get() = _state
 
@@ -42,7 +42,8 @@ class DailyScheduleViewModel: ViewModel() {
                     min += milliseconds/60000
                     min = Math.round(min * 100) / 100.0
 
-                    exercises = it.get("number_of_exercise") as String
+                    val ex = it.get("number_of_exercise") as Double
+                    exercises += ex
 
                     _state.value = ScheduleState.LOADED
                 }

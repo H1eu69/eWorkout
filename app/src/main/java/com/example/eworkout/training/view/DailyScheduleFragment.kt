@@ -94,6 +94,7 @@ class DailyScheduleFragment : Fragment() {
             "LOADED" -> {
                 binding.numOfKcal.text = _viewModel.num.toString()
                 binding.numOfTime.text = _viewModel.min.toString()
+                binding.numOfExercises.text = _viewModel.exercises.toString()
             }
         }
     }

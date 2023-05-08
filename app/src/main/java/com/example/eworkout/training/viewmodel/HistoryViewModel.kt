@@ -25,7 +25,7 @@ class HistoryViewModel: ViewModel() {
 
     var num: Double = 0.0
     var min: Double = 0.0
-    var exercises: String = ""
+    var exercises: Double = 0.0
 
     val sets = mutableListOf<Set>()
     val list_settakenid = mutableListOf<String>()
@@ -112,6 +112,8 @@ class HistoryViewModel: ViewModel() {
                     min += milliseconds/60000
                     min = Math.round(min * 100) / 100.0
 
+                    val ex = it.get("number_of_exercise") as Double
+                    exercises += ex
                 }
                 _state.value = HistoryState.LOADED
             }.addOnFailureListener {
