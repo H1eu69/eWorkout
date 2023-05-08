@@ -6,10 +6,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.eworkout.training.model.WorkoutDoneModel
 import com.example.eworkout.training.model.WorkoutDoneState
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import java.text.DateFormat
 import java.text.SimpleDateFormat
+import java.time.LocalDate
 import java.util.*
 
 class WorkoutDoneViewModel : ViewModel() {
@@ -23,6 +26,8 @@ class WorkoutDoneViewModel : ViewModel() {
 
     var currentSetId: String? = null
 
+    var min: Double = 0.0
+
     fun getModelData(setTakenID: String)
     {
         firestore.collection("Set_Taken")
@@ -30,6 +35,7 @@ class WorkoutDoneViewModel : ViewModel() {
             .get().addOnSuccessListener {
                 val calo = it.getDouble("total_calories")!!
                 val milliseconds = (it.getDate("end_time")?.time!! - (it.getDate("start_time")?.time!!))
+                min = milliseconds.toDouble()
 
                 val simpledateformat = SimpleDateFormat("mm:ss")
                 simpledateformat.timeZone = TimeZone.getTimeZone("UTC")
@@ -54,5 +60,25 @@ class WorkoutDoneViewModel : ViewModel() {
                 modelLiveData.value = model
                 _state.value = WorkoutDoneState.LOADED
             }
+    }
+
+
+    val auth = Firebase.auth
+    var calendar_id: String? = null
+    val calendar = Calendar.getInstance().time
+    val dateFormat = DateFormat.getDateInstance().format(calendar)
+    fun addToCalendar(setTakenId: String)
+    {
+        val data = hashMapOf(
+            "user_id" to auth.currentUser!!.uid,
+            "set_taken_id" to setTakenId,
+            "date" to dateFormat,
+            "total_calories" to model.kcal,
+            "number_of_exercise" to model.exerciseQuantity.toDouble(),
+            "total_time" to min
+        )
+        firestore.collection("Calendar").add(data).addOnSuccessListener {
+            calendar_id = it.id
+        }
     }
 }

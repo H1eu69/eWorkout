@@ -10,7 +10,7 @@ import com.example.eworkout.databinding.FragmentSetsItemBinding
 import com.example.eworkout.training.listener.SetOnClickListener
 import com.example.eworkout.training.model.Set
 
-class SetsAdapter(val list: List<Set>, val listener: SetOnClickListener): RecyclerView.Adapter<SetsAdapter.ViewHolder>() {
+class SetsAdapter(val list: List<Set>, val listener: SetOnClickListener) : RecyclerView.Adapter<SetsAdapter.ViewHolder>() {
 
     inner class ViewHolder(val binding: FragmentSetsItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
