@@ -1,15 +1,19 @@
 package com.example.eworkout.custom_workout.viewModel
 
+import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.eworkout.custom_workout.model.AddToCartState
+import com.example.eworkout.custom_workout.model.CartState
 import com.example.eworkout.custom_workout.model.ExerciseInCart
 import com.example.eworkout.custom_workout.model.ExerciseToAdd
 import com.example.eworkout.custom_workout.model.ExerciseToAddDetail
 import com.example.eworkout.custom_workout.model.PickExercise
 import com.example.eworkout.custom_workout.model.PickExercisesState
+import com.example.eworkout.custom_workout.util.ConvertTypeUtil
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
@@ -31,7 +35,7 @@ class PickExercisesSharedViewModel : ViewModel() {
 
     val filterExercises = mutableListOf<PickExercise>()
 
-    private val exerciseInCart = mutableListOf<ExerciseToAdd>()
+    private var exerciseInCart = mutableListOf<ExerciseToAdd>()
 
     private val _exercisesInCartLiveData : MutableLiveData<List<ExerciseToAdd>> = MutableLiveData(exerciseInCart)
     val exercisesInCartLiveData : LiveData<List<ExerciseToAdd>> get() = _exercisesInCartLiveData
@@ -152,4 +156,11 @@ class PickExercisesSharedViewModel : ViewModel() {
         _exercisesInCartLiveData.value = exerciseInCart
         Log.d("TEst add exercise in cart", _exercisesInCartLiveData.value!!.size.toString())
     }
+
+    fun updateExercisesInCart(list: List<ExerciseInCart>)
+    {
+        exerciseInCart = ConvertTypeUtil.convertInCartToToAdd(list)
+        _exercisesInCartLiveData.value = exerciseInCart
+    }
+
 }

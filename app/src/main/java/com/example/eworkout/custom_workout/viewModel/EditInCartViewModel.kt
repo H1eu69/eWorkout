@@ -31,8 +31,7 @@ class EditInCartViewModel : ViewModel() {
             bundle.getString("name").toString(),
             bundle.getString("image").toString(),
             bundle.getInt("rep"),
-            bundle.getString("repType").toString()
-        )
+            bundle.getString("repType").toString())
         exerciseInCart.value = exercise
     }
 

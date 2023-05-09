@@ -4,10 +4,20 @@ import android.os.Bundle
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.eworkout.custom_workout.util.ConvertTypeUtil
+import androidx.lifecycle.viewModelScope
 import com.example.eworkout.custom_workout.model.CartState
 import com.example.eworkout.custom_workout.model.ExerciseInCart
 import com.example.eworkout.custom_workout.model.ExerciseToAdd
+import com.example.eworkout.custom_workout.util.ConvertTypeUtil
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
+
 
 class CartViewModel: ViewModel() {
     private val _state : MutableLiveData<CartState> = MutableLiveData(CartState.CHECKING_CART)
@@ -21,7 +31,7 @@ class CartViewModel: ViewModel() {
     var itemChangePosition = -1
     fun getExerciseFromSharedVM(listLiveData: List<ExerciseToAdd>?)
     {
-        exerciseInCart = ConvertTypeUtil.convert(listLiveData)
+        exerciseInCart = ConvertTypeUtil.convertToAddToInCart(listLiveData)
         _exercisesInCartLiveData.value = exerciseInCart
 
     }

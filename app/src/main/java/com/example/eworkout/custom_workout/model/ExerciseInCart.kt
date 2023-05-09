@@ -6,4 +6,4 @@ data class ExerciseInCart(
     var image: String,
     var reps: Int,
     var repType: String
-)
+    )

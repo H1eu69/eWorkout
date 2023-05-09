@@ -107,7 +107,7 @@ class CustomCreateSetFragmentPickExercises : Fragment() {
         })
 
         binding.btnViewCart.setOnClickListener {
-            findNavController().navigate(R.id.action_customCreateSetFragmentPickExercises_to_customCreateSetCartFragment)
+            findNavController().navigate(R.id.action_customCreateSetFragmentPickExercises_to_customCreateSetCartFragment, arguments)
         }
     }
 
