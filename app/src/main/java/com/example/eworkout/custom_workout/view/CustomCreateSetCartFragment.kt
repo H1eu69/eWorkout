@@ -12,11 +12,8 @@ import com.example.eworkout.R
 import com.example.eworkout.custom_workout.adapter.CartAdapter
 import com.example.eworkout.custom_workout.listener.CartOnCLickListener
 import com.example.eworkout.custom_workout.model.CartState
-import com.example.eworkout.custom_workout.model.PickExercisesState
 import com.example.eworkout.custom_workout.viewModel.CartViewModel
 import com.example.eworkout.custom_workout.viewModel.PickExercisesSharedViewModel
-import com.example.eworkout.custom_workout.viewModel.SetDetailViewModel
-import com.example.eworkout.databinding.FragmentCustomCreateSetDetailBinding
 import com.example.eworkout.databinding.FragmentCustomSetCartBinding
 
 class CustomCreateSetCartFragment: Fragment() {
@@ -62,13 +59,22 @@ class CustomCreateSetCartFragment: Fragment() {
             "EMPTY_CART" -> showEmptyUI()
             "NOT_EMPTY_CART" -> showUI()
             "ELEMENT_UPDATED" -> {
-                refreshUI()
+                refreshUIUpdate()
+            }
+            "ELEMENT_DELETED" -> {
+                refreshUIDelete()
             }
         }
     }
 
-    private fun refreshUI() {
+    private fun refreshUIDelete() {
+        binding.recyclerView.adapter?.notifyItemRemoved(viewModel.itemChangePosition)
+        Log.d("test cart delete", viewModel.exercisesInCartLiveData.value?.size.toString())
+    }
+
+    private fun refreshUIUpdate() {
         binding.recyclerView.adapter?.notifyItemChanged(viewModel.itemChangePosition)
+        Log.d("test cart update", viewModel.exercisesInCartLiveData.value?.size.toString())
     }
 
     private fun showUI() {
@@ -80,14 +86,15 @@ class CustomCreateSetCartFragment: Fragment() {
             }
 
             override fun onDelete(bundle: Bundle) {
-
+                viewModel.deleteExerciseInCart(bundle)
             }
-
         }
         binding.recyclerView.adapter = CartAdapter(
             viewModel.exercisesInCartLiveData.value!!,
             listener
         )
+        Log.d("test cart init", viewModel.exercisesInCartLiveData.value?.size.toString())
+
     }
 
     private fun checkEmptyCart() {
@@ -95,7 +102,7 @@ class CustomCreateSetCartFragment: Fragment() {
     }
 
     private fun showEmptyUI() {
-        TODO("Not yet implemented")
+
     }
 
 

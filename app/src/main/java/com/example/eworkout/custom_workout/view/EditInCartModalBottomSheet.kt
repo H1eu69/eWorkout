@@ -107,7 +107,7 @@ class EditInCartModalBottomSheet(
             viewModel.increaseRepByOne()
         }
         binding.btnEdit.setOnClickListener {
-            parentViewModel.editExerciseInCart(viewModel.exerciseInCart.value)
+            parentViewModel.updateExerciseInCart(viewModel.exerciseInCart.value)
             dismiss()
         }
     }

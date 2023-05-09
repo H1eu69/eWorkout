@@ -4,5 +4,6 @@ enum class CartState {
     EMPTY_CART,
     NOT_EMPTY_CART,
     CHECKING_CART,
-    ELEMENT_UPDATED
+    ELEMENT_UPDATED,
+    ELEMENT_DELETED
 }
