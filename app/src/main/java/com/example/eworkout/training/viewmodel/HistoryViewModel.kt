@@ -81,7 +81,10 @@ class HistoryViewModel: ViewModel() {
                     list_settakenid.add(it.get("set_taken_id").toString())
                     Log.d("History", it.getString("set_taken_id").toString())
                 }
-                getSetId(list_settakenid)
+                if(list_settakenid.isNotEmpty())
+                {
+                    getSetId(list_settakenid)
+                }
                 Log.d("list_settakenid",list_settakenid.toString())
             }
     }

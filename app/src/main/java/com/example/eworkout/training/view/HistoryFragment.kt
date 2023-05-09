@@ -119,6 +119,7 @@ class HistoryFragment : Fragment() {
                 binding.num.text = _viewModel.num.toString()
                 binding.min.text = _viewModel.min.toString()
                 binding.numOfExercisesHistory.text = _viewModel.exercises.toString()
+                hideLoading()
             }
             "SET_LOADED" -> {
                 setUpReyclerView()
