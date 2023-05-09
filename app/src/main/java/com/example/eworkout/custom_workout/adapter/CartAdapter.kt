@@ -43,6 +43,8 @@ class CartAdapter(
                     putString("exercise_id", id)
                     putString("name", name)
                     putString("image", image)
+                    putInt("rep", reps)
+                    putString("repType", repType)
                 }
 
                 binding.btnEdit.setOnClickListener {

@@ -21,12 +21,17 @@ class EditInCartViewModel : ViewModel() {
     }
 
     fun initExerciseInCart(bundle: Bundle) {
+        when(bundle.getString("repType").toString())
+        {
+            "Reps" -> _state.value = AddToCartState.REPS_CHOOSE
+            "Time" -> _state.value = AddToCartState.TIME_CHOOSE
+        }
         val exercise = ExerciseInCart(
             bundle.getString("id").toString(),
             bundle.getString("name").toString(),
             bundle.getString("image").toString(),
-            15,
-            "Reps"
+            bundle.getInt("rep"),
+            bundle.getString("repType").toString()
         )
         exerciseInCart.value = exercise
     }

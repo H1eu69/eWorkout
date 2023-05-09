@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.navGraphViewModels
 import com.example.eworkout.R
 import com.example.eworkout.custom_workout.model.AddToCartState
+import com.example.eworkout.custom_workout.viewModel.CartViewModel
 import com.example.eworkout.custom_workout.viewModel.EditInCartViewModel
 import com.example.eworkout.custom_workout.viewModel.PickExercisesSharedViewModel
 import com.example.eworkout.databinding.FragmentEditInCartModalBottomSheetBinding
@@ -30,7 +31,7 @@ class EditInCartModalBottomSheet(
     ) : BottomSheetDialogFragment() {
     private var _binding: FragmentEditInCartModalBottomSheetBinding? = null
     private val binding: FragmentEditInCartModalBottomSheetBinding get() = _binding!!
-    private val shareViewModel: PickExercisesSharedViewModel by navGraphViewModels(R.id.custom_set)
+    private val parentViewModel: CartViewModel by viewModels({requireParentFragment()})
     private val viewModel: EditInCartViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,12 +60,6 @@ class EditInCartModalBottomSheet(
         getBundle()
         observeViewModel()
         setListener()
-        checkRepsButton()
-    }
-
-    private fun checkRepsButton()
-    {
-        binding.toggleButton.check(binding.btnRep.id)
     }
 
     private fun observeViewModel()
@@ -81,10 +76,12 @@ class EditInCartModalBottomSheet(
             "REPS_CHOOSE" -> {
                 binding.timeRepCountTextView.text = "x" + viewModel.exerciseInCart.value?.reps.toString()
                 viewModel.changeRepType()
+                binding.toggleButton.check(binding.btnRep.id)
             }
             "TIME_CHOOSE" -> {
                 binding.timeRepCountTextView.text = viewModel.exerciseInCart.value?.reps.toString() + "s"
                 viewModel.changeRepType()
+                binding.toggleButton.check(binding.btnTime.id)
             }
         }
     }
@@ -110,7 +107,7 @@ class EditInCartModalBottomSheet(
             viewModel.increaseRepByOne()
         }
         binding.btnEdit.setOnClickListener {
-            shareViewModel.editExerciseInCart(viewModel.exerciseInCart.value)
+            parentViewModel.editExerciseInCart(viewModel.exerciseInCart.value)
             dismiss()
         }
     }

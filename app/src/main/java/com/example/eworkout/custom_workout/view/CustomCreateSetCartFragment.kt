@@ -51,10 +51,6 @@ class CustomCreateSetCartFragment: Fragment() {
         {
             handleState(it)
         }
-        _shareViewModel.state.observe(viewLifecycleOwner)
-        {
-            handleState(it)
-        }
     }
 
     private fun handleState(state: CartState) {
@@ -65,12 +61,6 @@ class CustomCreateSetCartFragment: Fragment() {
             }
             "EMPTY_CART" -> showEmptyUI()
             "NOT_EMPTY_CART" -> showUI()
-        }
-    }
-
-    private fun handleState(state: PickExercisesState) {
-        when(state.name)
-        {
             "ELEMENT_UPDATED" -> {
                 refreshUI()
             }
@@ -78,7 +68,7 @@ class CustomCreateSetCartFragment: Fragment() {
     }
 
     private fun refreshUI() {
-        binding.recyclerView.adapter?.notifyItemChanged(_shareViewModel.itemChangePosition)
+        binding.recyclerView.adapter?.notifyItemChanged(viewModel.itemChangePosition)
     }
 
     private fun showUI() {
