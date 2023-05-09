@@ -29,6 +29,10 @@ class CartViewModel: ViewModel() {
     val exercisesInCartLiveData: LiveData<List<ExerciseInCart>> get() = _exercisesInCartLiveData
 
     var itemChangePosition = -1
+    private var orderNumber = 0
+    private val defaultDispatcher: CoroutineDispatcher = Dispatchers.IO
+    val firestore = Firebase.firestore
+    val auth = FirebaseAuth.getInstance()
     fun getExerciseFromSharedVM(listLiveData: List<ExerciseToAdd>?)
     {
         exerciseInCart = ConvertTypeUtil.convertToAddToInCart(listLiveData)
@@ -75,6 +79,43 @@ class CartViewModel: ViewModel() {
         itemChangePosition = exerciseInCart.indexOf(updateExercise)
         exerciseInCart.remove(updateExercise)
         _state.value = CartState.ELEMENT_DELETED
+
+        if(exerciseInCart.isEmpty())
+            _state.value = CartState.EMPTY_CART
+
+    }
+
+    fun addToDb(arguments: Bundle?) {
+        viewModelScope.launch(defaultDispatcher) {
+            val setName = arguments?.getString("set_name")!!
+
+            val customSetData: MutableMap<String, Any> = HashMap()
+            customSetData["set_name"] = setName
+            customSetData["number_of_exercises"] = exerciseInCart.size
+            customSetData["user_id"] = auth.currentUser!!.uid
+
+
+            val set = firestore.collection("Custom_Set")
+                .add(customSetData)
+                .await()
+
+            withContext(defaultDispatcher) {
+                exerciseInCart.forEach {
+                    val customSetInfoData: MutableMap<String, Any> = HashMap()
+                    customSetInfoData["set_id"] = set.id
+                    customSetInfoData["exercise_id"] = it.id
+                    customSetInfoData["reps"] = it.reps
+                    customSetInfoData["rep_Type"] = it.repType
+                    customSetInfoData["orderNumber"] = orderNumber
+                    firestore.collection("Custom_Set_Information")
+                        .add(customSetInfoData)
+                        .await()
+                    orderNumber += 1
+                }
+            }
+            _state.postValue(CartState.ADDED_NEW_SET)
+
+        }
     }
 
 

@@ -82,6 +82,9 @@ class CustomCreateSetCartFragment: Fragment() {
             "ELEMENT_DELETED" -> {
                 refreshUIDelete()
             }
+            "ADDED_NEW_SET" -> {
+                findNavController().navigate(R.id.action_customCreateSetCartFragment_to_customSetChooseImageFragment)
+            }
         }
     }
 

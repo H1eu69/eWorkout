@@ -23,7 +23,7 @@ class AddToCartViewModel : ViewModel() {
 
     fun initExerciseToAdd(bundle: Bundle) {
         val exercise = ExerciseToAdd(
-            bundle.getString("id").toString(),
+            bundle.getString("exercise_id").toString(),
             bundle.getString("name").toString(),
             bundle.getString("image").toString(),
             15,

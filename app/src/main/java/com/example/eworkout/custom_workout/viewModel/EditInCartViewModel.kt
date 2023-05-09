@@ -27,7 +27,7 @@ class EditInCartViewModel : ViewModel() {
             "Time" -> _state.value = AddToCartState.TIME_CHOOSE
         }
         val exercise = ExerciseInCart(
-            bundle.getString("id").toString(),
+            bundle.getString("exercise_id").toString(),
             bundle.getString("name").toString(),
             bundle.getString("image").toString(),
             bundle.getInt("rep"),

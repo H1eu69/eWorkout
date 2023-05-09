@@ -21,7 +21,7 @@ class SetDetailViewModel : ViewModel() {
 
     fun initExerciseToAddDetail(bundle: Bundle?) {
         val exercise = ExerciseToAddDetail(
-            bundle?.getString("id").toString(),
+            bundle?.getString("exercise_id").toString(),
             bundle?.getString("name").toString(),
             bundle?.getString("image").toString(),
             15,
