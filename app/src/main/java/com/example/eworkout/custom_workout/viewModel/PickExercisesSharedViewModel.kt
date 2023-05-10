@@ -47,6 +47,7 @@ class PickExercisesSharedViewModel : ViewModel() {
 
     fun getExercise(){
          viewModelScope.launch(defaultDispatcher) {
+             exercises.clear()
              Log.d("test coroutine", "1")
              val docs = firestore.collection("Exercises")
                  .get().await()
@@ -161,6 +162,11 @@ class PickExercisesSharedViewModel : ViewModel() {
     {
         exerciseInCart = ConvertTypeUtil.convertInCartToToAdd(list)
         _exercisesInCartLiveData.value = exerciseInCart
+    }
+
+    fun clearExerciseInCart()
+    {
+        exerciseInCart.clear()
     }
 
 }

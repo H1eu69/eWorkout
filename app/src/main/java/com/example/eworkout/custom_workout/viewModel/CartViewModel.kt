@@ -17,6 +17,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
+import java.sql.Timestamp
 
 
 class CartViewModel: ViewModel() {
@@ -89,11 +90,14 @@ class CartViewModel: ViewModel() {
         viewModelScope.launch(defaultDispatcher) {
             val setName = arguments?.getString("set_name")!!
 
+            val createdDate = com.google.firebase.Timestamp.now()
+
             val customSetData: MutableMap<String, Any> = HashMap()
             customSetData["set_name"] = setName
             customSetData["number_of_exercises"] = exerciseInCart.size
             customSetData["user_id"] = auth.currentUser!!.uid
-
+            customSetData["created_date"] = createdDate
+            arguments.putLong("createdDate", createdDate.seconds)
 
             val set = firestore.collection("Custom_Set")
                 .add(customSetData)
