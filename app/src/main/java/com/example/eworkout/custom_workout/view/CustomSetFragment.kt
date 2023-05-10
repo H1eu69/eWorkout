@@ -5,8 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.eworkout.R
+import com.example.eworkout.custom_workout.adapter.CustomSetAdapter
+import com.example.eworkout.custom_workout.adapter.PickExercisesAdapter
+import com.example.eworkout.custom_workout.listener.CustomSetOnClickListener
+import com.example.eworkout.custom_workout.listener.PickExercisesOnClickListener
+import com.example.eworkout.custom_workout.model.CustomSetState
+import com.example.eworkout.custom_workout.viewModel.CustomSetViewModel
 import com.example.eworkout.databinding.FragmentCustomSetBinding
 
 /**
@@ -20,7 +27,7 @@ class CustomSetFragment : Fragment() {
     private var param2: String? = null
     private var _binding : FragmentCustomSetBinding? = null
     val binding : FragmentCustomSetBinding get() = _binding!!
-
+    private val viewModel: CustomSetViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -56,7 +63,58 @@ class CustomSetFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        observeViewModel()
         setOnClick()
+    }
+
+    private fun observeViewModel() {
+        viewModel.state.observe(viewLifecycleOwner)
+        {
+            handleState(it)
+        }
+    }
+
+    private fun handleState(it: CustomSetState) {
+        when(it.name)
+        {
+            "LOADING" -> {
+                showLoading()
+                viewModel.getCustomSet()
+            }
+            "LOADED" -> {
+                showData()
+            }
+        }
+    }
+
+    private fun showLoading() {
+        binding.lottie.visibility = View.VISIBLE
+        binding.recyclerView.visibility = View.GONE
+        binding.createSetBtn.visibility = View.GONE
+    }
+
+    private fun hideLoading()
+    {
+        binding.lottie.visibility = View.GONE
+        binding.recyclerView.visibility = View.VISIBLE
+        binding.createSetBtn.visibility = View.VISIBLE
+    }
+
+    private fun showData() {
+        hideLoading()
+        setupRecyclerView()
+    }
+
+    private fun setupRecyclerView() {
+        val listener = object : CustomSetOnClickListener
+        {
+            override fun onClick(bundle: Bundle) {
+                TODO("Not yet implemented")
+            }
+
+        }
+        binding.recyclerView.adapter = CustomSetAdapter(viewModel.sets.value!!, listener)
+
     }
 
     private fun setOnClick() {

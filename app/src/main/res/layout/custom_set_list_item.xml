@@ -58,7 +58,7 @@
         android:background="@drawable/ellipse"/>
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/Set_imageView"
+        android:id="@+id/set_imageView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="5dp"
