@@ -2,48 +2,56 @@ package com.example.eworkout.training.view
 
 import android.annotation.SuppressLint
 import android.content.ContentValues.TAG
-import android.os.Build
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.eworkout.R
+import com.example.eworkout.databinding.FragmentHistoryBinding
+import com.example.eworkout.databinding.FragmentSetsItemBinding
 import com.example.eworkout.databinding.FragmentTrainingBinding
-import com.example.eworkout.training.adapter.SetsAdapter
-import com.example.eworkout.training.listener.SetOnClickListener
-import com.example.eworkout.training.model.TrainingState
+import com.example.eworkout.training.adapter.HistoryAdapter
+import com.example.eworkout.training.model.HistoryState
+import com.example.eworkout.training.model.ScheduleState
+import com.example.eworkout.training.model.Set
+import com.example.eworkout.training.viewmodel.HistoryViewModel
 import com.example.eworkout.training.viewmodel.TrainingViewModel
+import org.checkerframework.checker.units.qual.Length
 
-/**
- * A simple [Fragment] subclass.
- * Use the [TrainingFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+// TODO: Rename parameter arguments, choose names that match
+// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-class TrainingFragment : Fragment() {
+/**
+ * A simple [Fragment] subclass.
+ * Use the [HistoryFragment.newInstance] factory method to
+ * create an instance of this fragment.
+ */
+class HistoryFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private var _binding: FragmentTrainingBinding? = null
+    private var _binding: FragmentHistoryBinding? = null
     val binding get() = _binding!!
-    private lateinit var _viewModel: TrainingViewModel
+    private lateinit var _viewModel: HistoryViewModel
 
-    //private var setTakenID: String? = null
+    private var date: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
-            //setTakenID = it.getString("setTakenId")
+            date = it.getString("date")
         }
     }
 
@@ -52,11 +60,11 @@ class TrainingFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-        _binding = FragmentTrainingBinding.inflate(inflater,container,false)
-        val viewModel: TrainingViewModel by viewModels()
+        _binding = FragmentHistoryBinding.inflate(inflater,container,false)
+        val viewModel: HistoryViewModel by viewModels()
         _viewModel = viewModel
         binding.viewModel = viewModel
-        binding.lifecycleOwner = this@TrainingFragment
+        binding.lifecycleOwner = this@HistoryFragment
         return binding.root
     }
 
@@ -67,12 +75,12 @@ class TrainingFragment : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment TrainingFragment.
+         * @return A new instance of fragment HistoryFragment.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            TrainingFragment().apply {
+            HistoryFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)
@@ -82,10 +90,14 @@ class TrainingFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        _viewModel.getCurrentUserEmail()
-        setOnClick()
+        onClick()
         observeViewModel()
-        setupRecyclerView()
+        setUpReyclerView()
+    }
+
+    private fun setUpReyclerView() {
+        val list = _viewModel.sets
+        binding.recyclerHistory.adapter = HistoryAdapter(list)
     }
 
     private fun observeViewModel()
@@ -95,16 +107,22 @@ class TrainingFragment : Fragment() {
         }
     }
 
-    private fun handleState(state: TrainingState)
+    private fun handleState(state: HistoryState)
     {
         when(state.name){
             "LOADING" -> {
-                _viewModel.loadSets()
-                _viewModel.indicatorWatching()
+                _viewModel.indicator(date.toString())
+                _viewModel.getSetTakenId(date.toString())
                 showLoading()
             }
             "LOADED" -> {
-                setupRecyclerView()
+                binding.num.text = _viewModel.num.toString()
+                binding.min.text = _viewModel.min.toString()
+                binding.numOfExercisesHistory.text = _viewModel.exercises.toString()
+                hideLoading()
+            }
+            "SET_LOADED" -> {
+                setUpReyclerView()
                 hideLoading()
             }
             "IMAGE_LOADED" -> {
@@ -116,39 +134,20 @@ class TrainingFragment : Fragment() {
 
     private fun showLoading()
     {
-        binding.shimmerLayout.visibility = View.VISIBLE
-        binding.dataLayout.visibility = View.GONE
+        binding.historyLayout.visibility = View.GONE
     }
     private fun hideLoading()
     {
-        binding.shimmerLayout.visibility = View.GONE
-        binding.dataLayout.visibility = View.VISIBLE
+        binding.historyLayout.visibility = View.VISIBLE
     }
-
-    private fun setupRecyclerView()
-    {
-        val listener = SetOnClickListener {
-            findNavController().navigate(R.id.action_trainingFragment_to_workoutDetail1, it)
-        }
-        val list = _viewModel.sets
-        binding.recyclerView.adapter = SetsAdapter(list, listener)
-        binding.textView2.text = _viewModel.userEmail
-        binding.textViewCalories.text = _viewModel.num.toString()
-        binding.textViewCaloriesNumber.text = _viewModel.num.toString()
-        binding.textViewHours.text = _viewModel.min.toString()
-    }
-
-    private fun setOnClick(){
-        binding.buttonSchedule.setOnClickListener{
-            findNavController().navigate(R.id.action_trainingFragment_to_dailyScheduleFragment)
+    private fun onClick() {
+        binding.buttonBack.setOnClickListener {
+            findNavController().navigate(R.id.action_historyFragment_to_dailyScheduleFragment)
         }
     }
-
     @SuppressLint("NotifyDataSetChanged")
     private fun notifyDataChange()
     {
-        binding.recyclerView.adapter?.notifyDataSetChanged()
+        binding.recyclerHistory.adapter?.notifyDataSetChanged()
     }
 }
-
-
