@@ -62,4 +62,5 @@
     <string name="next">Next</string>
     <string name="add_to_cart">Add to Cart</string>
     <string name="create_new_set">Create new set</string>
+    <string name="custom">Custom</string>
 </resources>

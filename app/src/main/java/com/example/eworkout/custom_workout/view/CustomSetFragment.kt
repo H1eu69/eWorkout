@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.example.eworkout.MainActivity
 import com.example.eworkout.R
 import com.example.eworkout.custom_workout.adapter.CustomSetAdapter
 import com.example.eworkout.custom_workout.adapter.PickExercisesAdapter
@@ -121,5 +122,14 @@ class CustomSetFragment : Fragment() {
         binding.createSetBtn.setOnClickListener {
             findNavController().navigate(R.id.action_customSetFragment_to_customCreateSetChooseName)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        showBottomNav()
+    }
+
+    private fun showBottomNav() {
+        (requireActivity() as MainActivity).bottomNavigation.visibility = View.VISIBLE
     }
 }

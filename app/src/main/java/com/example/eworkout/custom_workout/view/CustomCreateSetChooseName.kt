@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.example.eworkout.MainActivity
 import com.example.eworkout.R
 import com.example.eworkout.custom_workout.model.ChooseNameState
 import com.example.eworkout.custom_workout.viewModel.CustomCreateSetChooseNameViewModel
@@ -94,5 +95,14 @@ class CustomCreateSetChooseName : Fragment() {
                 findNavController().navigate(R.id.action_customCreateSetChooseName_to_customCreateSetFragmentPickExercises, bundle)
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        hideBottomNav()
+    }
+
+    private fun hideBottomNav() {
+        (requireActivity() as MainActivity).bottomNavigation.visibility = View.GONE
     }
 }

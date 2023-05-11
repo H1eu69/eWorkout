@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.example.eworkout.MainActivity
 import com.example.eworkout.R
 import com.example.eworkout.databinding.FragmentTrainingBinding
 import com.example.eworkout.training.adapter.SetsAdapter
@@ -86,6 +87,16 @@ class TrainingFragment : Fragment() {
         setOnClick()
         observeViewModel()
         setupRecyclerView()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        showBottomNav()
+    }
+
+    private fun showBottomNav()
+    {
+        (requireActivity() as MainActivity).bottomNavigation.visibility = View.VISIBLE
     }
 
     private fun observeViewModel()
