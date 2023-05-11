@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.example.eworkout.MainActivity
 import com.example.eworkout.R
 import com.example.eworkout.databinding.FragmentDailyScheduleBinding
 import com.example.eworkout.training.model.ScheduleState
@@ -77,7 +78,14 @@ class DailyScheduleFragment : Fragment() {
         setOnClick()
         pickDate()
     }
+    override fun onResume() {
+        super.onResume()
+        hideBottomNav()
+    }
 
+    private fun hideBottomNav() {
+        (requireActivity() as MainActivity).bottomNavigation.visibility = View.GONE
+    }
     private fun observeViewModel()
     {
         _viewModel.state.observe(viewLifecycleOwner){

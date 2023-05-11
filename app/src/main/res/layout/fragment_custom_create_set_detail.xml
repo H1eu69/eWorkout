@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.eworkout.custom_workout.viewModel.SetDetailViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_marginStart="28.8dp"
+        android:layout_marginEnd="28.8dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/shimmerFrameLayout"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_navigate_up"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="57.6dp"
+            android:background="@drawable/btn_close_background"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardview"
+            style="@style/Widget.Material3.CardView.Elevated"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="16dp"
+            android:theme="@style/Theme.MaterialComponents"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="1dp"
+            app:cardPreventCornerOverlap="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_navigate_up">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/view_thumbnail_background"
+                    android:layout_width="0dp"
+                    android:layout_height="200dp"
+                    android:src="@drawable/blue_linear"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/image_background_thumbnail"
+                    android:layout_width="0dp"
+                    android:layout_height="200dp"
+                    android:background="#99000000"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/image_thumbnail"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:src="@drawable/jumping_rope"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageButton
+                    android:id="@+id/exo_play_pause_btn"
+                    style="@style/ExoStyledControls.Button.Center.PlayPause"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.media3.ui.PlayerView
+                    android:id="@+id/playerView"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:resize_mode="fill" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:id="@+id/exercises_name_textview"
+            style="@style/TextView1"
+            android:layout_marginTop="16dp"
+            android:text="@={viewModel.exerciseToAddDetail.name}"
+            app:layout_constraintStart_toStartOf="@+id/btn_navigate_up"
+            app:layout_constraintTop_toBottomOf="@+id/cardview" />
+
+        <TextView
+            android:id="@+id/exercises_information_textview"
+            style="@style/TextView2"
+            android:layout_marginTop="8dp"
+            android:text="@={viewModel.exerciseToAddDetail.level}"
+            app:layout_constraintStart_toStartOf="@+id/exercises_name_textview"
+            app:layout_constraintTop_toBottomOf="@+id/exercises_name_textview" />
+
+        <TextView
+            android:id="@+id/description_hardcode_textview"
+            style="@style/TextView1"
+            android:layout_marginTop="16dp"
+            android:text="@string/description"
+            app:layout_constraintStart_toStartOf="@+id/exercises_information_textview"
+            app:layout_constraintTop_toBottomOf="@+id/exercises_information_textview" />
+
+        <ScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constrainedHeight="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_max="200dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/description_hardcode_textview"
+            app:layout_constraintVertical_bias="0">
+
+            <TextView
+                android:id="@+id/description_textview"
+                style="@style/TextView2"
+                android:text="@={viewModel.exerciseToAddDetail.description}"
+                app:layout_constraintStart_toStartOf="@+id/description_hardcode_textview"
+                app:layout_constraintTop_toBottomOf="@+id/description_hardcode_textview" />
+        </ScrollView>
+
+
+        <TextView
+            android:id="@+id/htdi_textview"
+            style="@style/TextView1"
+            android:text="How many reps or time do you want"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="@+id/scrollView"
+            app:layout_constraintTop_toBottomOf="@+id/scrollView" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnMinus"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/remove_circle"
+            app:layout_constraintStart_toStartOf="@+id/htdi_textview"
+            app:layout_constraintTop_toBottomOf="@+id/htdi_textview" />
+
+        <TextView
+            android:id="@+id/time_rep_count_textView"
+            style="@style/TextView1"
+            android:layout_marginStart="24dp"
+            textByNumber="@={viewModel.exerciseToAddDetail.reps}"
+            app:layout_constraintBottom_toBottomOf="@+id/btnMinus"
+            app:layout_constraintStart_toEndOf="@+id/btnMinus"
+            app:layout_constraintTop_toTopOf="@+id/btnMinus" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnAdd"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="24dp"
+            android:background="@drawable/add_circle"
+            app:layout_constraintBottom_toBottomOf="@+id/time_rep_count_textView"
+            app:layout_constraintStart_toEndOf="@+id/time_rep_count_textView"
+            app:layout_constraintTop_toTopOf="@+id/time_rep_count_textView" />
+
+        <com.google.android.material.button.MaterialButtonToggleGroup
+            android:id="@+id/toggleButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:singleSelection="true"
+            app:selectionRequired="true"
+            app:layout_constraintHorizontal_bias=".8"
+            app:layout_constraintBottom_toBottomOf="@+id/btnAdd"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/btnAdd"
+            app:layout_constraintTop_toTopOf="@+id/btnAdd">
+
+            <Button
+                android:id="@+id/btnRep"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:textSize="12sp"
+                android:text="Reps" />
+
+            <Button
+                android:id="@+id/btnTime"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:textSize="12sp"
+                android:text="Time" />
+        </com.google.android.material.button.MaterialButtonToggleGroup>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnAddToCart"
+            style="@style/Button1"
+            android:layout_marginBottom="40dp"
+            android:background="@drawable/pink_linear_button"
+            android:text="@string/add_to_cart"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

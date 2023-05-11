@@ -2,22 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:title="@string/home"
-        android:id="@+id/home"
+        android:id="@+id/training_nav"
         android:icon="@drawable/baseline_home_24"
         android:enabled="true"/>
 
-    <item android:title="@string/report"
-        android:id="@+id/report"
-        android:icon="@drawable/report"
-        android:enabled="true"/>
-
-    <item android:title="@string/discover"
-        android:id="@+id/discover"
+    <item android:title="@string/custom"
+        android:id="@+id/custom_set"
         android:icon="@drawable/discover_icon"
         android:enabled="true"/>
 
-    <item android:title="@string/setting"
-        android:id="@+id/setting"
-        android:icon="@drawable/setting_icon"
+    <item android:title="@string/report"
+        android:id="@+id/report_nav"
+        android:icon="@drawable/report"
         android:enabled="true"/>
 </menu>

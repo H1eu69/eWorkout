@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.example.eworkout.MainActivity
 import com.example.eworkout.authentication.login.viewmodel.LoginViewModel
 import com.example.eworkout.R
 import com.example.eworkout.databinding.FragmentLetsStartBinding
@@ -28,6 +29,7 @@ class LetsStartFragment : Fragment() {
     private var param2: String? = null
     private var _binding: FragmentLetsStartBinding? = null
     val binding get() = _binding!!
+    private val viewModel: LetsStartViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -69,10 +71,22 @@ class LetsStartFragment : Fragment() {
         setOnClickListener()
     }
 
+    override fun onResume() {
+        super.onResume()
+        hideBottomNav()
+    }
+
+    private fun hideBottomNav() {
+        (requireActivity() as MainActivity).bottomNavigation.visibility = View.GONE
+    }
+
     private fun setOnClickListener()
     {
         binding.btnLetsStart.setOnClickListener {
-            findNavController().navigate(R.id.action_letsStartFragment_to_loginFragment)
+            if(viewModel.hasSignInPreviously())
+                findNavController().navigate(R.id.action_letsStartFragment_to_Training)
+            else
+                findNavController().navigate(R.id.action_letsStartFragment_to_loginFragment)
         }
 
     }

@@ -112,7 +112,7 @@
                 style="@style/Button6"
                 android:layout_marginBottom="40dp"
                 android:text="Done"
-                android:background="@drawable/blue_linear_button"
+                android:background="@drawable/blue_linear_button_enable"
                 android:paddingStart="8dp"
                 android:paddingEnd="0dp"
                 android:drawableStart="@drawable/btn_check_training_background"

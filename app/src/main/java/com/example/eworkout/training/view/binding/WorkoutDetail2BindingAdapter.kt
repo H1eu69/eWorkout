@@ -41,6 +41,27 @@ fun getTextByNumber2(view: TextView) : Double?{
     else null
 }
 
+@BindingAdapter("textByNumber")
+fun setTextByNumber(view: TextView, text: Int?) {
+    if(text != null){
+        view.setText(text.toString()
+            .replace("s", "")
+            .replace("x",""))
+    }
+    else
+        view.text = null
+}
+
+@InverseBindingAdapter(attribute = "textByNumber")
+fun getTextByNumber(view: TextView) : Int?{
+    return if(view.text.toString().contains("s") || view.text.toString().contains("x"))
+        view.text.toString()
+            .replace("s", "")
+            .replace("x","")
+            .toInt()
+    else null
+}
+
 @BindingAdapter("textByNumberAttrChanged")
 fun setListeners(
     view: TextView,

@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
+import com.example.eworkout.MainActivity
 import com.example.eworkout.R
 import com.example.eworkout.databinding.FragmentWorkoutDetail1Binding
 import com.example.eworkout.training.adapter.ExercisesAdapter
@@ -86,6 +87,15 @@ class FragmentWorkoutDetail1 : Fragment() {
         setupRecyclerView()
     }
 
+    override fun onResume() {
+        super.onResume()
+        hideBottomNav()
+    }
+
+    private fun hideBottomNav() {
+        (requireActivity() as MainActivity).bottomNavigation.visibility = View.GONE
+    }
+
     private fun setOnClickListener()
     {
         binding.btnStart.setOnClickListener {
@@ -158,10 +168,6 @@ class FragmentWorkoutDetail1 : Fragment() {
         super.onStart()
         Log.d("test view state", " start")
 
-    }
-    override fun onResume() {
-        super.onResume()
-        Log.d("test view state", " resume")
     }
 
     override fun onPause() {
