@@ -1,6 +1,7 @@
 package com.example.eworkout.authentication.letsstart
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -83,8 +84,9 @@ class LetsStartFragment : Fragment() {
     private fun setOnClickListener()
     {
         binding.btnLetsStart.setOnClickListener {
-            if(viewModel.hasSignInPreviously())
+            if(viewModel.hasSignInPreviously()){
                 findNavController().navigate(R.id.action_letsStartFragment_to_Training)
+            }
             else
                 findNavController().navigate(R.id.action_letsStartFragment_to_loginFragment)
         }
