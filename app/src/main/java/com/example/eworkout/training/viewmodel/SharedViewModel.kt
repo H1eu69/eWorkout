@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.eworkout.training.model.Exercise
 import com.example.eworkout.training.model.UpdateState
 import com.example.eworkout.training.model.WorkoutDetail1State
@@ -13,6 +14,9 @@ import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 
 class SharedViewModel : ViewModel() {
     private val firestore = Firebase.firestore
@@ -88,6 +92,60 @@ class SharedViewModel : ViewModel() {
         currentExerciseIndex = 0
         kcalConsumed = 0.0
     }
+
+
+    fun getCustomSetFields(id: String)
+    {
+        exercises.clear()
+        viewModelScope.launch(Dispatchers.IO) {
+            val customSet = firestore.collection("Custom_Set")
+                .document(id)
+                .get().await()
+            exercises.clear()
+
+            findAllCustomSetInformation(id)
+        }
+    }
+
+    private fun findAllCustomSetInformation(id: String) {
+
+        viewModelScope.launch(Dispatchers.IO) {
+            val setInformation = firestore.collection("Custom_Set_Information")
+                .whereEqualTo("set_id", id)
+                .get().await()
+
+            val exercisesIds = mutableListOf<String>()
+
+            for (doc in setInformation.documents){
+                exercisesIds.add(doc.getString("exercise_id").toString())
+                Log.d("Workout Detail 1", doc.getString("exercise_id").toString())
+            }
+            findCustomExercisesByIds(exercisesIds)
+        }
+    }
+
+    private fun findCustomExercisesByIds(ids: List<String>) {
+        firestore.collection("Exercises")
+            .whereIn(FieldPath.documentId(), ids)
+            .get()
+            .addOnSuccessListener {
+                for (doc in it.documents){
+                    val exercise = Exercise(
+                        doc.id,
+                        doc.get("name").toString(),
+                        "",
+                        doc.get("reps").toString(),
+                        doc.get("description").toString(),
+                        doc.get("calories").toString(),
+                        doc.get("instruction").toString(),
+                        doc.get("animation_url").toString(),
+                        doc.getDouble("MET")!!)
+                    exercises.add(exercise)
+                }
+                Log.d("Workout Detail 1","LOADED")
+            }
+    }
+
 
     fun getSetsFieldsById(id: String) {
         exercises.clear()

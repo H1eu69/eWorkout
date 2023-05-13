@@ -1,11 +1,13 @@
 package com.example.eworkout.custom_workout.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.createGraph
 import androidx.navigation.fragment.findNavController
 import com.example.eworkout.MainActivity
 import com.example.eworkout.R
@@ -110,7 +112,9 @@ class CustomSetFragment : Fragment() {
         val listener = object : CustomSetOnClickListener
         {
             override fun onClick(bundle: Bundle) {
-                TODO("Not yet implemented")
+                val graph = findNavController().navInflater.inflate(R.navigation.training_nav)
+                graph.setStartDestination(R.id.workoutDetail1)
+                findNavController().setGraph(graph, bundle)
             }
 
         }

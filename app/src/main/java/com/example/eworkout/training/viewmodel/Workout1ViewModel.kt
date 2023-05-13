@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.eworkout.training.model.Exercise
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -12,6 +13,9 @@ import com.google.firebase.Timestamp
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FieldPath
 import com.google.firebase.storage.ktx.storage
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 
 class Workout1ViewModel : ViewModel() {
     val firestore = Firebase.firestore
@@ -29,6 +33,73 @@ class Workout1ViewModel : ViewModel() {
     private val _state : MutableLiveData<WorkoutDetail1State> = MutableLiveData(WorkoutDetail1State.LOADING)
     val state : LiveData<WorkoutDetail1State> get() = _state
 
+    fun getCustomSetFields(id: String)
+    {
+        exercises.clear()
+        viewModelScope.launch(Dispatchers.IO) {
+            val customSet = firestore.collection("Custom_Set")
+                .document(id)
+                .get().await()
+            exercises.clear()
+            val numOfExercise = customSet.get("number_of_exercises")
+
+            setsName.postValue(customSet.getString("set_name").toString())
+
+            setsInformation.postValue("$numOfExercise Exercise")
+
+            findAllCustomSetInformation(id)
+        }
+    }
+
+    private fun findAllCustomSetInformation(id: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val setInformation = firestore.collection("Custom_Set_Information")
+                .whereEqualTo("set_id", id)
+                .get().await()
+
+            val exercisesIds = mutableListOf<String>()
+
+            for (doc in setInformation.documents){
+                exercisesIds.add(doc.getString("exercise_id").toString())
+                Log.d("Workout Detail 1", doc.getString("exercise_id").toString())
+            }
+            findCustomExercisesByIds(exercisesIds)
+        }
+    }
+
+    private fun findCustomExercisesByIds(ids: List<String>) {
+        viewModelScope.launch {
+            val docs = firestore.collection("Exercises")
+                .whereIn(FieldPath.documentId(), ids)
+                .get().await()
+            for (doc in docs.documents){
+                val exercise = Exercise(
+                    doc.id,
+                    doc.get("name").toString(),
+                    "",
+                    doc.get("reps").toString(),
+                    doc.get("description").toString(),
+                    doc.get("calories").toString(),
+                    doc.get("instruction").toString(),
+                    doc.get("animation_url").toString(),
+                    doc.getDouble("MET")!!)
+                exercises.add(exercise)
+                getUriCustomImageByName(exercise)
+            }
+            _state.value = WorkoutDetail1State.LOADED
+            Log.d("Workout Detail 1","LOADED")
+        }
+    }
+
+    private fun getUriCustomImageByName(exercise: Exercise)
+    {
+        val path = "images/" + exercise.name + ".jpg"
+        viewModelScope.launch {
+            val url = storageRef.child(path).downloadUrl.await()
+            exercise.image = url.toString()
+            _state.value = WorkoutDetail1State.IMAGE_LOADED
+        }
+    }
 
     fun getSetsFieldsById(id: String) {
         exercises.clear()
