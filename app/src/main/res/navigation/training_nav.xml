@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@id/trainingFragment">
+    app:startDestination="@id/cameraFragment">
     <fragment
         android:id="@+id/workoutDetail2"
         android:name="com.example.eworkout.training.view.FragmentWorkoutDetail2"
@@ -159,4 +159,9 @@
             android:id="@+id/action_historyFragment_to_dailyScheduleFragment"
             app:destination="@id/dailyScheduleFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/cameraFragment"
+        android:name="com.example.eworkout.training.view.CameraFragment"
+        android:label="fragment_camera"
+        tools:layout="@layout/fragment_camera" />
 </navigation>
