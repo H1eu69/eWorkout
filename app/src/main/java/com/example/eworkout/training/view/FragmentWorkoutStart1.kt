@@ -137,6 +137,9 @@ class FragmentWorkoutStart1 : Fragment() {
 
     private fun setListener()
     {
+        binding.cameraBtn.setOnClickListener {
+            findNavController().navigate(R.id.action_fragmentWorkoutStart1_to_AI)
+        }
         binding.btnPrevious.setOnClickListener {
             _viewModel.decreaseCurrentExerciseIndex()
             findNavController().navigate(R.id.action_fragmentWorkoutStart1_to_fragmentWorkoutRest)

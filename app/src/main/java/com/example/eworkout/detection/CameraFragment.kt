@@ -35,6 +35,8 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.example.eworkout.MainActivity
 import com.example.eworkout.databinding.FragmentCameraBinding
 import com.google.mediapipe.tasks.vision.core.RunningMode
 import java.util.concurrent.ExecutorService
@@ -53,11 +55,8 @@ class CameraFragment : Fragment(), PoseLandmarkerHelper.LandmarkerListener {
             if (isGranted) {
                 setupBackgroundThread()
             } else {
-                // Explain to the user that the feature is unavailable because the
-                // feature requires a permission that the user has denied. At the
-                // same time, respect the user's decision. Don't link to system
-                // settings in an effort to convince the user to change their
-                // decision.
+                Toast.makeText(requireContext(), "You need to enable camera permission to use this function", Toast.LENGTH_SHORT).show()
+                findNavController().popBackStack()
             }
         }
 
@@ -87,6 +86,7 @@ class CameraFragment : Fragment(), PoseLandmarkerHelper.LandmarkerListener {
                 poseLandmarkerHelper.setupPoseLandmarker()
             }
         }
+        hideBottomNav()
     }
 
     override fun onPause() {
@@ -129,6 +129,7 @@ class CameraFragment : Fragment(), PoseLandmarkerHelper.LandmarkerListener {
         super.onViewCreated(view, savedInstanceState)
         if(hasAllPermission())
         {
+            setOnClickListener()
             observeViewModel()
             setupBackgroundThread()
         }
@@ -138,10 +139,25 @@ class CameraFragment : Fragment(), PoseLandmarkerHelper.LandmarkerListener {
         }
     }
 
-    private fun observeViewModel() {
-        viewModel.pushupPhase.observe(viewLifecycleOwner){
-            handlePhase(it)
+    private fun hideBottomNav() {
+        (requireActivity() as MainActivity).bottomNavigation.visibility = View.GONE
+    }
+    private fun setOnClickListener()
+    {
+        fragmentCameraBinding.btnCamera.setOnClickListener {
+            if(cameraFacing == CameraSelector.LENS_FACING_BACK)
+                cameraFacing = CameraSelector.LENS_FACING_FRONT
+            else
+                cameraFacing = CameraSelector.LENS_FACING_BACK
+
+            setUpCamera()
         }
+        fragmentCameraBinding.btnNavigateUp.setOnClickListener {
+            findNavController().popBackStack()
+        }
+    }
+
+    private fun observeViewModel() {
         viewModel.poseState.observe(viewLifecycleOwner)
         {
             handleState(it)
@@ -155,14 +171,6 @@ class CameraFragment : Fragment(), PoseLandmarkerHelper.LandmarkerListener {
             "PUSH_UP_ARM_WRONG" -> {fragmentCameraBinding.overlay.setState(state)}
             "PUSH_UP_BACK_WRONG" -> {fragmentCameraBinding.overlay.setState(state)}
             "NO_WRONG" -> {fragmentCameraBinding.overlay.setState(state)}
-
-        }
-    }
-
-    private fun handlePhase(phase: PushUpPhase) {
-        when(phase.name)
-        {
-
         }
     }
 
