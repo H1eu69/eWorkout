@@ -1,4 +1,4 @@
-package com.example.eworkout
+package com.example.eworkout.detection
 /*
  * Copyright 2023 The TensorFlow Authors. All Rights Reserved.
  *
@@ -18,13 +18,10 @@ package com.example.eworkout
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Matrix
-import android.media.MediaMetadataRetriever
-import android.net.Uri
 import android.os.SystemClock
 import android.util.Log
 import androidx.annotation.VisibleForTesting
 import androidx.camera.core.ImageProxy
-import com.example.eworkout.training.view.CameraFragment
 import com.google.mediapipe.framework.image.BitmapImageBuilder
 import com.google.mediapipe.framework.image.MPImage
 import com.google.mediapipe.tasks.core.BaseOptions
@@ -86,7 +83,6 @@ class PoseLandmarkerHelper(
             when (currentModel) {
                 MODEL_POSE_LANDMARKER_FULL -> "pose_landmarker_full.task"
                 MODEL_POSE_LANDMARKER_LITE -> "pose_landmarker_lite.task"
-                MODEL_POSE_LANDMARKER_HEAVY -> "pose_landmarker_heavy.task"
                 else -> "pose_landmarker_full.task"
             }
 

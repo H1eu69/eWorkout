@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.eworkout.training.view
+package com.example.eworkout.detection
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -35,13 +35,8 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.example.eworkout.PoseLandmarkerHelper
 import com.example.eworkout.databinding.FragmentCameraBinding
-import com.example.eworkout.training.viewmodel.CameraViewModel
 import com.google.mediapipe.tasks.vision.core.RunningMode
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
@@ -134,11 +129,40 @@ class CameraFragment : Fragment(), PoseLandmarkerHelper.LandmarkerListener {
         super.onViewCreated(view, savedInstanceState)
         if(hasAllPermission())
         {
+            observeViewModel()
             setupBackgroundThread()
         }
         else
         {
             requestPermissionLauncher.launch(Manifest.permission.CAMERA)
+        }
+    }
+
+    private fun observeViewModel() {
+        viewModel.pushupPhase.observe(viewLifecycleOwner){
+            handlePhase(it)
+        }
+        viewModel.poseState.observe(viewLifecycleOwner)
+        {
+            handleState(it)
+        }
+    }
+
+    private fun handleState(state: PoseState) {
+        when(state.name)
+        {
+            "PUSH_UP_FULL_WRONG" -> {fragmentCameraBinding.overlay.setState(state)}
+            "PUSH_UP_ARM_WRONG" -> {fragmentCameraBinding.overlay.setState(state)}
+            "PUSH_UP_BACK_WRONG" -> {fragmentCameraBinding.overlay.setState(state)}
+            "NO_WRONG" -> {fragmentCameraBinding.overlay.setState(state)}
+
+        }
+    }
+
+    private fun handlePhase(phase: PushUpPhase) {
+        when(phase.name)
+        {
+
         }
     }
 
@@ -265,8 +289,6 @@ class CameraFragment : Fragment(), PoseLandmarkerHelper.LandmarkerListener {
         resultBundle: PoseLandmarkerHelper.ResultBundle
     ) {
         activity?.runOnUiThread {
-            Log.e(TAG, _fragmentCameraBinding.toString())
-            Log.e("livestream result", resultBundle.toString())
             if (_fragmentCameraBinding != null) {
                 // Pass necessary information to OverlayView for drawing on the canvas
                 fragmentCameraBinding.overlay.setResults(
@@ -275,7 +297,7 @@ class CameraFragment : Fragment(), PoseLandmarkerHelper.LandmarkerListener {
                     resultBundle.inputImageWidth,
                     RunningMode.LIVE_STREAM
                 )
-
+                viewModel.detectPushUp(resultBundle.results.first())
                 // Force a redraw
                 fragmentCameraBinding.overlay.invalidate()
             }
