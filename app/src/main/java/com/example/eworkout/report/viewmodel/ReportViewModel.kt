@@ -64,10 +64,16 @@ class ReportViewModel: ViewModel() {
                     val _weight : Double = it.get("weight") as Double
                     weight_data_list.add(_weight)
                 }
-                current_bmi = Math.round(current_bmi * 100) / 100.0
-                current_weight = weight_data_list.last()
-                update_haviest_weight(weight_data_list)
-                update_lightest_weight(weight_data_list)
+                if (weight_data_list.isNotEmpty())
+                {
+                    current_bmi = Math.round(current_bmi * 100) / 100.0
+                    current_weight = weight_data_list.last()
+                    update_haviest_weight(weight_data_list)
+                    update_lightest_weight(weight_data_list)
+                }
+                else
+                {weight_data_list.add(0.0)}
+
                 _state.value = ReportState.LOADED
             }
 
