@@ -37,14 +37,11 @@ class TrainingFragment : Fragment() {
     val binding get() = _binding!!
     private lateinit var _viewModel: TrainingViewModel
 
-    //private var setTakenID: String? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
-            //setTakenID = it.getString("setTakenId")
         }
     }
 
