@@ -29,6 +29,8 @@ class FragmentWorkoutDetail1 : Fragment() {
     private var mParam1: String? = null
     private var mParam2: String? = null
     private var setId:String? = null
+    private var isSystemSet:Boolean? = null
+
     private var _binding: FragmentWorkoutDetail1Binding? = null
     val binding get() = _binding!!
     private val _viewModel: Workout1ViewModel by viewModels()
@@ -40,6 +42,7 @@ class FragmentWorkoutDetail1 : Fragment() {
             mParam1 = it.getString(ARG_PARAM1)
             mParam2 = it.getString(ARG_PARAM2)
             setId = it.getString("set_id")
+            isSystemSet = it.getBoolean("isSystemSet")
             Log.d("test set id", setId.toString())
         }
     }
@@ -120,8 +123,15 @@ class FragmentWorkoutDetail1 : Fragment() {
             "LOADING" -> {
                 showLoading()
                 Log.d("set id", setId.toString())
-                _viewModel.getSetsFieldsById((setId!!))
-                _sharedViewModel.getSetsFieldsById((setId!!))
+                if(isSystemSet == true){
+                    _viewModel.getSetsFieldsById((setId!!))
+                    _sharedViewModel.getSetsFieldsById((setId!!))
+                }
+                else
+                {
+                    _viewModel.getCustomSetFields((setId!!))
+                    _sharedViewModel.getCustomSetFields(setId!!)
+                }
             }
             "LOADED" -> {
                 Log.d("hahohi", " LOADED")

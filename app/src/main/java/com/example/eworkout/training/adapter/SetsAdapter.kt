@@ -18,6 +18,7 @@ class SetsAdapter(val list: List<Set>, val listener: SetOnClickListener) : Recyc
             set.apply {
                 val bundle = Bundle().apply {
                     putString("set_id", setId)
+                    putBoolean("isSystemSet", true)
                 }
                 binding.textViewSetName.text = setName
                 binding.textViewTotalExercises.text = totalExercises.toString()

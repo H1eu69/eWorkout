@@ -1,5 +1,6 @@
 package com.example.eworkout.custom_workout.adapter
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -19,12 +20,19 @@ val listener: CustomSetOnClickListener
     {
         fun bind(item: CustomSet)
         {
+            val bundle = Bundle()
             item.apply {
                 binding.textViewSetName.text = name
                 binding.textViewTotalExercises.text = "$numOfExercises Exercise"
                 Glide.with(binding.root.context)
                     .load(image)
                     .into(binding.setImageView)
+                bundle.putString("set_id", id)
+                bundle.putBoolean("isSystemSet", false)
+            }
+
+            binding.buttonViewDetail.setOnClickListener {
+                listener.onClick(bundle)
             }
 
         }

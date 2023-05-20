@@ -43,6 +43,7 @@ class CustomSetViewModel: ViewModel() {
                 val createdDate = doc.getTimestamp("created_date")?.seconds!!
                 setList.add(
                     CustomSet(
+                        doc.id,
                         setName,
                         numOfExercise,
                         "",
