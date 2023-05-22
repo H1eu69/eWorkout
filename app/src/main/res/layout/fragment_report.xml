@@ -74,7 +74,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_semibold"
                             android:textSize="25sp"
-                            android:text="25"
+                            android:text="0"
                             app:layout_constraintEnd_toEndOf="@+id/textViewExercises"
                             app:layout_constraintStart_toStartOf="@+id/textViewExercises"
                             app:layout_constraintTop_toBottomOf="@+id/textViewExercises" />
@@ -98,7 +98,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_semibold"
                             android:textSize="25sp"
-                            android:text="30"
+                            android:text="0"
                             app:layout_constraintEnd_toEndOf="@+id/textViewKcal"
                             app:layout_constraintStart_toStartOf="@+id/textViewKcal"
                             app:layout_constraintTop_toBottomOf="@+id/textViewKcal" />
@@ -123,7 +123,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_semibold"
                             android:textSize="25sp"
-                            android:text="55"
+                            android:text="0"
                             app:layout_constraintEnd_toEndOf="@+id/textViewTime"
                             app:layout_constraintStart_toStartOf="@+id/textViewTime"
                             app:layout_constraintTop_toBottomOf="@+id/textViewTime" />

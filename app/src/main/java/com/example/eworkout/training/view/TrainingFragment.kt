@@ -112,6 +112,9 @@ class TrainingFragment : Fragment() {
                 showLoading()
             }
             "LOADED" -> {
+                binding.textViewCalories.text = _viewModel.num.toString()
+                binding.textViewCaloriesNumber.text = _viewModel.num.toString()
+                binding.textViewHours.text = _viewModel.min.toString()
                 setupRecyclerView()
                 hideLoading()
             }
