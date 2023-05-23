@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/radius_shape">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/WEIGHT"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="WEIGHT"
+            style="@style/TextView14"
+            android:layout_margin="20dp"/>
+
+        <EditText
+            android:id="@+id/editTextWEIGHT"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/WEIGHT"
+            app:layout_constraintEnd_toStartOf="@+id/KG"
+            app:layout_constraintStart_toStartOf="parent"
+            android:textSize="15sp"
+            android:inputType="number"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginTop="10dp"/>
+
+        <TextView
+            android:id="@+id/KG"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/WEIGHT"
+            android:text="KG"
+            style="@style/TextView15"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="30dp"/>
+
+        <TextView
+            android:id="@+id/HEIGHT"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/editTextWEIGHT"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="HEIGHT"
+            style="@style/TextView14"
+            android:layout_margin="20dp"/>
+
+        <EditText
+            android:id="@+id/editTextHEIGHT"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/HEIGHT"
+            app:layout_constraintEnd_toStartOf="@+id/CM"
+            app:layout_constraintStart_toStartOf="parent"
+            android:textSize="15sp"
+            android:inputType="number"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginTop="10dp"/>
+
+        <TextView
+            android:id="@+id/CM"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/HEIGHT"
+            android:text="CM"
+            style="@style/TextView15"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="30dp"/>
+
+        <TextView
+            android:id="@+id/SAVE"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editTextHEIGHT"
+            android:text="SAVE"
+            android:textSize="16sp"
+            android:textColor="@color/fill"
+            android:fontFamily="@font/montserrat_medium"
+            android:layout_margin="30dp"/>
+
+        <TextView
+            android:id="@+id/CANCEL"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toStartOf="@id/SAVE"
+            app:layout_constraintTop_toBottomOf="@id/editTextHEIGHT"
+            android:text="CANCEL"
+            android:textColor="@color/line_color"
+            android:textSize="15sp"
+            android:fontFamily="@font/montserrat_medium"
+            android:layout_margin="30dp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
