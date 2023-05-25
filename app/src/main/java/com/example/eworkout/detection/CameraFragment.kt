@@ -120,7 +120,8 @@ class CameraFragment : Fragment(), PoseLandmarkerHelper.LandmarkerListener {
     ): View {
         _fragmentCameraBinding =
             FragmentCameraBinding.inflate(inflater, container, false)
-
+        fragmentCameraBinding.viewModel = viewModel
+        fragmentCameraBinding.lifecycleOwner = viewLifecycleOwner
         return fragmentCameraBinding.root
     }
 
@@ -162,6 +163,10 @@ class CameraFragment : Fragment(), PoseLandmarkerHelper.LandmarkerListener {
         {
             handleState(it)
         }
+        viewModel.pushupPhase.observe(viewLifecycleOwner)
+        {
+            handleState(it)
+        }
     }
 
     private fun handleState(state: PoseState) {
@@ -173,7 +178,13 @@ class CameraFragment : Fragment(), PoseLandmarkerHelper.LandmarkerListener {
             "NO_WRONG" -> {fragmentCameraBinding.overlay.setState(state)}
         }
     }
-
+    private fun handleState(state: PushUpPhase) {
+        when(state.name)
+        {
+            "DONE" -> {
+            }
+        }
+    }
     private fun setupBackgroundThread()
     {
         backgroundExecutor = Executors.newSingleThreadExecutor()

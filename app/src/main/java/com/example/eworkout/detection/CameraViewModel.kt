@@ -21,12 +21,17 @@ class CameraViewModel : ViewModel() {
     private var _minPosePresenceConfidence: Float = PoseLandmarkerHelper
         .DEFAULT_POSE_PRESENCE_CONFIDENCE
     private var _poseState: MutableLiveData<PoseState> = MutableLiveData()
+
+    var repCount = 0
+    val repCountLiveData: MutableLiveData<Int> = MutableLiveData(repCount)
     val poseState: LiveData<PoseState> get() = _poseState
 
     private var _pushupPhase: MutableLiveData<PushUpPhase> = MutableLiveData(PushUpPhase.DESCENDING)
     val pushupPhase: LiveData<PushUpPhase> get() = _pushupPhase
+
     var lastAngle = 0.0
-    private val detector = PushUpDetector(170.0, 0.0, 0.0)
+
+    private var detector = PushUpDetector(170.0, 0.0, 0.0)
 
 
     val currentDelegate: Int get() = _delegate
@@ -86,14 +91,25 @@ class CameraViewModel : ViewModel() {
                 MathUlti.Point(leftElbow.x(), leftElbow.y()),
                 MathUlti.Point(leftWrist.x(), leftWrist.y()),
             )
-
-            val armAngle =
+            var armAngle: Double
+            if(rightArmAngle >= 0)
+            {
+                armAngle =
                 when(rightArmAngle)
                 {
                     in 0.0..180.0 -> rightArmAngle
-                    in 180.0..360.0 -> 360 - rightArmAngle
-                    else -> 360 - (360 + rightArmAngle)
+                    else -> 360 - rightArmAngle
                 }
+            }
+            else
+            {
+                armAngle =
+                    when(leftArmAngle)
+                    {
+                        in 0.0..180.0 -> leftArmAngle
+                        else -> 360 - leftArmAngle
+                    }
+            }
             Log.d("test right angle", rightArmAngle.toString())
             Log.d("test left angle", leftArmAngle.toString())
             Log.d("test arm angle", armAngle.toString())
@@ -121,16 +137,16 @@ class CameraViewModel : ViewModel() {
                 when(rightBackAngle)
                 {
                     in 0.0..180.0 -> rightBackAngle
-                    in 180.0..360.0 -> 360 - rightBackAngle
-                    else -> 360 - (360 + rightBackAngle)
+                    else -> 360 - rightBackAngle
                 }
+            Log.d("push up back angle", backAngle.toString())
 
-            if((armAngle in 80.0..180.0 && backAngle > 160))
+            if((armAngle in 40.0..180.0 && backAngle > 160))
             {
                 Log.d("push up last angle", lastAngle.toString())
                 Log.d("push up arm angle", armAngle.toString())
 
-                if(armAngle >= 80 && armAngle < lastAngle && _pushupPhase.value!!.name == "DESCENDING")
+                if(armAngle >= 40 && armAngle < lastAngle && _pushupPhase.value!!.name == "DESCENDING")
                 {
                     detector.ascendedAngle = armAngle
                 }
@@ -138,7 +154,7 @@ class CameraViewModel : ViewModel() {
                 {
                     detector.endAngle = armAngle
                 }
-                else if(armAngle <= 90 && armAngle > lastAngle)
+                else if(armAngle <= 110 && armAngle > lastAngle)
                 {
                     _pushupPhase.value = PushUpPhase.ASCENDING
                 }
@@ -147,11 +163,14 @@ class CameraViewModel : ViewModel() {
                 Log.d("push up progress", detector.toString())
 
                 if(detector.isOnePushUp()){
-                    _pushupPhase.value = PushUpPhase.DONE
                     Log.d("push up done", detector.toString())
+                    _pushupPhase.value = PushUpPhase.DONE
+                    _pushupPhase.value = PushUpPhase.DESCENDING
+                    increaseRepsCount()
+                    resetDetector()
                 }
             }
-            else if(armAngle !in 80.0..180.0 && backAngle <= 160)
+            else if(armAngle !in 40.0..180.0 && backAngle <= 160)
             {
                 Log.d("push up error full", armAngle.toString())
                 Log.d("push up error full", backAngle.toString())
@@ -159,7 +178,7 @@ class CameraViewModel : ViewModel() {
 
                 _poseState.value = PoseState.PUSH_UP_FULL_WRONG
             }
-            else if(armAngle !in 80.0..180.0)
+            else if(armAngle !in 40.0..180.0)
             {
                 Log.d("push up error arm", armAngle.toString())
                 Log.d("push up error arm", backAngle.toString())
@@ -167,7 +186,7 @@ class CameraViewModel : ViewModel() {
 
                 _poseState.value = PoseState.PUSH_UP_ARM_WRONG
             }
-            else{
+            else if(backAngle <= 160){
                 Log.d("push up error back", armAngle.toString())
                 Log.d("push up error back", backAngle.toString())
                 Log.d("push up error back", detector.toString())
@@ -175,5 +194,14 @@ class CameraViewModel : ViewModel() {
                 _poseState.value = PoseState.PUSH_UP_BACK_WRONG
             }
         }
+    }
+    private fun increaseRepsCount()
+    {
+        repCount++
+        repCountLiveData.value = repCount
+    }
+    private fun resetDetector()
+    {
+        detector = PushUpDetector(170.0, 0.0, 0.0)
     }
 }
