@@ -4,7 +4,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.eworkout.detection.CameraViewModel" />
+            type="com.example.eworkout.detection.viewmodel.CameraViewModel" />
     </data>
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/camera_container"
@@ -19,7 +19,7 @@
 
         </androidx.camera.view.PreviewView>
 
-        <com.example.eworkout.detection.OverlayView
+        <com.example.eworkout.detection.view.OverlayView
             android:id="@+id/overlay"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />

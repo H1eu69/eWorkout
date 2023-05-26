@@ -1,9 +1,13 @@
-package com.example.eworkout.detection
+package com.example.eworkout.detection.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.eworkout.detection.model.PoseState
+import com.example.eworkout.detection.model.PushUpDetector
+import com.example.eworkout.detection.model.PushUpPhase
+import com.example.eworkout.detection.util.PoseLandmarkerHelper
 import com.example.eworkout.training.util.MathUlti
 import com.google.mediapipe.tasks.vision.poselandmarker.PoseLandmarkerResult
 

@@ -1,4 +1,4 @@
-package com.example.eworkout.detection
+package com.example.eworkout.detection.view
 /*
  * Copyright 2023 The TensorFlow Authors. All Rights Reserved.
  *
@@ -21,6 +21,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.View
+import com.example.eworkout.detection.model.PoseState
 import com.google.mediapipe.tasks.components.containers.NormalizedLandmark
 import com.google.mediapipe.tasks.vision.core.RunningMode
 import com.google.mediapipe.tasks.vision.poselandmarker.PoseLandmarker

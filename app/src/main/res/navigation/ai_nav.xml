@@ -6,6 +6,6 @@
 
     <fragment
         android:id="@+id/cameraFragment2"
-        android:name="com.example.eworkout.detection.CameraFragment"
+        android:name="com.example.eworkout.detection.view.CameraFragment"
         android:label="CameraFragment" />
 </navigation>

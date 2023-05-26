@@ -1,4 +1,4 @@
-package com.example.eworkout.detection
+package com.example.eworkout.detection.model
 
 data class PushUpDetector(
     var startAngle: Double,

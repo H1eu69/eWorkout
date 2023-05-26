@@ -1,4 +1,4 @@
-package com.example.eworkout.detection
+package com.example.eworkout.detection.model
 
 enum class PoseState {
     PUSH_UP_BACK_WRONG,

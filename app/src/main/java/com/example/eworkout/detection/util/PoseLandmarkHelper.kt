@@ -1,4 +1,4 @@
-package com.example.eworkout.detection
+package com.example.eworkout.detection.util
 /*
  * Copyright 2023 The TensorFlow Authors. All Rights Reserved.
  *

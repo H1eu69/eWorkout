@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.eworkout.detection
+package com.example.eworkout.detection.view
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -38,6 +38,10 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.eworkout.MainActivity
 import com.example.eworkout.databinding.FragmentCameraBinding
+import com.example.eworkout.detection.viewmodel.CameraViewModel
+import com.example.eworkout.detection.util.PoseLandmarkerHelper
+import com.example.eworkout.detection.model.PoseState
+import com.example.eworkout.detection.model.PushUpPhase
 import com.google.mediapipe.tasks.vision.core.RunningMode
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
