@@ -1,35 +1,33 @@
 package com.example.eworkout.report.view
 
-import android.animation.ObjectAnimator
-import android.app.Activity
 import android.app.Dialog
-import android.content.Context
 import android.graphics.Color
+import android.graphics.LinearGradient
+import android.graphics.Shader
 import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.PaintDrawable
+import android.graphics.drawable.ShapeDrawable.ShaderFactory
+import android.graphics.drawable.shapes.RectShape
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
-import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.eworkout.R
 import com.example.eworkout.databinding.FragmentReportBinding
-import com.example.eworkout.databinding.UpdateBmiDialogBinding
 import com.example.eworkout.report.model.ReportState
 import com.example.eworkout.report.viewmodel.ReportViewModel
-import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.data.LineDataSet.Mode.CUBIC_BEZIER
-import com.github.mikephil.charting.data.LineDataSet.Mode.CUBIC_BEZIER as ModeCUBIC_BEZIER
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -95,18 +93,22 @@ class ReportFragment : Fragment() {
         val btnCancel : TextView = dialog.findViewById(R.id.CANCEL)
 
         btnSave.setOnClickListener {
-            val current_weight : Float = dialog.findViewById<EditText>(R.id.editTextWEIGHT).text.toString().toFloat()
-            val current_height : Float = dialog.findViewById<EditText>(R.id.editTextHEIGHT).text.toString().toFloat()
-            _viewModel.update_weight_height(current_weight,current_height)
-            _viewModel.change_state()
-            dialog.dismiss()
+            if(dialog.findViewById<EditText>(R.id.editTextWEIGHT).text.isNotEmpty() || dialog.findViewById<EditText>(R.id.editTextHEIGHT).text.isNotEmpty())
+            {
+                val current_weight : Float = dialog.findViewById<EditText>(R.id.editTextWEIGHT).text.toString().toFloat()
+                val current_height : Float = dialog.findViewById<EditText>(R.id.editTextHEIGHT).text.toString().toFloat()
+
+                _viewModel.update_weight_height(current_weight,current_height)
+                _viewModel.change_state()
+                dialog.dismiss()
+            }
+
         }
 
         btnCancel.setOnClickListener{
             dialog.dismiss()
         }
         dialog.show()
-
     }
 
     private fun observeViewModel()
@@ -150,7 +152,7 @@ class ReportFragment : Fragment() {
 
         val lineEntry = ArrayList<Entry>()
         var xValue = 0f
-        for(data in _viewModel.weight_data_list) {
+        for(data in _viewModel.point_list) {
             lineEntry.add(Entry(xValue,data.toFloat()))
             xValue += 1
         }
@@ -178,13 +180,13 @@ class ReportFragment : Fragment() {
         binding.lineChart.setDrawGridBackground(false)
         binding.lineChart.setBackgroundColor(resources.getColor(R.color.white))
 
-        binding.lineChart.axisLeft.axisMaximum = 90f
-        binding.lineChart.axisLeft.axisMinimum = 30f
+        binding.lineChart.axisLeft.axisMaximum = _viewModel.heviest_weight.toFloat() + 5f
+        binding.lineChart.axisLeft.axisMinimum = _viewModel.lightest_weight.toFloat() - 5f
         binding.lineChart.axisRight.isEnabled = false
 
         binding.lineChart.xAxis.position = XAxis.XAxisPosition.BOTTOM
         binding.lineChart.xAxis.axisMinimum = 1f
-        binding.lineChart.xAxis.axisMaximum = _viewModel.weight_data_list.count().toFloat() - 1f
+        binding.lineChart.xAxis.axisMaximum = 12f //_viewModel.weight_data_list.count().toFloat() - 1f
         binding.lineChart.xAxis.granularity = 1f
         binding.lineChart.xAxis.setDrawAxisLine(false)
         binding.lineChart.xAxis.setDrawGridLines(false)
