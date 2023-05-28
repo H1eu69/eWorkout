@@ -159,7 +159,7 @@ class ReportViewModel: ViewModel() {
                 else
                 {weight_data_list.add(0.0)}
 
-                _state.value = ReportState.LOADED
+                _state.value = ReportState.CHART_UPDATED
             }
     }
 
@@ -196,6 +196,6 @@ class ReportViewModel: ViewModel() {
 
     fun change_state(){
         weight_data_list.clear()
-        _state.value = ReportState.LOADING
+        _state.value = ReportState.CHART_UPDATED
     }
 }

@@ -93,7 +93,7 @@ class ReportFragment : Fragment() {
         val btnCancel : TextView = dialog.findViewById(R.id.CANCEL)
 
         btnSave.setOnClickListener {
-            if(dialog.findViewById<EditText>(R.id.editTextWEIGHT).text.isNotEmpty() || dialog.findViewById<EditText>(R.id.editTextHEIGHT).text.isNotEmpty())
+            if(dialog.findViewById<EditText>(R.id.editTextWEIGHT).text.isNotEmpty() && dialog.findViewById<EditText>(R.id.editTextHEIGHT).text.isNotEmpty())
             {
                 val current_weight : Float = dialog.findViewById<EditText>(R.id.editTextWEIGHT).text.toString().toFloat()
                 val current_height : Float = dialog.findViewById<EditText>(R.id.editTextHEIGHT).text.toString().toFloat()
@@ -130,12 +130,14 @@ class ReportFragment : Fragment() {
                 binding.TotalKcalReport.text = _viewModel.num.toString()
                 binding.TotalTimeReport.text = _viewModel.min.toString()
                 binding.TotalExercisesReport.text = _viewModel.exercises.toString()
+                hideLoading()
+            }
+            "CHART_UPDATED" -> {
                 binding.txtCurrentWeight.text = _viewModel.current_weight.toString() + " kg"
                 binding.txtHeaviestWeight.text = _viewModel.heviest_weight.toString() + " kg"
                 binding.txtLightestWeight.text = _viewModel.lightest_weight.toString() + " kg"
                 setLineChartData()
                 BMIProgress()
-                hideLoading()
             }
         }
     }
