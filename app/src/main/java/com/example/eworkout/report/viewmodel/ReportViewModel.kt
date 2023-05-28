@@ -44,7 +44,6 @@ class ReportViewModel: ViewModel() {
     var _point11 : Double = 0.0
     var _point12 : Double = 0.0
     private var Height_and_Weight_id: String? = null
-    var month4: String? = null
     private val _state: MutableLiveData<ReportState> = MutableLiveData(ReportState.LOADING)
     val state: LiveData<ReportState> get() = _state
 
@@ -159,7 +158,7 @@ class ReportViewModel: ViewModel() {
                 else
                 {weight_data_list.add(0.0)}
 
-                _state.value = ReportState.CHART_UPDATED
+                _state.value = ReportState.LOADED
             }
     }
 
@@ -196,6 +195,6 @@ class ReportViewModel: ViewModel() {
 
     fun change_state(){
         weight_data_list.clear()
-        _state.value = ReportState.CHART_UPDATED
+        _state.value = ReportState.CHART_LOADING
     }
 }

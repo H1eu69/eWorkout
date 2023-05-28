@@ -102,7 +102,6 @@ class ReportFragment : Fragment() {
                 _viewModel.change_state()
                 dialog.dismiss()
             }
-
         }
 
         btnCancel.setOnClickListener{
@@ -126,18 +125,20 @@ class ReportFragment : Fragment() {
                 showLoading()
             }
 
+            "CHART_LOADING" -> {
+                _viewModel.get_weight_data()
+            }
+
             "LOADED" -> {
                 binding.TotalKcalReport.text = _viewModel.num.toString()
                 binding.TotalTimeReport.text = _viewModel.min.toString()
                 binding.TotalExercisesReport.text = _viewModel.exercises.toString()
-                hideLoading()
-            }
-            "CHART_UPDATED" -> {
                 binding.txtCurrentWeight.text = _viewModel.current_weight.toString() + " kg"
                 binding.txtHeaviestWeight.text = _viewModel.heviest_weight.toString() + " kg"
                 binding.txtLightestWeight.text = _viewModel.lightest_weight.toString() + " kg"
                 setLineChartData()
                 BMIProgress()
+                hideLoading()
             }
         }
     }
