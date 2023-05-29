@@ -154,7 +154,7 @@ class ReportFragment : Fragment() {
     fun setLineChartData(){
 
         val lineEntry = ArrayList<Entry>()
-        var xValue = 0f
+        var xValue = 1f
         for(data in _viewModel.point_list) {
             lineEntry.add(Entry(xValue,data.toFloat()))
             xValue += 1

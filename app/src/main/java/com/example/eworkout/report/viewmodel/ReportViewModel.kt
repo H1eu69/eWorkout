@@ -25,12 +25,25 @@ class ReportViewModel: ViewModel() {
     var exercises: Double = 0.0
 
     val point_list = mutableListOf<Double>()
-    val average_list = mutableListOf<Double>()
+
     val weight_data_list = mutableListOf<Double>()
     var heviest_weight : Double = 0.0
     var lightest_weight : Double = 0.0
     var current_weight : Double = 0.0
     var current_bmi : Double = 0.0
+
+    val average_list1 = mutableListOf<Double>()
+    val average_list2 = mutableListOf<Double>()
+    val average_list3 = mutableListOf<Double>()
+    val average_list4 = mutableListOf<Double>()
+    val average_list5 = mutableListOf<Double>()
+    val average_list6 = mutableListOf<Double>()
+    val average_list7 = mutableListOf<Double>()
+    val average_list8 = mutableListOf<Double>()
+    val average_list9 = mutableListOf<Double>()
+    val average_list10 = mutableListOf<Double>()
+    val average_list11 = mutableListOf<Double>()
+    val average_list12 = mutableListOf<Double>()
     var _point1 : Double = 0.0
     var _point2 : Double = 0.0
     var _point3 : Double = 0.0
@@ -86,52 +99,52 @@ class ReportViewModel: ViewModel() {
 
                     when(month){
                         "Jan" -> {
-                            average_list.add(_weight)
-                            _point1 = average_list.average()
+                            average_list1.add(_weight)
+                            _point1 = average_list1.average()
                         }
                         "Feb" -> {
-                            average_list.add(_weight)
-                            _point2 = average_list.average()
+                            average_list2.add(_weight)
+                            _point2 = average_list2.average()
                         }
                         "Mar" -> {
-                            average_list.add(_weight)
-                            _point3 = average_list.average()
+                            average_list3.add(_weight)
+                            _point3 = average_list3.average()
                         }
                         "Apr" -> {
-                            average_list.add(_weight)
-                            _point4 = average_list.average()
+                            average_list4.add(_weight)
+                            _point4 = average_list4.average()
                         }
                         "May" -> {
-                            average_list.add(_weight)
-                            _point5 = average_list.average()
+                            average_list5.add(_weight)
+                            _point5 = average_list5.average()
                         }
                         "Jun" -> {
-                            average_list.add(_weight)
-                            _point6 = average_list.average()
+                            average_list6.add(_weight)
+                            _point6 = average_list6.average()
                         }
                         "Jul" -> {
-                            average_list.add(_weight)
-                            _point7 = average_list.average()
+                            average_list7.add(_weight)
+                            _point7 = average_list7.average()
                         }
                         "Aug" -> {
-                            average_list.add(_weight)
-                            _point5 = average_list.average()
+                            average_list8.add(_weight)
+                            _point8 = average_list8.average()
                         }
                         "Sep" -> {
-                            average_list.add(_weight)
-                            _point6 = average_list.average()
+                            average_list9.add(_weight)
+                            _point9 = average_list9.average()
                         }
                         "Oct" -> {
-                            average_list.add(_weight)
-                            _point5 = average_list.average()
+                            average_list10.add(_weight)
+                            _point10 = average_list10.average()
                         }
                         "Nov" -> {
-                            average_list.add(_weight)
-                            _point5 = average_list.average()
+                            average_list11.add(_weight)
+                            _point11 = average_list11.average()
                         }
                         "Dec" -> {
-                            average_list.add(_weight)
-                            _point5 = average_list.average()
+                            average_list12.add(_weight)
+                            _point12 = average_list12.average()
                         }
                     }
 
