@@ -9,4 +9,5 @@
     <include app:graph="@navigation/training_nav" />
     <include app:graph="@navigation/custom_set_nav" />
     <include app:graph="@navigation/report_nav" />
+    <include app:graph="@navigation/ai_nav"/>
 </navigation>

@@ -40,7 +40,7 @@ class ChooseImageViewModel: ViewModel() {
             }
     }
 
-    fun getUri(uri: Uri?)
+    fun setUri(uri: Uri?)
     {
         _uriLiveData.value = uri
     }

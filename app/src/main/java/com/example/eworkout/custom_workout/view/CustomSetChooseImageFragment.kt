@@ -42,7 +42,7 @@ class CustomSetChooseImageFragment : Fragment() {
 
     val getContent = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
         loadImage(uri)
-        viewModel.getUri(uri)
+        viewModel.setUri(uri)
     }
 
     private val viewModel: ChooseImageViewModel by viewModels()
@@ -110,7 +110,10 @@ class CustomSetChooseImageFragment : Fragment() {
             getContent.launch("image/*")
         }
         binding.btnNext.setOnClickListener {
-            viewModel.updateImage(arguments)
+            if(viewModel.uriLiveData.value != null && !Uri.EMPTY.equals(viewModel.uriLiveData.value))
+                viewModel.updateImage(arguments)
+            else
+                pickRandomImage()
         }
         binding.textViewSkip.setOnClickListener {
             pickRandomImage()
