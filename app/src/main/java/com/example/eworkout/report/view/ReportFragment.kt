@@ -72,6 +72,7 @@ class ReportFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         observeViewModel()
         onClick()
+        onDestroyView()
     }
 
     private fun onClick() {
