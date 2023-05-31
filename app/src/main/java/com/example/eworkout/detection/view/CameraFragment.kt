@@ -55,13 +55,9 @@ class CameraFragment : Fragment(), PoseLandmarkerHelper.LandmarkerListener {
     val requestPermissionLauncher =
         registerForActivityResult(
             ActivityResultContracts.RequestPermission()
-        ) { isGranted: Boolean ->
-            if (isGranted) {
-                setupBackgroundThread()
-            } else {
-                Toast.makeText(requireContext(), "You need to enable camera permission to use this function", Toast.LENGTH_SHORT).show()
-                findNavController().popBackStack()
-            }
+        ) {isGranted ->
+            if(!isGranted)
+                showError()
         }
 
 
@@ -83,6 +79,8 @@ class CameraFragment : Fragment(), PoseLandmarkerHelper.LandmarkerListener {
 
     override fun onResume() {
         super.onResume()
+        Log.d("CameraFragment", "onResume")
+
         // Start the PoseLandmarkerHelper again when users come back
         // to the foreground.
         backgroundExecutor.execute {
@@ -129,19 +127,19 @@ class CameraFragment : Fragment(), PoseLandmarkerHelper.LandmarkerListener {
         return fragmentCameraBinding.root
     }
 
-    @SuppressLint("MissingPermission")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if(hasAllPermission())
-        {
-            setOnClickListener()
-            observeViewModel()
-            setupBackgroundThread()
-        }
-        else
-        {
+        setOnClickListener()
+        observeViewModel()
+        setupBackgroundThread()
+        if(!hasAllPermission()){
             requestPermissionLauncher.launch(Manifest.permission.CAMERA)
         }
+    }
+
+    private fun showError()
+    {
+        Toast.makeText(requireContext(), "You need to enable camera permission to use this function", Toast.LENGTH_SHORT).show()
     }
 
     private fun hideBottomNav() {
