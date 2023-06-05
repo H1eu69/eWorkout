@@ -15,4 +15,9 @@
         android:id="@+id/report_nav"
         android:icon="@drawable/report"
         android:enabled="true"/>
+
+    <item android:title="@string/profile"
+        android:id="@+id/profile_nav"
+        android:icon="@drawable/profile_icon"
+        android:enabled="true"/>
 </menu>
