@@ -149,6 +149,7 @@ class CameraViewModel : ViewModel() {
             {
                 Log.d("push up last angle", lastAngle.toString())
                 Log.d("push up arm angle", armAngle.toString())
+                Log.d("push up phase", _pushupPhase.value!!.name)
 
                 if(armAngle >= 40 && armAngle < lastAngle && _pushupPhase.value!!.name == "DESCENDING")
                 {
