@@ -17,6 +17,8 @@
         <action
             android:id="@+id/action_letsStartFragment_to_Training"
             app:destination="@id/training_nav"
+            app:popUpTo="@id/login_nav"
+            app:popUpToInclusive="true"
             app:enterAnim="@android:anim/slide_in_left"
             app:exitAnim="@android:anim/slide_out_right" />
     </fragment>
@@ -34,7 +36,8 @@
         <action
             android:id="@+id/action_loginFragment_to_trainingFragment"
             app:destination="@id/training_nav"
-            app:popUpTo="@id/trainingFragment" />
+            app:popUpTo="@id/login_nav"
+            app:popUpToInclusive="true"/>
         <action
             android:id="@+id/action_loginFragment_to_BMIEvaluation"
             app:destination="@id/BMIEvaluation" />
@@ -56,6 +59,7 @@
         <action
             android:id="@+id/action_BMIEvaluation_to_trainingFragment"
             app:destination="@id/training_nav"
-            app:popUpTo="@id/trainingFragment" />
+            app:popUpTo="@id/login_nav"
+            app:popUpToInclusive="true"/>
     </fragment>
 </navigation>

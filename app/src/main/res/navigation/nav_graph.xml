@@ -10,4 +10,5 @@
     <include app:graph="@navigation/custom_set_nav" />
     <include app:graph="@navigation/report_nav" />
     <include app:graph="@navigation/ai_nav"/>
+    <include app:graph="@navigation/profile_nav"/>
 </navigation>
