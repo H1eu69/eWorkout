@@ -44,6 +44,7 @@ class FragmentWorkoutDetail1 : Fragment() {
             setId = it.getString("set_id")
             isSystemSet = it.getBoolean("isSystemSet")
             Log.d("test set id", setId.toString())
+            Log.d("test system set", isSystemSet.toString())
         }
     }
 
@@ -103,7 +104,7 @@ class FragmentWorkoutDetail1 : Fragment() {
     {
         binding.btnStart.setOnClickListener {
             _sharedViewModel.addNewSetTaken(setId!!)
-            findNavController().navigate(R.id.action_workoutDetail1_to_fragmentWorkoutReady)
+            findNavController().navigate(R.id.action_workoutDetail1_to_fragmentWorkoutReady, arguments)
         }
         binding.backBtn.setOnClickListener {
             findNavController().popBackStack()

@@ -105,7 +105,7 @@ class FragmentWorkoutStart2 : Fragment() {
         }
         binding.btnPrevious.setOnClickListener {
             _sharedViewModel.decreaseCurrentExerciseIndex()
-            findNavController().navigate(R.id.action_fragmentWorkoutStart2_to_fragmentWorkoutRest)
+            findNavController().navigate(R.id.action_fragmentWorkoutStart2_to_fragmentWorkoutRest, arguments)
         }
         binding.btnMiddle.setOnClickListener {
             onClick()
@@ -129,11 +129,12 @@ class FragmentWorkoutStart2 : Fragment() {
     {
         if(_sharedViewModel.increaseCurrentExerciseIndex()){
             _sharedViewModel.calculateKcal((SystemClock.elapsedRealtime() - timer.base) / 1000)
-            findNavController().navigate(R.id.action_fragmentWorkoutStart2_to_fragmentWorkoutRest)
+            findNavController().navigate(R.id.action_fragmentWorkoutStart2_to_fragmentWorkoutRest, arguments)
         }
         else{
             val bundle = Bundle()
             bundle.putString("set_taken_id", _sharedViewModel.setTakenID)
+            bundle.putBoolean("isSystemSet", requireArguments().getBoolean("isSystemSet"))
             _sharedViewModel.calculateAndUpdate((SystemClock.elapsedRealtime() - timer.base) / 1000)
             findNavController().navigate(R.id.action_fragmentWorkoutStart2_to_fragmentWorkoutDone, bundle)
         }

@@ -123,12 +123,11 @@ class FragmentWorkoutStart1 : Fragment() {
                 Log.d("navigate", "timer fninish")
                 if(_viewModel.increaseCurrentExerciseIndex()){
                     _viewModel.calculateKcal((SystemClock.elapsedRealtime() - timer.base) / 1000)
-                    findNavController().navigate(R.id.action_fragmentWorkoutStart1_to_fragmentWorkoutRest)
+                    findNavController().navigate(R.id.action_fragmentWorkoutStart1_to_fragmentWorkoutRest, arguments)
                 }
-
                 else{
                     _viewModel.calculateAndUpdate((SystemClock.elapsedRealtime() - timer.base) / 1000)
-                    findNavController().navigate(R.id.action_fragmentWorkoutStart1_to_fragmentWorkoutDone)
+                    findNavController().navigate(R.id.action_fragmentWorkoutStart1_to_fragmentWorkoutDone, arguments)
                 }
             }
         }
@@ -142,7 +141,7 @@ class FragmentWorkoutStart1 : Fragment() {
         }
         binding.btnPrevious.setOnClickListener {
             _viewModel.decreaseCurrentExerciseIndex()
-            findNavController().navigate(R.id.action_fragmentWorkoutStart1_to_fragmentWorkoutRest)
+            findNavController().navigate(R.id.action_fragmentWorkoutStart1_to_fragmentWorkoutRest, arguments)
         }
         binding.btnMiddle.setOnClickListener {
             if(isPaused)
@@ -166,11 +165,11 @@ class FragmentWorkoutStart1 : Fragment() {
             if(_viewModel.increaseCurrentExerciseIndex())
             {
                 _viewModel.calculateKcal((SystemClock.elapsedRealtime() - timer.base) / 1000)
-                findNavController().navigate(R.id.action_fragmentWorkoutStart1_to_fragmentWorkoutRest)
+                findNavController().navigate(R.id.action_fragmentWorkoutStart1_to_fragmentWorkoutRest, arguments)
             }
             else{
                 _viewModel.calculateAndUpdate((SystemClock.elapsedRealtime() - timer.base) / 1000)
-                findNavController().navigate(R.id.action_fragmentWorkoutStart1_to_fragmentWorkoutDone)
+                findNavController().navigate(R.id.action_fragmentWorkoutStart1_to_fragmentWorkoutDone, arguments)
             }
         }
 

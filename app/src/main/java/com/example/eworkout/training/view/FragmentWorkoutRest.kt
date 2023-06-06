@@ -97,10 +97,7 @@ class FragmentWorkoutRest : Fragment() {
 
     private fun setListener() {
         binding.skipTextView.setOnClickListener {
-            if(_viewModel.getCurrentExercise().reps.contains("s"))
-                findNavController().navigate(R.id.action_fragmentWorkoutRest_to_fragmentWorkoutStart1)
-            else
-                findNavController().navigate(R.id.action_fragmentWorkoutRest_to_fragmentWorkoutStart2)
+            navigate()
         }
 
         binding.add10sTextView.setOnClickListener {
@@ -112,6 +109,14 @@ class FragmentWorkoutRest : Fragment() {
             binding.backgroundImageview.visibility = View.VISIBLE
             binding.backgroundAnimationview.visibility = View.GONE
         }
+    }
+
+    private fun navigate()
+    {
+        if(_viewModel.getCurrentExercise().reps.contains("s"))
+            findNavController().navigate(R.id.action_fragmentWorkoutRest_to_fragmentWorkoutStart1, arguments)
+        else
+            findNavController().navigate(R.id.action_fragmentWorkoutRest_to_fragmentWorkoutStart2, arguments)
     }
 
     private fun cancelAndStartNewCountDown(millisCountDown: Long)
@@ -141,10 +146,7 @@ class FragmentWorkoutRest : Fragment() {
             }
 
             override fun onFinish() {
-                if(_viewModel.getCurrentExercise().reps.contains("s"))
-                    findNavController().navigate(R.id.action_fragmentWorkoutRest_to_fragmentWorkoutStart1)
-                else
-                    findNavController().navigate(R.id.action_fragmentWorkoutRest_to_fragmentWorkoutStart2)
+                navigate()
             }
 
         }
