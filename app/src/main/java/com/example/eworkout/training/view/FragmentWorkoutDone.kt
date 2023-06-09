@@ -95,7 +95,6 @@ class FragmentWorkoutDone : Fragment() {
             onClick()
         }
         binding.btnNext.setOnClickListener {
-            _viewModel.addToCalendar(setTakenID.toString())
             onClick()
         }
         binding.textViewNext.setOnClickListener {
@@ -108,6 +107,7 @@ class FragmentWorkoutDone : Fragment() {
 
     private fun onClick()
     {
+        _viewModel.addToCalendar(setTakenID.toString())
         _sharedViewModel.resetIndexAndCalories()
         val bundle = Bundle()
         bundle.putString("setTakenId",setTakenID)
@@ -116,8 +116,10 @@ class FragmentWorkoutDone : Fragment() {
 
     private fun doExerciseAgain()
     {
+        _viewModel.addToCalendar(setTakenID.toString())
         val bundle = Bundle()
         bundle.putString("set_id", _viewModel.currentSetId)
+        bundle.putBoolean("isSystemSet", requireArguments().getBoolean("isSystemSet"))
         _sharedViewModel.resetIndexAndCalories()
         findNavController().navigate(R.id.action_fragmentWorkoutDone_to_workoutDetail1, bundle)
     }

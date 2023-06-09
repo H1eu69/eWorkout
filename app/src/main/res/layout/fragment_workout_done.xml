@@ -227,8 +227,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView_easy"
-                    app:layout_constraintVertical_bias="0"
-                    android:theme="@style/Theme.AppCompat">
+                    app:layout_constraintVertical_bias="0">
                     <!-- Ta dao -->
                     <RadioButton
                         android:layout_width="0dp"
