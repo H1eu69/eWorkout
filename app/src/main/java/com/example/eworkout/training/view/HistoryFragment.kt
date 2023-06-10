@@ -45,6 +45,7 @@ class HistoryFragment : Fragment() {
     private lateinit var _viewModel: HistoryViewModel
 
     private var date: String? = null
+    private var date1: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,6 +53,7 @@ class HistoryFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
             date = it.getString("date")
+            date1 = it.getString("date1")
         }
     }
 
@@ -111,8 +113,8 @@ class HistoryFragment : Fragment() {
     {
         when(state.name){
             "LOADING" -> {
-                _viewModel.indicator(date.toString())
-                _viewModel.getSetTakenId(date.toString())
+                _viewModel.indicator(date.toString(), date1.toString())
+                _viewModel.getSetTakenId(date.toString(), date1.toString())
                 showLoading()
             }
             "LOADED" -> {

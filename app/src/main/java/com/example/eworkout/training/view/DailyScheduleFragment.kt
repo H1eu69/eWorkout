@@ -117,13 +117,36 @@ class DailyScheduleFragment : Fragment() {
             val month = i1
             val day = i2
             val date = formatDateChange(i,i1,i2)
+            val date1 = formatDateChange1(i,i1,i2)
             //_viewModel.date = formatDateChange(i,i1,i2)
             //_viewModel.indicator(_viewModel.date.toString())
             val bundle = Bundle().apply {
                 putString("date", date)
+                putString("date1", date1)
             }
             findNavController().navigate(R.id.action_dailyScheduleFragment_to_historyFragment, bundle)
         }
+    }
+
+    private fun formatDateChange1(i: Int, i1: Int, i2: Int): String? {
+        val day: String = i2.toString()
+        var month = ""
+        val year: String = i.toString()
+        when(i1+1){
+            1 -> month = "Jan"
+            2 -> month = "Feb"
+            3 -> month = "Mar"
+            4 -> month = "Apr"
+            5 -> month = "May"
+            6 -> month = "Jun"
+            7 -> month = "Jul"
+            8 -> month = "Aug"
+            9 -> month = "Sep"
+            10 -> month = "Oct"
+            11 -> month = "Nov"
+            12 -> month = "Dec"
+        }
+        return day + " " + month + " " + year
     }
 
     private fun formatDateChange(i: Int, i1: Int, i2: Int): String{
