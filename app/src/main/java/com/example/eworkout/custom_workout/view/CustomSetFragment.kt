@@ -112,11 +112,8 @@ class CustomSetFragment : Fragment() {
         val listener = object : CustomSetOnClickListener
         {
             override fun onClick(bundle: Bundle) {
-                val graph = findNavController().navInflater.inflate(R.navigation.training_nav)
-                graph.setStartDestination(R.id.workoutDetail1)
-                findNavController().setGraph(graph, bundle)
+                findNavController().navigate(R.id.action_customSetFragment_to_custom_training, bundle)
             }
-
         }
         binding.recyclerView.adapter = CustomSetAdapter(viewModel.sets.value!!, listener)
 

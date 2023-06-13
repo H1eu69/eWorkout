@@ -3,12 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/login_nav">
+    app:startDestination="@id/auth_nav">
 
-    <include app:graph="@navigation/login_nav" />
-    <include app:graph="@navigation/training_nav" />
-    <include app:graph="@navigation/custom_set_nav" />
-    <include app:graph="@navigation/report_nav" />
-    <include app:graph="@navigation/ai_nav"/>
-    <include app:graph="@navigation/profile_nav"/>
+    <include app:graph="@navigation/auth_nav" />
+    <include app:graph="@navigation/in_app_nav"/>
 </navigation>

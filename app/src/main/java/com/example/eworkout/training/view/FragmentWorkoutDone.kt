@@ -37,6 +37,8 @@ class FragmentWorkoutDone : Fragment() {
     private val _sharedViewModel: SharedViewModel by navGraphViewModels(R.id.training_nav)
 
     private var setTakenID: String? = null
+    private var isSystemSet: Boolean? = null
+
     private lateinit var mediaPlayer : MediaPlayer
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +46,7 @@ class FragmentWorkoutDone : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
             setTakenID = it.getString("set_taken_id")
+            isSystemSet = it.getBoolean("isSystemSet")
         }
     }
 
@@ -111,7 +114,8 @@ class FragmentWorkoutDone : Fragment() {
         _sharedViewModel.resetIndexAndCalories()
         val bundle = Bundle()
         bundle.putString("setTakenId",setTakenID)
-        findNavController().navigate(R.id.action_fragmentWorkoutDone_to_trainingFragment, bundle)
+        Log.d("findNavController", findNavController().graph.toString())
+        findNavController().navigate(R.id.action_fragmentWorkoutDone_to_trainingFragment)
     }
 
     private fun doExerciseAgain()
@@ -119,7 +123,7 @@ class FragmentWorkoutDone : Fragment() {
         _viewModel.addToCalendar(setTakenID.toString())
         val bundle = Bundle()
         bundle.putString("set_id", _viewModel.currentSetId)
-        bundle.putBoolean("isSystemSet", requireArguments().getBoolean("isSystemSet"))
+        bundle.putBoolean("isSystemSet", isSystemSet!!)
         _sharedViewModel.resetIndexAndCalories()
         findNavController().navigate(R.id.action_fragmentWorkoutDone_to_workoutDetail1, bundle)
     }
@@ -139,22 +143,9 @@ class FragmentWorkoutDone : Fragment() {
         when(updateState.name){
             "RUNNING" -> {
                 showLoading()
-                _viewModel.getModelData(setTakenID!!)
+                _viewModel.getModelData(setTakenID!!, isSystemSet!!)
             }
             "DONE" -> {
-                hideLoading()
-            }
-        }
-    }
-
-    private fun handleState(state: WorkoutDoneState)
-    {
-        when(state.name){
-            "LOADING" -> {
-                showLoading()
-                _viewModel.getModelData(setTakenID!!)
-            }
-            "LOADED" -> {
                 hideLoading()
             }
         }
