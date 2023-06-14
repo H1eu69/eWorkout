@@ -35,7 +35,7 @@
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <action
             android:id="@+id/action_loginFragment_to_trainingFragment"
-            app:destination="@id/training_nav"
+            app:destination="@id/in_app_nav"
             app:popUpTo="@id/auth_nav"
             app:popUpToInclusive="true"/>
         <action
@@ -58,7 +58,7 @@
         tools:layout="@layout/fragment_b_m_i_evaluation" >
         <action
             android:id="@+id/action_BMIEvaluation_to_trainingFragment"
-            app:destination="@id/training_nav"
+            app:destination="@id/in_app_nav"
             app:popUpTo="@id/auth_nav"
             app:popUpToInclusive="true"/>
     </fragment>

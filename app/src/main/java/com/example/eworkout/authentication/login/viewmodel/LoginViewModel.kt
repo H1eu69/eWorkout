@@ -67,7 +67,10 @@ class LoginViewModel: ViewModel() {
             "email" to auth.currentUser?.email,
             "is_guest" to isGuest,
             "first_name" to "",
-            "last_name" to ""
+            "last_name" to "",
+            "age" to 18,
+            "current_weight" to 60.0,
+            "current_height" to 165.0,
         )
         auth.currentUser?.let {
             firestore.collection("Users").document(it.uid).set(data)

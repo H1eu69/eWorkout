@@ -17,6 +17,7 @@ import java.text.*
 import java.util.*
 
 class TrainingViewModel: ViewModel() {
+
     val firestore = Firebase.firestore
     val storageRef = Firebase.storage.reference
 
@@ -38,7 +39,11 @@ class TrainingViewModel: ViewModel() {
     fun getCurrentUserEmail(){
         if (user != null)
         {
-            userEmail = user.email!!.substringBefore('@',userEmail)
+            userEmail = if(user.email.isNullOrEmpty())
+                ANONYMOUS_USER
+            else
+                user.email!!.substringBefore('@',userEmail)
+
         }
     }
 
@@ -122,5 +127,9 @@ class TrainingViewModel: ViewModel() {
             .addOnFailureListener {
                 Log.d("adsa", it.message.toString())
             }
+    }
+
+    companion object{
+        private const val ANONYMOUS_USER = "Anonymous User"
     }
 }
