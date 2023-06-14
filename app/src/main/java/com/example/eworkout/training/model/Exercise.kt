@@ -4,7 +4,7 @@ data class Exercise(
     val id: String,
     val name: String,
     var image: String,
-    val reps: String,
+    var reps: String,
     val description: String,
     val calo: String,
     val instruction: String,

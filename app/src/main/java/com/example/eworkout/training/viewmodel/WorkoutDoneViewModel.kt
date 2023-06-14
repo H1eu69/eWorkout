@@ -33,8 +33,10 @@ class WorkoutDoneViewModel : ViewModel() {
         firestore.collection("Set_Taken")
             .document(setTakenID)
             .get().addOnSuccessListener {
+                Log.d("WorkoutDoneVM", setTakenID.toString())
+
                 val calo = it.getDouble("total_calories")!!
-                    val milliseconds = (it.getDate("end_time")?.time!! - (it.getDate("start_time")?.time!!))
+                val milliseconds = (it.getDate("end_time")?.time!! - (it.getDate("start_time")?.time!!))
                 min = milliseconds.toDouble()
 
                 val simpledateformat = SimpleDateFormat("mm:ss")

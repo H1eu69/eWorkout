@@ -43,8 +43,8 @@ class FragmentWorkoutDetail1 : Fragment() {
             mParam2 = it.getString(ARG_PARAM2)
             setId = it.getString("set_id")
             isSystemSet = it.getBoolean("isSystemSet")
-            Log.d("test set id", setId.toString())
-            Log.d("test system set", isSystemSet.toString())
+            Log.d("FragmentDetail1", setId.toString())
+            Log.d("FragmentDetail1", isSystemSet.toString())
         }
     }
 

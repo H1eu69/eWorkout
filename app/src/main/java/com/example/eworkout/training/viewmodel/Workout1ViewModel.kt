@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.eworkout.training.model.CustomSetInfo
 import com.example.eworkout.training.model.Exercise
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -57,18 +58,28 @@ class Workout1ViewModel : ViewModel() {
                 .whereEqualTo("set_id", id)
                 .get().await()
 
-            val exercisesIds = mutableListOf<String>()
+            val customExercises = mutableListOf<CustomSetInfo>()
 
             for (doc in setInformation.documents){
-                exercisesIds.add(doc.getString("exercise_id").toString())
+                customExercises.add(
+                    CustomSetInfo(
+                        doc.getString("exercise_id").toString(),
+                        doc.getLong("reps"),
+                        doc.getString("rep_Type").toString()))
+
                 Log.d("Workout Detail 1", doc.getString("exercise_id").toString())
             }
-            findCustomExercisesByIds(exercisesIds)
+            findCustomExercisesByIds(customExercises)
         }
     }
 
-    private fun findCustomExercisesByIds(ids: List<String>) {
+    private fun findCustomExercisesByIds(customExercises: List<CustomSetInfo>) {
         viewModelScope.launch {
+            val ids = mutableListOf<String>()
+            customExercises.forEach {
+                ids.add(it.exercise_id.toString())
+            }
+
             val docs = firestore.collection("Exercises")
                 .whereIn(FieldPath.documentId(), ids)
                 .get().await()
@@ -85,6 +96,15 @@ class Workout1ViewModel : ViewModel() {
                     doc.getDouble("MET")!!)
                 exercises.add(exercise)
                 getUriCustomImageByName(exercise)
+            }
+            customExercises.forEach { custom ->
+                val exercise = exercises.find {
+                    custom.exercise_id == it.id
+                }
+                if (custom.repType == "Reps")
+                    exercise?.reps = "x" + custom.reps.toString()
+                else
+                    exercise?.reps = custom.reps.toString() + "s"
             }
             _state.value = WorkoutDetail1State.LOADED
             Log.d("Workout Detail 1","LOADED")
