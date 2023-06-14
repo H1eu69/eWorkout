@@ -70,14 +70,13 @@ class HistoryViewModel: ViewModel() {
 
     }
 
-    fun getSetTakenId(date: String) {
+    fun getSetTakenId(date: String, date1: String) {
         firestore.collection("Calendar")
             .whereEqualTo("user_id", auth.currentUser!!.uid)
-            .whereEqualTo("date", date)
+            .whereIn("date", listOf(date, date1))
             .get()
             .addOnSuccessListener {
                 for(it in it.documents){
-                    //val _setTakenId =
                     list_settakenid.add(it.get("set_taken_id").toString())
                     Log.d("History", it.getString("set_taken_id").toString())
                 }
@@ -101,10 +100,10 @@ class HistoryViewModel: ViewModel() {
             }
     }
 
-    fun indicator(date: String){
+    fun indicator(date: String, date1: String){
         firestore.collection("Calendar")
             .whereEqualTo("user_id", auth.currentUser!!.uid)
-            .whereEqualTo("date", date)
+            .whereIn("date", listOf(date, date1))
             .get().addOnSuccessListener { documents ->
                 for(it in documents){
                     val calo = it.get("total_calories") as Double

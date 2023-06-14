@@ -2,5 +2,6 @@ package com.example.eworkout.report.model
 
 enum class ReportState {
     LOADED,
-    LOADING
+    LOADING,
+    CHART_LOADING
 }

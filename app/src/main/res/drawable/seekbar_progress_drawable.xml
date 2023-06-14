@@ -1,14 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android"
-    android:shape="rectangle">
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <size
-        android:height="10dp"/>
-    <gradient
-        android:angle="0"
-        android:startColor="#EEA4CE"
-        android:centerColor="#9DCEFF"
-        android:endColor="#EEA4CE"
-        android:type="linear"
-        android:centerX="0.4"/>
-</shape>
+    <item>
+        <shape android:shape="rectangle">
+            <size android:width="25dp"
+                android:height="20dp"/>
+            <solid android:color="#c6e2ff"/>
+        </shape>
+    </item>
+
+    <item
+        android:left="25dp">
+        <shape android:shape="rectangle">
+            <size android:width="25dp"
+                android:height="20dp"/>
+            <solid android:color="#40bf60"/>
+        </shape>
+    </item>
+
+    <item
+        android:left="50dp">
+        <shape android:shape="rectangle">
+            <size android:width="25dp"
+                android:height="20dp"/>
+            <solid android:color="#ffc300"/>
+        </shape>
+    </item>
+
+    <item
+        android:left="275dp">
+        <shape android:shape="rectangle">
+            <size android:width="25dp"
+                android:height="20dp"/>
+            <solid android:color="#e74c3c"/>
+        </shape>
+    </item>
+
+
+</layer-list>
