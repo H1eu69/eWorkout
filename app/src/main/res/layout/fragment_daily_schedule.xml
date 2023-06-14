@@ -15,18 +15,21 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/schedule_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/calendar_fragment_bg">
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/buttonBackToHome"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="60dp"
+                android:layout_marginTop="30dp"
                 android:background="@drawable/btn_navigate_up_background"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -36,116 +39,30 @@
                 android:id="@+id/textViewCalendar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
-                android:fontFamily="@font/poppins_medium"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/poppins_semibold"
                 android:text="Calendar"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="30sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.4"
                 app:layout_constraintStart_toEndOf="@+id/buttonBackToHome"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/frameIndicator"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="25dp"
-                android:layout_marginEnd="20dp"
-                android:background="@drawable/radius_shape"
-                android:paddingTop="5dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewCalendar">
-
-                <TextView
-                    android:id="@+id/textViewExercises"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/poppins_semibold"
-                    android:text="Exercises"
-                    android:textColor="@color/black"
-                    android:textSize="14sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/numOfExercises"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins_semibold"
-                    android:text="0"
-                    android:textSize="25sp"
-                    app:layout_constraintEnd_toEndOf="@+id/textViewExercises"
-                    app:layout_constraintStart_toStartOf="@+id/textViewExercises"
-                    app:layout_constraintTop_toBottomOf="@+id/textViewExercises" />
-
-                <TextView
-                    android:id="@+id/textViewKcal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/poppins_semibold"
-                    android:text="kCal"
-                    android:textColor="@color/black"
-                    android:textSize="14sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/numOfKcal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins_semibold"
-                    android:text="0"
-                    android:textSize="25sp"
-                    app:layout_constraintEnd_toEndOf="@+id/textViewKcal"
-                    app:layout_constraintStart_toStartOf="@+id/textViewKcal"
-                    app:layout_constraintTop_toBottomOf="@+id/textViewKcal" />
-
-                <TextView
-                    android:id="@+id/textViewTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:fontFamily="@font/poppins_semibold"
-                    android:text="Time(mins)"
-                    android:textColor="@color/black"
-                    android:textSize="14sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/numOfTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins_semibold"
-                    android:text="0"
-                    android:textSize="25sp"
-                    app:layout_constraintEnd_toEndOf="@+id/textViewTime"
-                    app:layout_constraintStart_toStartOf="@+id/textViewTime"
-                    app:layout_constraintTop_toBottomOf="@+id/textViewTime" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
             <CalendarView
                 android:id="@+id/calendarView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/calendar_bg"
+                android:dateTextAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:focusedMonthDateColor="#E91E63"
+                android:selectedDateVerticalBar="@drawable/pink_linear"
+                android:weekNumberColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/frameIndicator"
-                app:layout_constraintVertical_bias="0.2" />
+                app:layout_constraintTop_toBottomOf="@+id/textViewCalendar" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
