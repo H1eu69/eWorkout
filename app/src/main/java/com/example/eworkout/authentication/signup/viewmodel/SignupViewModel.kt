@@ -34,8 +34,7 @@ class SignupViewModel : ViewModel() {
     suspend fun createUserWithEmailAndPassword() {
         try {
             if(auth.createUserWithEmailAndPassword(email.value.toString(), password.value.toString())
-                .await().user != null)
-            {
+                .await().user != null) {
                 _signupState.postValue(SignupState.SUCCESS)
                 createInFireStore()
             }
@@ -50,20 +49,25 @@ class SignupViewModel : ViewModel() {
         val data = mutableMapOf(
             "email" to auth.currentUser?.email,
             "is_guest" to false,
-            "first_name" to firstName.value,
-            "last_name" to lastName.value
+            "first_name" to "",
+            "last_name" to "",
+            "age" to 18,
+            "current_weight" to 60.0,
+            "current_height" to 165.0,
         )
         auth.currentUser?.let {
             firestore.collection("Users").document(it.uid).set(data)
         }
     }
 
-
     suspend fun signInWithCredential(credential: AuthCredential)
     {
         try{
             if(auth.signInWithCredential(credential).await().user != null)
+            {
+                createInFireStore()
                 _signupState.postValue(SignupState.SUCCESS)
+            }
         }
         catch (ex: Exception) {
             Log.d(TAG, ex.toString())

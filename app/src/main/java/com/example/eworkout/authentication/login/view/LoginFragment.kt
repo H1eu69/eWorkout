@@ -152,6 +152,10 @@ class LoginFragment : Fragment() {
                 binding.textFieldPassword.error = getString(R.string.ERROR_WRONG_PASSWORD)
                 binding.textFieldPassword.isErrorEnabled = true
             }
+            "FAILED" -> {
+                binding.textFieldPassword.error = "Wrong email or password!"
+                binding.textFieldPassword.isErrorEnabled = true
+            }
             //No above error
 
             "NO_ERROR_EMAIL" -> binding.textFieldEmail.isErrorEnabled = false
