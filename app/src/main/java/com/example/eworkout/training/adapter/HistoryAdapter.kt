@@ -3,6 +3,7 @@ package com.example.eworkout.training.adapter
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -26,6 +27,10 @@ class HistoryAdapter(val list: List<Set>) : RecyclerView.Adapter<HistoryAdapter.
                         .into(binding.SetImageViewHistory)
                 }
 
+                if(set.totalTime == 0L){
+                    binding.texViewDuration.visibility = View.INVISIBLE
+                    binding.txtView2.visibility = View.INVISIBLE
+                }
             }
         }
     }

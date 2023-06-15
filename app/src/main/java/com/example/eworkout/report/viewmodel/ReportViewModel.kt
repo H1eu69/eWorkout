@@ -65,6 +65,9 @@ class ReportViewModel: ViewModel() {
         firestore.collection("Calendar")
             .whereEqualTo("user_id", auth.currentUser!!.uid)
             .get().addOnSuccessListener { documents ->
+                min = 0.0
+                num = 0.0
+                exercises = 0.0
                 for(it in documents){
                     val calo = it.get("total_calories") as Double
                     num += calo
@@ -205,7 +208,9 @@ class ReportViewModel: ViewModel() {
             Height_and_Weight_id = it.id
         }
     }
-
+    fun changeStateTo(state: ReportState){
+        _state.value = state
+    }
     fun change_state(){
         weight_data_list.clear()
         _state.value = ReportState.CHART_LOADING

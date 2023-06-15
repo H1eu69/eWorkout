@@ -238,4 +238,9 @@ class ReportFragment : Fragment() {
         super.onDestroy()
         _binding = null
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _viewModel.changeStateTo(ReportState.LOADING)
+    }
 }
