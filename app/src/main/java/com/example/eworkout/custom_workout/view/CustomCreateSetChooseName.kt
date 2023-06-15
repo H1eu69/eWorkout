@@ -95,6 +95,9 @@ class CustomCreateSetChooseName : Fragment() {
                 findNavController().navigate(R.id.action_customCreateSetChooseName_to_customCreateSetFragmentPickExercises, bundle)
             }
         }
+        binding.btnNavigateUp.setOnClickListener {
+            findNavController().popBackStack()
+        }
     }
 
     override fun onResume() {
