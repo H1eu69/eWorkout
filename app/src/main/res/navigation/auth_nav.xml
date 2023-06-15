@@ -50,6 +50,11 @@
         <action
             android:id="@+id/action_signupFragment_to_BMIEvaluation"
             app:destination="@id/BMIEvaluation" />
+        <action
+            android:id="@+id/action_signupFragment_to_in_app_nav"
+            app:destination="@id/in_app_nav"
+            app:popUpTo="@id/auth_nav"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/BMIEvaluation"

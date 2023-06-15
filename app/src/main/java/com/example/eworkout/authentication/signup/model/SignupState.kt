@@ -17,6 +17,7 @@ enum class SignupState{
     NO_ERROR_PASSWORD,
     NO_ERROR_CONFIRM_PASSWORD,
     SUCCESS,
+    GOOGLE_SIGN_IN_SUCCESS,
     LOADING
 
 }

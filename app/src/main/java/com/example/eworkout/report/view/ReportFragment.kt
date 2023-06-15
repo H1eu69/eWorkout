@@ -133,7 +133,7 @@ class ReportFragment : Fragment() {
             "LOADED" -> {
                 binding.TotalKcalReport.text = _viewModel.num.toString()
                 binding.TotalTimeReport.text = _viewModel.min.toString()
-                binding.TotalExercisesReport.text = _viewModel.exercises.toString()
+                binding.TotalExercisesReport.text = _viewModel.exercises.toInt().toString()
                 binding.txtCurrentWeight.text = _viewModel.current_weight.toString() + " kg"
                 binding.txtHeaviestWeight.text = _viewModel.heviest_weight.toString() + " kg"
                 binding.txtLightestWeight.text = _viewModel.lightest_weight.toString() + " kg"
@@ -182,7 +182,7 @@ class ReportFragment : Fragment() {
         binding.lineChart.legend.isEnabled = false
         binding.lineChart.description = null
         binding.lineChart.setDrawGridBackground(false)
-        binding.lineChart.setBackgroundColor(resources.getColor(R.color.white))
+        binding.lineChart.setBackgroundColor(Color.WHITE)
 
         binding.lineChart.axisLeft.axisMaximum = _viewModel.heviest_weight.toFloat() + 5f
         binding.lineChart.axisLeft.axisMinimum = _viewModel.lightest_weight.toFloat() - 5f

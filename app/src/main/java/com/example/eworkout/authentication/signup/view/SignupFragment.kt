@@ -199,6 +199,9 @@ class SignupFragment : Fragment() {
             "SUCCESS" -> {
                 findNavController().navigate(R.id.action_signupFragment_to_BMIEvaluation)
             }
+            "GOOGLE_SIGN_IN_SUCCESS" -> {
+                findNavController().navigate(R.id.action_signupFragment_to_in_app_nav)
+            }
         }
     }
 

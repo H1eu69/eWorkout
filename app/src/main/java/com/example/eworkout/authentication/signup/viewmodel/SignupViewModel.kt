@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.eworkout.authentication.signup.model.SignupState
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -60,13 +61,28 @@ class SignupViewModel : ViewModel() {
         }
     }
 
+    private fun createAdditionalInfo()
+    {
+        val _BMI = (60.0/((165.0/100)*(165.0/100)))
+        val data2 = hashMapOf(
+            "user_id" to auth.currentUser!!.uid,
+            "height" to 165.0,
+            "weight" to 60.0,
+            "time" to Timestamp.now(),
+            "bmi" to _BMI
+        )
+        firestore.collection("Height_and_Weight").add(data2)
+    }
     suspend fun signInWithCredential(credential: AuthCredential)
     {
         try{
-            if(auth.signInWithCredential(credential).await().user != null)
+            val authResult = auth.signInWithCredential(credential).await()
+            if(authResult.user != null)
             {
                 createInFireStore()
-                _signupState.postValue(SignupState.SUCCESS)
+                if(authResult.additionalUserInfo!!.isNewUser)
+                    createAdditionalInfo()
+                _signupState.postValue(SignupState.GOOGLE_SIGN_IN_SUCCESS)
             }
         }
         catch (ex: Exception) {
