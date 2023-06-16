@@ -157,7 +157,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="20dp"
                             android:text="+"
-                            android:textColor="@color/fill"
+                            android:textColor="#3732ff"
                             android:textSize="40sp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -167,16 +167,16 @@
                             style="@style/TextView15"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_margin="10dp"
+                            android:layout_marginTop="16dp"
                             android:text="kg"
-                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintStart_toStartOf="@+id/lineChart"
                             app:layout_constraintTop_toBottomOf="@id/weight" />
 
                         <com.github.mikephil.charting.charts.LineChart
                             android:id="@+id/lineChart"
                             android:layout_width="0dp"
                             android:layout_height="300dp"
-                            android:layout_margin="10dp"
+                            android:layout_margin="16dp"
                             android:shadowColor="@color/black"
                             android:theme="@style/Theme.AppCompat"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -187,7 +187,7 @@
                             android:id="@+id/blueBox"
                             android:layout_width="20dp"
                             android:layout_height="20dp"
-                            android:layout_margin="10dp"
+                            android:layout_margin="16dp"
                             android:background="#154782"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/lineChart" />
@@ -199,15 +199,16 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="10dp"
                             android:text="Weight"
+                            app:layout_constraintBottom_toBottomOf="@+id/blueBox"
                             app:layout_constraintStart_toEndOf="@id/blueBox"
-                            app:layout_constraintTop_toBottomOf="@id/lineChart" />
+                            app:layout_constraintTop_toTopOf="@+id/blueBox" />
 
                         <TextView
                             android:id="@+id/txtCurrent"
                             style="@style/TextView15"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
+                            android:layout_marginStart="16dp"
                             android:layout_marginTop="20dp"
                             android:text="Current"
                             app:layout_constraintStart_toStartOf="parent"
@@ -218,7 +219,8 @@
                             style="@style/TextView15"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_margin="10dp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="8dp"
                             android:text="Heaviest"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/txtCurrent" />
@@ -228,7 +230,8 @@
                             style="@style/TextView15"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_margin="10dp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="8dp"
                             android:text="Lightest"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/txtHeaviest" />
@@ -238,31 +241,31 @@
                             style="@style/TextView15"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
-                            android:layout_marginEnd="10dp"
-                            android:text="65.00 kg"
+                            android:layout_marginEnd="16dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/txtCurrent"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/blueBox" />
+                            app:layout_constraintTop_toTopOf="@+id/txtCurrent"
+                            tools:text="20.00 kg" />
 
                         <TextView
                             android:id="@+id/txtHeaviestWeight"
                             style="@style/TextView15"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_margin="10dp"
-                            android:text="70.00 kg"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/txtCurrentWeight" />
+                            app:layout_constraintBottom_toBottomOf="@+id/txtHeaviest"
+                            app:layout_constraintEnd_toEndOf="@+id/txtCurrentWeight"
+                            app:layout_constraintTop_toTopOf="@+id/txtHeaviest"
+                            tools:text="20.00 kg" />
 
                         <TextView
                             android:id="@+id/txtLightestWeight"
                             style="@style/TextView15"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_margin="10dp"
-                            android:text="60.00 kg"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/txtHeaviestWeight" />
+                            app:layout_constraintBottom_toBottomOf="@+id/txtLightest"
+                            app:layout_constraintEnd_toEndOf="@+id/txtHeaviestWeight"
+                            app:layout_constraintTop_toTopOf="@+id/txtLightest"
+                            tools:text="20.00 kg" />
 
                         <TextView
                             android:id="@+id/BMI"
@@ -283,7 +286,7 @@
                             app:layout_constraintStart_toEndOf="@+id/BMI"
                             app:layout_constraintTop_toTopOf="@+id/BMI"
                             android:layout_marginStart="10dp"
-                            android:text="24.09"
+                            tools:text="23.4"
                             android:fontFamily="@font/montserrat_medium"
                             android:textColor="@color/black"
                             android:textSize="25sp"/>
@@ -318,39 +321,39 @@
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_weight="0.56"
-                                android:background="#98c1d9"/>
+                                android:background="#a7d5ce"/>
 
                             <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1.04"
-                                android:background="#40c060"/>
+                                android:background="#00ef7d"/>
 
                             <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_weight="0.8"
-                                android:background="#f0b95f"/>
+                                android:background="#ffb82e"/>
 
                             <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1.6"
-                                android:background="#bf0603"/>
+                                android:background="#ff0034"/>
 
                         </LinearLayout>
 
                         <TextView
                             android:id="@+id/BMI_Text"
+                            style="@style/TextView14"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            app:layout_constraintTop_toBottomOf="@id/bar"
-                            app:layout_constraintStart_toStartOf="parent"
+                            android:layout_margin="16dp"
+                            tools:text="Healthy"
+                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginBottom="50dp"
-                            android:text="Healthy"
-                            style="@style/TextView14"/>
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/bar" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
