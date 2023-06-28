@@ -7,6 +7,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import com.example.eworkout.databinding.UpdateBmiDialogBinding
 import com.example.eworkout.report.`interface`.UpdateBMIDialogOnClick
+import com.example.eworkout.report.util.MathRounder
 
 class UpdateBMIDialog(
     val listener: UpdateBMIDialogOnClick,
@@ -79,7 +80,7 @@ class UpdateBMIDialog(
 
     private fun getCurrentValue()
     {
-        binding.editTextWEIGHT.setText(currentWeight.toString())
-        binding.editTextHEIGHT.setText(currentHeight.toString())
+        binding.editTextWEIGHT.setText(MathRounder.round(currentWeight).toString())
+        binding.editTextHEIGHT.setText(MathRounder.round(currentHeight).toString())
     }
 }

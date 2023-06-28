@@ -15,6 +15,7 @@ import android.view.ViewGroup
 import android.view.Window
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -22,12 +23,17 @@ import com.example.eworkout.R
 import com.example.eworkout.databinding.FragmentReportBinding
 import com.example.eworkout.report.`interface`.UpdateBMIDialogOnClick
 import com.example.eworkout.report.model.ReportState
+import com.example.eworkout.report.util.MathRounder
 import com.example.eworkout.report.viewmodel.ReportViewModel
+import com.github.mikephil.charting.components.Legend
+import com.github.mikephil.charting.components.LegendEntry
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.data.LineDataSet.Mode.CUBIC_BEZIER
+import com.github.mikephil.charting.highlight.Highlight
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -119,9 +125,9 @@ class ReportFragment : Fragment() {
                 binding.TotalKcalReport.text = _viewModel.num.toString()
                 binding.TotalTimeReport.text = _viewModel.min.toString()
                 binding.TotalExercisesReport.text = _viewModel.exercises.toInt().toString()
-                binding.txtCurrentWeight.text = _viewModel.current_weight.toString() + " kg"
-                binding.txtHeaviestWeight.text = _viewModel.heviest_weight.toString() + " kg"
-                binding.txtLightestWeight.text = _viewModel.lightest_weight.toString() + " kg"
+                binding.txtCurrentWeight.text = MathRounder.round(_viewModel.current_weight).toString() + " kg"
+                binding.txtHeaviestWeight.text = MathRounder.round(_viewModel.heviest_weight).toString() + " kg"
+                binding.txtLightestWeight.text = MathRounder.round(_viewModel.lightest_weight).toString() + " kg"
                 setLineChartData()
                 BMIProgress()
                 hideLoading()
@@ -142,11 +148,11 @@ class ReportFragment : Fragment() {
         val lineEntry = ArrayList<Entry>()
         var xValue = 1f
         for(data in _viewModel.point_list) {
-            lineEntry.add(Entry(xValue,data.toFloat()))
-            xValue += 1
+            data?.let {
+                lineEntry.add(Entry(xValue, it.toFloat()))
+                xValue += 1
+            }
         }
-
-
         val lineDataSet = LineDataSet(lineEntry,"")
 
         val data = LineData(lineDataSet)
@@ -154,31 +160,53 @@ class ReportFragment : Fragment() {
         binding.lineChart.data = data
 
         // Style Line
-        lineDataSet.setColor(R.color.fill1)
-        lineDataSet.lineWidth = 4f
+        lineDataSet.color = Color.rgb(62,29,255)
+        lineDataSet.lineWidth = 2f
         lineDataSet.mode = CUBIC_BEZIER
+        lineDataSet.valueTextSize = 12f
+        lineDataSet.valueTextColor = Color.rgb(62,29,255)
+        lineDataSet.circleRadius = 5f
+        lineDataSet.circleHoleRadius = 3f
+        lineDataSet.setDrawHighlightIndicators(false)
         lineDataSet.setDrawCircles(false)
         lineDataSet.setDrawValues(false)
+
 
         lineDataSet.setDrawFilled(true)
         lineDataSet.fillDrawable = ContextCompat.getDrawable(requireContext(), R.drawable.chart_gradient)
 
+        binding.lineChart.legend.direction = Legend.LegendDirection.RIGHT_TO_LEFT
+        binding.lineChart.legend.yEntrySpace = 10f
+        binding.lineChart.legend.isWordWrapEnabled = true
+
         //Style Chart
+        /*val legend = LegendEntry()
+        legend.label = "Weight"
+        legend.formSize = 20f
+        legend.formLineWidth = 2f
+        legend.formColor = Color.rgb(62,29,255)
+
+        val legendList = mutableListOf(legend)
+
+        binding.lineChart.legend.setCustom(legendList)
+        binding.lineChart.legend.isEnabled = true*/
+
         binding.lineChart.legend.isEnabled = false
         binding.lineChart.description = null
         binding.lineChart.setDrawGridBackground(false)
         binding.lineChart.setBackgroundColor(Color.WHITE)
 
-        binding.lineChart.axisLeft.axisMaximum = _viewModel.heviest_weight.toFloat() + 5f
+        //binding.lineChart.axisLeft.axisMaximum = _viewModel.heviest_weight.toFloat() + 5f
         binding.lineChart.axisLeft.axisMinimum = _viewModel.lightest_weight.toFloat() - 5f
         binding.lineChart.axisRight.isEnabled = false
 
         binding.lineChart.xAxis.position = XAxis.XAxisPosition.BOTTOM
-        binding.lineChart.xAxis.axisMinimum = 1f
+        binding.lineChart.xAxis.axisMinimum = 0f
         binding.lineChart.xAxis.axisMaximum = 12f //_viewModel.weight_data_list.count().toFloat() - 1f
         binding.lineChart.xAxis.granularity = 1f
         binding.lineChart.xAxis.setDrawAxisLine(false)
         binding.lineChart.xAxis.setDrawGridLines(false)
+        binding.lineChart.marker = CustomMarkerView(requireContext(), R.layout.marker_layout)
 
         binding.lineChart.animateY(1000)
     }
