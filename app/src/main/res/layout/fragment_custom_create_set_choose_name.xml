@@ -3,7 +3,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.eworkout.custom_workout.viewModel.CustomCreateSetChooseNameViewModel" />
+            type="com.seuit.eworkout.custom_workout.viewModel.CustomCreateSetChooseNameViewModel" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"

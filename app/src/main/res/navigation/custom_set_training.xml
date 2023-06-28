@@ -6,7 +6,7 @@
     app:startDestination="@id/workoutDetail1">
     <fragment
         android:id="@+id/workoutDetail2"
-        android:name="com.example.eworkout.training.view.FragmentWorkoutDetail2"
+        android:name="com.seuit.eworkout.training.view.FragmentWorkoutDetail2"
         android:label="fragment_workout_detail2"
         tools:layout="@layout/fragment_workout_detail2">
         <action
@@ -15,7 +15,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentWorkoutReady"
-        android:name="com.example.eworkout.training.view.FragmentWorkoutReady"
+        android:name="com.seuit.eworkout.training.view.FragmentWorkoutReady"
         android:label="FragmentWorkoutReady" >
         <action
             android:id="@+id/action_fragmentWorkoutReady_to_fragmentWorkoutStart2"
@@ -30,7 +30,7 @@
     </fragment>
     <fragment
         android:id="@+id/workoutDetail1"
-        android:name="com.example.eworkout.training.view.FragmentWorkoutDetail1"
+        android:name="com.seuit.eworkout.training.view.FragmentWorkoutDetail1"
         android:label="WorkoutDetail1">
         <action
             android:id="@+id/action_workoutDetail1_to_workoutDetail2"
@@ -52,7 +52,7 @@
     </fragment>
     <fragment
         android:id="@+id/trainingFragment"
-        android:name="com.example.eworkout.training.view.TrainingFragment"
+        android:name="com.seuit.eworkout.training.view.TrainingFragment"
         android:label="fragment_training"
         tools:layout="@layout/fragment_training" >
         <action
@@ -64,7 +64,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentWorkoutStart2"
-        android:name="com.example.eworkout.training.view.FragmentWorkoutStart2"
+        android:name="com.seuit.eworkout.training.view.FragmentWorkoutStart2"
         android:label="FragmentWorkoutStart2" >
         <action
             android:id="@+id/action_fragmentWorkoutStart2_to_fragmentWorkoutRest"
@@ -92,7 +92,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentWorkoutRest"
-        android:name="com.example.eworkout.training.view.FragmentWorkoutRest"
+        android:name="com.seuit.eworkout.training.view.FragmentWorkoutRest"
         android:label="FragmentWorkoutRest" >
         <action
             android:id="@+id/action_fragmentWorkoutRest_to_fragmentWorkoutStart2"
@@ -110,7 +110,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentWorkoutStart1"
-        android:name="com.example.eworkout.training.view.FragmentWorkoutStart1"
+        android:name="com.seuit.eworkout.training.view.FragmentWorkoutStart1"
         android:label="FragmentWorkoutStart1" >
         <action
             android:id="@+id/action_fragmentWorkoutStart1_to_fragmentWorkoutRest"
@@ -133,7 +133,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentWorkoutDone"
-        android:name="com.example.eworkout.training.view.FragmentWorkoutDone"
+        android:name="com.seuit.eworkout.training.view.FragmentWorkoutDone"
         android:label="FragmentWorkoutDone" >
         <action
             android:id="@+id/action_fragmentWorkoutDone_to_trainingFragment"
@@ -148,7 +148,7 @@
     </fragment>
     <fragment
         android:id="@+id/dailyScheduleFragment"
-        android:name="com.example.eworkout.training.view.DailyScheduleFragment"
+        android:name="com.seuit.eworkout.training.view.DailyScheduleFragment"
         android:label="DailyScheduleFragment" >
         <action
             android:id="@+id/action_dailyScheduleFragment_to_trainingFragment"
@@ -159,7 +159,7 @@
     </fragment>
     <fragment
         android:id="@+id/historyFragment"
-        android:name="com.example.eworkout.training.view.HistoryFragment"
+        android:name="com.seuit.eworkout.training.view.HistoryFragment"
         android:label="HistoryFragment" >
         <action
             android:id="@+id/action_historyFragment_to_dailyScheduleFragment"

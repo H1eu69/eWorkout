@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable name="viewModel"
-            type="com.example.eworkout.training.viewmodel.TrainingViewModel"/>
+            type="com.seuit.eworkout.training.viewmodel.TrainingViewModel"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

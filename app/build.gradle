@@ -7,11 +7,11 @@ plugins {
 }
 
 android {
-    namespace 'com.example.eworkout'
+    namespace 'com.seuit.eworkout'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.example.eworkout"
+        applicationId "com.seuit.eworkout"
         minSdk 26
         targetSdk 33
         versionCode 1

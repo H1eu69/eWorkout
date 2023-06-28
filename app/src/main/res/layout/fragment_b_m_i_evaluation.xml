@@ -5,7 +5,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.eworkout.authentication.bmi.viewmodel.BMIViewModel"/>
+            type="com.seuit.eworkout.authentication.bmi.viewmodel.BMIViewModel"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

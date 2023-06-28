@@ -1,4 +1,4 @@
-package com.example.eworkout
+package com.seuit.eworkout
 
 import org.junit.Test
 

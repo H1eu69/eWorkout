@@ -5,7 +5,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.eworkout.training.viewmodel.Workout1ViewModel" />
+            type="com.seuit.eworkout.training.viewmodel.Workout1ViewModel" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/data_layout"

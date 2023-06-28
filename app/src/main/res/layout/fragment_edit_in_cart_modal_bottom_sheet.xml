@@ -4,7 +4,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.eworkout.custom_workout.viewModel.EditInCartViewModel" />
+            type="com.seuit.eworkout.custom_workout.viewModel.EditInCartViewModel" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

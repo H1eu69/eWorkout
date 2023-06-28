@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/app_bg"
-    tools:context="com.example.eworkout.authentication.letsstart.LetsStartFragment">
+    tools:context="com.seuit.eworkout.authentication.letsstart.LetsStartFragment">
 
     <!-- TODO: Update blank fragment layout -->
 
