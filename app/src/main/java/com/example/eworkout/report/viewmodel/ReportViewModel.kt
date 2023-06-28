@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.eworkout.report.model.ReportState
+import com.example.eworkout.report.util.MathRounder
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -24,7 +25,7 @@ class ReportViewModel: ViewModel() {
     var min: Double = 0.0
     var exercises: Double = 0.0
 
-    val point_list = mutableListOf<Double>()
+    val point_list = mutableListOf<Double?>()
 
     val weight_data_list = mutableListOf<Double>()
     val height_data_list = mutableListOf<Double>()
@@ -46,18 +47,7 @@ class ReportViewModel: ViewModel() {
     val average_list10 = mutableListOf<Double>()
     val average_list11 = mutableListOf<Double>()
     val average_list12 = mutableListOf<Double>()
-    var _point1 : Double = 0.0
-    var _point2 : Double = 0.0
-    var _point3 : Double = 0.0
-    var _point4 : Double = 0.0
-    var _point5 : Double = 0.0
-    var _point6 : Double = 0.0
-    var _point7 : Double = 0.0
-    var _point8 : Double = 0.0
-    var _point9 : Double = 0.0
-    var _point10 : Double = 0.0
-    var _point11 : Double = 0.0
-    var _point12 : Double = 0.0
+
     private var Height_and_Weight_id: String? = null
     private val _state: MutableLiveData<ReportState> = MutableLiveData(ReportState.LOADING)
     val state: LiveData<ReportState> get() = _state
@@ -93,6 +83,7 @@ class ReportViewModel: ViewModel() {
             .whereEqualTo("user_id", auth.currentUser!!.uid)
             .orderBy("time")
             .get().addOnSuccessListener { documents ->
+                clearPoints()
                 for(it in documents){
                     current_bmi = it.get("bmi") as Double
                     val _weight : Double = it.get("weight") as Double
@@ -107,67 +98,80 @@ class ReportViewModel: ViewModel() {
                     when(month){
                         "Jan" -> {
                             average_list1.add(_weight)
-                            _point1 = average_list1.average()
                         }
                         "Feb" -> {
                             average_list2.add(_weight)
-                            _point2 = average_list2.average()
                         }
                         "Mar" -> {
                             average_list3.add(_weight)
-                            _point3 = average_list3.average()
                         }
                         "Apr" -> {
                             average_list4.add(_weight)
-                            _point4 = average_list4.average()
                         }
                         "May" -> {
                             average_list5.add(_weight)
-                            _point5 = average_list5.average()
                         }
                         "Jun" -> {
                             average_list6.add(_weight)
-                            _point6 = average_list6.average()
                         }
                         "Jul" -> {
                             average_list7.add(_weight)
-                            _point7 = average_list7.average()
                         }
                         "Aug" -> {
                             average_list8.add(_weight)
-                            _point8 = average_list8.average()
                         }
                         "Sep" -> {
                             average_list9.add(_weight)
-                            _point9 = average_list9.average()
                         }
                         "Oct" -> {
                             average_list10.add(_weight)
-                            _point10 = average_list10.average()
                         }
                         "Nov" -> {
                             average_list11.add(_weight)
-                            _point11 = average_list11.average()
                         }
                         "Dec" -> {
                             average_list12.add(_weight)
-                            _point12 = average_list12.average()
                         }
                     }
-
                 }
-                point_list.add(_point1)
-                point_list.add(_point2)
-                point_list.add(_point3)
-                point_list.add(_point4)
-                point_list.add(_point5)
-                point_list.add(_point6)
-                point_list.add(_point7)
-                point_list.add(_point8)
-                point_list.add(_point9)
-                point_list.add(_point10)
-                point_list.add(_point11)
-                point_list.add(_point12)
+
+                if(average_list1.isNotEmpty())
+                    point_list.add(MathRounder.round(average_list1.average()))
+
+                if(average_list2.isNotEmpty())
+                    point_list.add(MathRounder.round(average_list2.average()))
+
+                if(average_list3.isNotEmpty())
+                    point_list.add(MathRounder.round(average_list3.average()))
+
+                if(average_list4.isNotEmpty())
+                    point_list.add(MathRounder.round(average_list4.average()))
+
+                if(average_list5.isNotEmpty())
+                    point_list.add(MathRounder.round(average_list5.average()))
+
+                if(average_list6.isNotEmpty())
+                    point_list.add(MathRounder.round(average_list6.average()))
+
+                if(average_list7.isNotEmpty())
+                    point_list.add(MathRounder.round(average_list7.average()))
+
+                if(average_list8.isNotEmpty())
+                    point_list.add(MathRounder.round(average_list8.average()))
+
+                if(average_list9.isNotEmpty())
+                    point_list.add(MathRounder.round(average_list9.average()))
+
+                if(average_list10.isNotEmpty())
+                    point_list.add(MathRounder.round(average_list10.average()))
+
+                if(average_list11.isNotEmpty())
+                    point_list.add(MathRounder.round(average_list11.average()))
+
+                if(average_list12.isNotEmpty())
+                    point_list.add(MathRounder.round(average_list12.average()))
+
+
                 if (weight_data_list.isNotEmpty())
                 {
                     current_bmi = Math.round(current_bmi * 100) / 100.0
@@ -175,18 +179,36 @@ class ReportViewModel: ViewModel() {
                     update_haviest_weight(weight_data_list)
                     update_lightest_weight(weight_data_list)
                 }
-                else
-                {weight_data_list.add(0.0)}
+                else {
+                    weight_data_list.add(0.0)
+                }
 
-                if (height_data_list.isNotEmpty())
-                {
+                if (height_data_list.isNotEmpty()) {
                     current_height = height_data_list.last()
                 }
-                else
-                {height_data_list.add(0.0)}
+                else {
+                    height_data_list.add(0.0)
+                }
 
                 _state.value = ReportState.LOADED
             }
+    }
+
+    fun clearPoints()
+    {
+        average_list1.clear()
+        average_list2.clear()
+        average_list3.clear()
+        average_list4.clear()
+        average_list5.clear()
+        average_list6.clear()
+        average_list7.clear()
+        average_list8.clear()
+        average_list9.clear()
+        average_list10.clear()
+        average_list11.clear()
+        average_list12.clear()
+        point_list.clear()
     }
 
     fun update_haviest_weight(weight_list : List<Double>){
