@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.eworkout.training.model.CustomSetInfo
 import com.example.eworkout.training.model.Exercise
 import com.example.eworkout.training.model.UpdateState
 import com.example.eworkout.training.model.WorkoutDetail1State
@@ -23,40 +24,19 @@ class SharedViewModel : ViewModel() {
 
     private val auth = Firebase.auth
 
-    private var kcalConsumed = 0.0;
-
     private val exercises = mutableListOf<Exercise>()
 
     lateinit var setTakenID: String
 
     private var currentExerciseIndex = 0
 
-    private var currentWeight = 0.0
 
-    private val _updateState : MutableLiveData<UpdateState> = MutableLiveData(UpdateState.RUNNING)
-    val updateState : LiveData<UpdateState> get() = _updateState
 
-    fun calculateKcal(sec: Long)
+    fun resetIndex()
     {
-        firestore.collection("Users").document(auth.currentUser!!.uid)
-            .get().addOnSuccessListener {
-                currentWeight = it.getDouble("current_weight")!!
-
-                kcalConsumed += (((getCurrentExercise().MET * currentWeight * 3.5) / 200) / 60) * sec
-            }
+        currentExerciseIndex = 0
     }
 
-    fun calculateAndUpdate(sec: Long)
-    {
-        firestore.collection("Users").document(auth.currentUser!!.uid)
-            .get().addOnSuccessListener {
-                currentWeight = it.getDouble("current_weight")!!
-
-                kcalConsumed += (((getCurrentExercise().MET * currentWeight * 3.5) / 200) / 60) * sec
-
-                updateSetTaken()
-            }
-    }
     fun addNewSetTaken(setId: String)
     {
         val data = hashMapOf(
@@ -69,30 +49,6 @@ class SharedViewModel : ViewModel() {
             setTakenID = it.id
         }
     }
-    fun updateSetTaken()
-    {
-        val data = hashMapOf<String, Any>(
-            "end_time" to Timestamp.now(),
-            "total_calories" to Math.round(kcalConsumed * 100) / 100.0
-        )
-        firestore.collection("Set_Taken").document(setTakenID)
-            .update(data)
-            .addOnSuccessListener {
-                _updateState.postValue(UpdateState.DONE)
-            }
-    }
-
-    fun resetUpdateState()
-    {
-        _updateState.value = UpdateState.RUNNING
-    }
-
-    fun resetIndexAndCalories()
-    {
-        currentExerciseIndex = 0
-        kcalConsumed = 0.0
-    }
-
 
     fun getCustomSetFields(id: String)
     {
@@ -114,17 +70,27 @@ class SharedViewModel : ViewModel() {
                 .whereEqualTo("set_id", id)
                 .get().await()
 
-            val exercisesIds = mutableListOf<String>()
+            val customExercises = mutableListOf<CustomSetInfo>()
 
             for (doc in setInformation.documents){
-                exercisesIds.add(doc.getString("exercise_id").toString())
+                customExercises.add(
+                    CustomSetInfo(
+                        doc.getString("exercise_id").toString(),
+                        doc.getLong("reps"),
+                        doc.getString("rep_Type").toString()))
+
                 Log.d("Workout Detail 1", doc.getString("exercise_id").toString())
             }
-            findCustomExercisesByIds(exercisesIds)
+            findCustomExercisesByIds(customExercises)
         }
     }
 
-    private fun findCustomExercisesByIds(ids: List<String>) {
+    private fun findCustomExercisesByIds(customExercises: List<CustomSetInfo>) {
+        val ids = mutableListOf<String>()
+        customExercises.forEach {
+            ids.add(it.exercise_id.toString())
+        }
+
         firestore.collection("Exercises")
             .whereIn(FieldPath.documentId(), ids)
             .get()
@@ -142,7 +108,16 @@ class SharedViewModel : ViewModel() {
                         doc.getDouble("MET")!!)
                     exercises.add(exercise)
                 }
-                Log.d("Workout Detail 1","LOADED")
+
+                customExercises.forEach { custom ->
+                        val exercise = exercises.find {
+                            custom.exercise_id == it.id
+                        }
+                        if (custom.repType == "Reps")
+                            exercise?.reps = "x" + custom.reps.toString()
+                        else
+                            exercise?.reps = custom.reps.toString() + "s"
+                }
             }
     }
 

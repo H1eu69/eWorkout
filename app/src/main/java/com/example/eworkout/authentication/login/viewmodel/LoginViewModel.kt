@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.eworkout.authentication.login.model.LoginState
 import com.example.eworkout.authentication.signup.model.SignupState
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -39,8 +40,11 @@ class LoginViewModel: ViewModel() {
     suspend fun signInWithCredential(credential: AuthCredential)
     {
         try{
-            if(auth.signInWithCredential(credential).await().user != null){
-                createInFireStore(false)
+            val authResult = auth.signInWithCredential(credential).await()
+                if(authResult.user != null){
+                    if(authResult.additionalUserInfo!!.isNewUser){ //Create height and weight for new user
+                        createInFireStore(false)
+                    }
                 _loginState.postValue(LoginState.SUCCESS)
             }
         }
@@ -63,14 +67,27 @@ class LoginViewModel: ViewModel() {
 
     private fun createInFireStore(isGuest : Boolean)
     {
-        val data = mutableMapOf(
+        val data1 = mutableMapOf(
             "email" to auth.currentUser?.email,
             "is_guest" to isGuest,
             "first_name" to "",
-            "last_name" to ""
+            "last_name" to "",
+            "age" to 18,
+            "current_weight" to 60.0,
+            "current_height" to 165.0,
         )
         auth.currentUser?.let {
-            firestore.collection("Users").document(it.uid).set(data)
+            firestore.collection("Users").document(it.uid).set(data1)
+
+            val _BMI = (60.0/((165.0/100)*(165.0/100)))
+            val data2 = hashMapOf(
+                "user_id" to auth.currentUser!!.uid,
+                "height" to 165.0,
+                "weight" to 60.0,
+                "time" to Timestamp.now(),
+                "bmi" to _BMI
+            )
+            firestore.collection("Height_and_Weight").add(data2)
         }
     }
     fun validateText(): Boolean

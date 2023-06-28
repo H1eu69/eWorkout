@@ -27,9 +27,11 @@ class ReportViewModel: ViewModel() {
     val point_list = mutableListOf<Double>()
 
     val weight_data_list = mutableListOf<Double>()
+    val height_data_list = mutableListOf<Double>()
     var heviest_weight : Double = 0.0
     var lightest_weight : Double = 0.0
     var current_weight : Double = 0.0
+    var current_height : Double = 0.0
     var current_bmi : Double = 0.0
 
     val average_list1 = mutableListOf<Double>()
@@ -65,6 +67,9 @@ class ReportViewModel: ViewModel() {
         firestore.collection("Calendar")
             .whereEqualTo("user_id", auth.currentUser!!.uid)
             .get().addOnSuccessListener { documents ->
+                min = 0.0
+                num = 0.0
+                exercises = 0.0
                 for(it in documents){
                     val calo = it.get("total_calories") as Double
                     num += calo
@@ -91,11 +96,13 @@ class ReportViewModel: ViewModel() {
                 for(it in documents){
                     current_bmi = it.get("bmi") as Double
                     val _weight : Double = it.get("weight") as Double
+                    val _height : Double = it.get("height") as Double
 
                     val _month = it.getDate("time")
                     val month = _month.toString().subSequence(4,7)
 
                     weight_data_list.add(_weight)
+                    height_data_list.add(_height)
 
                     when(month){
                         "Jan" -> {
@@ -171,6 +178,13 @@ class ReportViewModel: ViewModel() {
                 else
                 {weight_data_list.add(0.0)}
 
+                if (height_data_list.isNotEmpty())
+                {
+                    current_height = height_data_list.last()
+                }
+                else
+                {height_data_list.add(0.0)}
+
                 _state.value = ReportState.LOADED
             }
     }
@@ -205,7 +219,9 @@ class ReportViewModel: ViewModel() {
             Height_and_Weight_id = it.id
         }
     }
-
+    fun changeStateTo(state: ReportState){
+        _state.value = state
+    }
     fun change_state(){
         weight_data_list.clear()
         _state.value = ReportState.CHART_LOADING

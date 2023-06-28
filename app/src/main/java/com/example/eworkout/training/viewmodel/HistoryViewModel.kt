@@ -5,18 +5,19 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.eworkout.custom_workout.model.CustomSet
 import com.example.eworkout.training.model.HistoryState
-import com.example.eworkout.training.model.ScheduleState
 import com.example.eworkout.training.model.Set
-import com.example.eworkout.training.model.TrainingState
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
-import java.text.DateFormat
-import java.util.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 
 class HistoryViewModel: ViewModel() {
     val auth: FirebaseAuth = Firebase.auth
@@ -36,24 +37,39 @@ class HistoryViewModel: ViewModel() {
 
 
     fun loadSets(list: MutableList<String>){
-        firestore.collection("Sets")
-            .whereIn(FieldPath.documentId(), list)
-            .get()
-            .addOnSuccessListener { documents ->
-                for(doc in documents){
-                    val set = Set(
-                        doc.id,
-                        doc.get("name").toString(),
-                        doc.get("total_time") as Long,
-                        doc.get("total_calories") as Long,
-                        doc.get("number_of_exercises") as Long,
-                        ""
-                    )
-                    sets.add(set)
-                    getUriImageByName(set)
-                }
-                _state.value = HistoryState.SET_LOADED
+        viewModelScope.launch(Dispatchers.IO)
+        {
+            var documents = firestore.collection("Sets")
+                .whereIn(FieldPath.documentId(), list)
+                .get().await()
+            for(doc in documents){
+                val set = Set(
+                    doc.id,
+                    doc.get("name").toString(),
+                    doc.get("total_time") as Long,
+                    doc.get("total_calories") as Long,
+                    doc.get("number_of_exercises") as Long,
+                    ""
+                )
+                getUriImageByName(set)
             }
+            documents = firestore.collection("Custom_Set")
+                .whereIn(FieldPath.documentId(), list)
+                .get().await()
+
+            for(doc in documents){
+                val customSet = CustomSet(
+                    doc.id,
+                    doc.get("set_name").toString(),
+                    doc.getLong("number_of_exercises")!!.toInt(),
+                    "",
+                    doc.getTimestamp("created_date")?.seconds!!
+                )
+                getUriImageByName(customSet)
+            }
+
+            _state.postValue(HistoryState.SET_LOADED)
+        }
     }
 
     private fun getSetId(list: MutableList<String>){
@@ -94,12 +110,22 @@ class HistoryViewModel: ViewModel() {
             .downloadUrl.addOnSuccessListener {
                 set.setImage = it.toString()
                 _state.value = HistoryState.IMAGE_LOADED
+                sets.add(set)
             }
             .addOnFailureListener {
                 Log.d("IMAGE", it.message.toString())
             }
     }
+    private fun getUriImageByName(set: CustomSet) {
+        val path = "custom_set/" + set.name + "_" + auth.currentUser?.uid + "_" + set.createdDate
+        storageRef.child(path)
+            .downloadUrl.addOnSuccessListener {
+                set.image = it.toString()
+                _state.value = HistoryState.IMAGE_LOADED
+                sets.add(set.toSet())
+            }
 
+    }
     fun indicator(date: String, date1: String){
         firestore.collection("Calendar")
             .whereEqualTo("user_id", auth.currentUser!!.uid)

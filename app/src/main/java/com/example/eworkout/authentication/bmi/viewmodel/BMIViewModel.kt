@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.eworkout.authentication.bmi.model.BMI
 import com.example.eworkout.authentication.bmi.model.BMIState
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
@@ -30,20 +31,36 @@ class BMIViewModel : ViewModel() {
     {
         when(auth.currentUser)
         {
-            null -> {
+            null -> { //Anonymous account
                 bmiLiveData.value = mainModel
                 auth.signInAnonymously().addOnSuccessListener {
+                    val weight = bmiLiveData.value!!.weight
+                    val height = bmiLiveData.value!!.height
                     val data = hashMapOf<String, Any?>(
                         "age" to bmiLiveData.value!!.age,
-                        "current_weight" to bmiLiveData.value!!.weight,
-                        "current_height" to bmiLiveData.value!!.height,
+                        "current_weight" to weight,
+                        "current_height" to height,
                     )
                     _state.value = BMIState.SIGNIN_SUCCESS
                     firestore.collection("Users").document(auth.currentUser!!.uid).update(data)
+
+
+                    val _BMI = (weight!! /((height!!/100)*(height/100)))
+                    val data2 = hashMapOf(
+                        "user_id" to it.user?.uid,
+                        "height" to height,
+                        "weight" to weight,
+                        "time" to Timestamp.now(),
+                        "bmi" to _BMI
+                    )
+                    firestore.collection("Height_and_Weight").add(data2)
                 }
             }
             else -> {
                 bmiLiveData.value = mainModel
+                val weight = bmiLiveData.value!!.weight
+                val height = bmiLiveData.value!!.height
+
                 val data = hashMapOf<String, Any?>(
                     "age" to bmiLiveData.value!!.age,
                     "current_weight" to bmiLiveData.value!!.weight,
@@ -51,24 +68,43 @@ class BMIViewModel : ViewModel() {
                 )
                 _state.value = BMIState.SIGNIN_SUCCESS
                 firestore.collection("Users").document(auth.currentUser!!.uid).update(data)
+
+                val _BMI = (weight!! /((height!!/100)*(height/100)))
+                val data2 = hashMapOf(
+                    "user_id" to auth.currentUser!!.uid,
+                    "height" to height,
+                    "weight" to weight,
+                    "time" to Timestamp.now(),
+                    "bmi" to _BMI
+                )
+                firestore.collection("Height_and_Weight").add(data2)
             }
         }
     }
 
     fun skipWithDefaultValue()
     {
-        bmiLiveData.value = skipModel
+        val weight = skipModel.weight
+        val height = skipModel.height
+        val age = skipModel.age
         val data = hashMapOf<String, Any?>(
-            "age" to bmiLiveData.value!!.age,
-            "current_weight" to bmiLiveData.value!!.weight,
-            "current_height" to bmiLiveData.value!!.height,
+            "age" to age,
+            "current_weight" to weight,
+            "current_height" to height,
         )
-        _state.value = BMIState.SIGNIN_SUCCESS
-        firestore.collection("Users").document(auth.currentUser!!.uid).update(data).addOnSuccessListener {
+        firestore.collection("Users").document(auth.currentUser!!.uid).update(data)
 
-        }.addOnFailureListener {
-            Log.d("failed", it.localizedMessage)
-        }
+        val _BMI = (skipModel.weight!!/((skipModel.height!!/100)*(skipModel.height!!/100)))
+        val data2 = hashMapOf(
+            "user_id" to auth.currentUser!!.uid,
+            "height" to height,
+            "weight" to weight,
+            "time" to Timestamp.now(),
+            "bmi" to _BMI
+        )
+        firestore.collection("Height_and_Weight").add(data2)
+        _state.value = BMIState.SIGNIN_SUCCESS
+
     }
 
     fun validateAge(): Boolean {

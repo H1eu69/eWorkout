@@ -80,12 +80,14 @@ class CustomCreateSetFragmentPickExercises : Fragment() {
         //binding.shimmerLayout.visibility = View.VISIBLE
         //binding.dataLayout.visibility = View.GONE
         binding.hideShimmer = false
+        binding.btnViewCart.visibility = View.GONE
     }
     private fun hideLoading()
     {
         //binding.shimmerLayout.visibility = View.GONE
         //binding.dataLayout.visibility = View.VISIBLE
         binding.hideShimmer = true
+        binding.btnViewCart.visibility = View.VISIBLE
     }
     private fun setListener() {
         binding.filterBtn.setOnClickListener {
@@ -108,6 +110,10 @@ class CustomCreateSetFragmentPickExercises : Fragment() {
 
         binding.btnViewCart.setOnClickListener {
             findNavController().navigate(R.id.action_customCreateSetFragmentPickExercises_to_customCreateSetCartFragment, arguments)
+        }
+
+        binding.backBtn.setOnClickListener {
+            findNavController().popBackStack()
         }
     }
 

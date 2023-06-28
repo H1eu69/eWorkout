@@ -1,72 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation android:id="@+id/custom_set"
-    app:startDestination="@id/customSetFragment"
+    app:startDestination="@id/custom_set_create"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-    <fragment
-        android:id="@+id/customSetFragment"
-        android:name="com.example.eworkout.custom_workout.view.CustomSetFragment"
-        android:label="fragment_custom_set"
-        tools:layout="@layout/fragment_custom_set" >
-        <action
-            android:id="@+id/action_customSetFragment_to_customCreateSetChooseName"
-            app:destination="@id/customCreateSetChooseName"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim" />
 
-        <action
-            android:id="@+id/action_customSetFragment_to_training"
-            app:destination="@id/training_nav"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/customCreateSetDetailFragment"
-        android:name="com.example.eworkout.custom_workout.view.CustomCreateSetDetailFragment"
-        android:label="fragment_custom_create_set_detail"
-        tools:layout="@layout/fragment_custom_create_set_detail" />
-    <fragment
-        android:id="@+id/customSetChooseImageFragment"
-        android:name="com.example.eworkout.custom_workout.view.CustomSetChooseImageFragment"
-        android:label="fragment_custom_set_choose_image"
-        tools:layout="@layout/fragment_custom_set_choose_image" />
-    <fragment
-        android:id="@+id/customCreateSetChooseName"
-        android:name="com.example.eworkout.custom_workout.view.CustomCreateSetChooseName"
-        android:label="CustomCreateSetChooseName" >
-        <action
-            android:id="@+id/action_customCreateSetChooseName_to_customCreateSetFragmentPickExercises"
-            app:destination="@id/customCreateSetFragmentPickExercises" />
-    </fragment>
-    <fragment
-        android:id="@+id/customCreateSetFragmentPickExercises"
-        android:name="com.example.eworkout.custom_workout.view.CustomCreateSetFragmentPickExercises"
-        android:label="CustomCreateSetFragmentPickExercises" >
-        <action
-            android:id="@+id/action_customCreateSetFragmentPickExercises_to_customCreateSetDetailFragment"
-            app:destination="@id/customCreateSetDetailFragment" />
-        <action
-            android:id="@+id/action_customCreateSetFragmentPickExercises_to_customCreateSetCartFragment"
-            app:destination="@id/customCreateSetCartFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/customCreateSetCartFragment"
-        android:name="com.example.eworkout.custom_workout.view.CustomCreateSetCartFragment"
-        android:label="CustomCreateSetCartFragment" >
-        <action
-            android:id="@+id/action_customCreateSetCartFragment_to_customSetChooseImageFragment"
-            app:destination="@id/customSetChooseImageFragment" />
-    </fragment>
-    <action
-        android:id="@+id/action_global_customSetFragment"
-        app:destination="@id/customSetFragment"
-        app:popUpTo="@id/customSetFragment"
-        app:popUpToInclusive="true"
-        app:enterAnim="@anim/nav_default_enter_anim"
-        app:exitAnim="@anim/nav_default_exit_anim"
-        app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-        app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    <include app:graph="@navigation/custom_set_create"/>
+    <include app:graph="@navigation/custom_set_training"/>
 
 </navigation>

@@ -4,6 +4,7 @@ import android.animation.ObjectAnimator
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -42,6 +43,8 @@ class FragmentWorkoutRest : Fragment() {
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
+            Log.d("FragmentRest", it.getString("set_id").toString())
+            Log.d("FragmentRest", it.getBoolean("isSystemSet").toString())
         }
     }
 

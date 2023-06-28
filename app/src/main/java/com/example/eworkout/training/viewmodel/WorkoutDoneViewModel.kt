@@ -28,11 +28,13 @@ class WorkoutDoneViewModel : ViewModel() {
 
     var min: Double = 0.0
 
-    fun getModelData(setTakenID: String)
+    fun getModelData(setTakenID: String, isSystemSet: Boolean)
     {
         firestore.collection("Set_Taken")
             .document(setTakenID)
             .get().addOnSuccessListener {
+                Log.d("WorkoutDoneVM", setTakenID.toString())
+
                 val calo = it.getDouble("total_calories")!!
                 val milliseconds = (it.getDate("end_time")?.time!! - (it.getDate("start_time")?.time!!))
                 min = milliseconds.toDouble()
@@ -46,7 +48,10 @@ class WorkoutDoneViewModel : ViewModel() {
 
                 currentSetId = it.getString("set_id").toString()
 
-                getExercisesQuantity(it.getString("set_id").toString())
+                if(isSystemSet)
+                    getExercisesQuantity(it.getString("set_id").toString())
+                else
+                    getCustomExercisesQuantity(it.getString("set_id").toString())
             }
             .addOnFailureListener {
                 Log.d("workout done failed", it.localizedMessage)
@@ -55,6 +60,15 @@ class WorkoutDoneViewModel : ViewModel() {
 
     private fun getExercisesQuantity(set_id: String) {
         firestore.collection("Sets").document(set_id)
+            .get().addOnSuccessListener {
+                model.exerciseQuantity = it.get("number_of_exercises").toString()
+                modelLiveData.value = model
+                _state.value = WorkoutDoneState.LOADED
+            }
+    }
+
+    private fun getCustomExercisesQuantity(set_id: String) {
+        firestore.collection("Custom_Set").document(set_id)
             .get().addOnSuccessListener {
                 model.exerciseQuantity = it.get("number_of_exercises").toString()
                 modelLiveData.value = model

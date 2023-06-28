@@ -37,13 +37,18 @@ class FragmentWorkoutDone : Fragment() {
     private val _sharedViewModel: SharedViewModel by navGraphViewModels(R.id.training_nav)
 
     private var setTakenID: String? = null
+    private var isSystemSet: Boolean? = null
+
     private lateinit var mediaPlayer : MediaPlayer
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
-            setTakenID = it.getString("set_taken_id")
+            setTakenID = _sharedViewModel.setTakenID
+            isSystemSet = it.getBoolean("isSystemSet")
+            Log.d("FragmentDone", setTakenID.toString())
+            Log.d("FragmentDone", isSystemSet.toString())
         }
     }
 
@@ -108,53 +113,32 @@ class FragmentWorkoutDone : Fragment() {
     private fun onClick()
     {
         _viewModel.addToCalendar(setTakenID.toString())
-        _sharedViewModel.resetIndexAndCalories()
-        val bundle = Bundle()
-        bundle.putString("setTakenId",setTakenID)
-        findNavController().navigate(R.id.action_fragmentWorkoutDone_to_trainingFragment, bundle)
+        _sharedViewModel.resetIndex()
+        findNavController().navigate(R.id.action_fragmentWorkoutDone_to_trainingFragment)
     }
 
     private fun doExerciseAgain()
     {
         _viewModel.addToCalendar(setTakenID.toString())
-        val bundle = Bundle()
-        bundle.putString("set_id", _viewModel.currentSetId)
-        bundle.putBoolean("isSystemSet", requireArguments().getBoolean("isSystemSet"))
-        _sharedViewModel.resetIndexAndCalories()
-        findNavController().navigate(R.id.action_fragmentWorkoutDone_to_workoutDetail1, bundle)
+        _sharedViewModel.resetIndex()
+        findNavController().navigate(R.id.action_fragmentWorkoutDone_to_workoutDetail1, arguments)
     }
 
     private fun observeViewModel()
     {
-        /*_viewModel.state.observe(viewLifecycleOwner){
+        _viewModel.state.observe(viewLifecycleOwner){
             handleState(it)
-        }*/
-        _sharedViewModel.updateState.observe(viewLifecycleOwner)
-        {
-            handleUpdateState(it)
         }
+
     }
 
-    private fun handleUpdateState(updateState: UpdateState) {
-        when(updateState.name){
-            "RUNNING" -> {
+    private fun handleState(updateState: WorkoutDoneState) {
+        when(updateState){
+            WorkoutDoneState.LOADING -> {
                 showLoading()
-                _viewModel.getModelData(setTakenID!!)
+                _viewModel.getModelData(setTakenID!!, isSystemSet!!)
             }
-            "DONE" -> {
-                hideLoading()
-            }
-        }
-    }
-
-    private fun handleState(state: WorkoutDoneState)
-    {
-        when(state.name){
-            "LOADING" -> {
-                showLoading()
-                _viewModel.getModelData(setTakenID!!)
-            }
-            "LOADED" -> {
+            else -> {
                 hideLoading()
             }
         }
@@ -172,7 +156,6 @@ class FragmentWorkoutDone : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _sharedViewModel.resetUpdateState()
         mediaPlayer.stop()
     }
 

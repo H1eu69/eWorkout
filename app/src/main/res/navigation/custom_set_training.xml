@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<navigation android:id="@+id/training_nav"
+<navigation android:id="@+id/custom_set_training"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@id/trainingFragment">
+    app:startDestination="@id/workoutDetail1">
     <fragment
         android:id="@+id/workoutDetail2"
         android:name="com.example.eworkout.training.view.FragmentWorkoutDetail2"
@@ -137,7 +137,7 @@
         android:label="FragmentWorkoutDone" >
         <action
             android:id="@+id/action_fragmentWorkoutDone_to_trainingFragment"
-            app:destination="@id/training_nav"
+            app:destination="@id/in_app_nav"
             app:popUpTo="@id/trainingFragment"
             app:popUpToInclusive="true"/>
         <action

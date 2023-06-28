@@ -13,7 +13,7 @@
         tools:context=".custom_workout.view.CustomCreateSetChooseName">
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/button"
+            android:id="@+id/btnNavigateUp"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginStart="28.8dp"
@@ -28,8 +28,8 @@
             style="@style/TextView1"
             android:layout_marginTop="20dp"
             android:text="First, let us know your set name"
-            app:layout_constraintStart_toStartOf="@+id/button"
-            app:layout_constraintTop_toBottomOf="@+id/button" />
+            app:layout_constraintStart_toStartOf="@+id/btnNavigateUp"
+            app:layout_constraintTop_toBottomOf="@+id/btnNavigateUp" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayout"

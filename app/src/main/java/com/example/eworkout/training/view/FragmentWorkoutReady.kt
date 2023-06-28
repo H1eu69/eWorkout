@@ -3,6 +3,7 @@ package com.example.eworkout.training.view
 import android.animation.ObjectAnimator
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,6 +39,8 @@ class FragmentWorkoutReady : Fragment() {
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
+            Log.d("FragmentReady", it.getString("set_id").toString())
+            Log.d("FragmentReady", it.getBoolean("isSystemSet").toString())
         }
     }
 

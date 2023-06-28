@@ -12,8 +12,8 @@
         tools:layout="@layout/fragment_profile" >
         <action
             android:id="@+id/action_profile_to_login"
-            app:destination="@id/nav_graph"
-            app:popUpTo="@id/nav_graph"
+            app:destination="@id/auth_nav"
+            app:popUpTo="@id/in_app_nav"
             app:popUpToInclusive="true"
             app:enterAnim="@android:anim/slide_in_left"
             app:exitAnim="@android:anim/slide_out_right" />

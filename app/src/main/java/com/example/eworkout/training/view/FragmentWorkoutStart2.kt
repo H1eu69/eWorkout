@@ -10,12 +10,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Chronometer
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import com.example.eworkout.R
 import com.example.eworkout.databinding.FragmentWorkoutStart2Binding
+import com.example.eworkout.training.model.UpdateState
 import com.example.eworkout.training.viewmodel.SharedViewModel
 import com.example.eworkout.training.viewmodel.Workout1ViewModel
+import com.example.eworkout.training.viewmodel.WorkoutStartViewModel
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -34,6 +37,7 @@ class FragmentWorkoutStart2 : Fragment() {
     private var _binding: FragmentWorkoutStart2Binding? = null
     val binding get() = _binding!!
     private val _sharedViewModel: SharedViewModel by navGraphViewModels(R.id.training_nav)
+    private val viewModel: WorkoutStartViewModel by viewModels()
     private lateinit var timer : Chronometer
     private lateinit var mediaPlayer : MediaPlayer
 
@@ -42,6 +46,8 @@ class FragmentWorkoutStart2 : Fragment() {
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
+            Log.d("FragmentStart2", it.getString("set_id").toString())
+            Log.d("FragmentStart2", it.getBoolean("isSystemSet").toString())
         }
     }
 
@@ -78,10 +84,31 @@ class FragmentWorkoutStart2 : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        observeViewModel()
         startSoundEffect()
         setAnimation()
         setListener()
         startCountUp()
+    }
+
+    private fun observeViewModel() {
+        viewModel.updateState.observe(viewLifecycleOwner)
+        {
+            handleState(it)
+        }
+    }
+
+    private fun handleState(state: UpdateState?) {
+        when(state)
+        {
+            UpdateState.DONE -> {
+                findNavController().navigate(R.id.action_fragmentWorkoutStart2_to_fragmentWorkoutDone, arguments)
+            }
+
+            else -> {
+                viewModel.setTakenID = requireArguments().getString("set_id").toString()
+            }
+        }
     }
     private fun startSoundEffect()
     {
@@ -101,11 +128,10 @@ class FragmentWorkoutStart2 : Fragment() {
     private fun setListener()
     {
         binding.cameraBtn.setOnClickListener {
-            findNavController().navigate(R.id.action_fragmentWorkoutStart2_to_AI)
+            navigateToCamera()
         }
         binding.btnPrevious.setOnClickListener {
-            _sharedViewModel.decreaseCurrentExerciseIndex()
-            findNavController().navigate(R.id.action_fragmentWorkoutStart2_to_fragmentWorkoutRest, arguments)
+            navigateToPreviousExercise()
         }
         binding.btnMiddle.setOnClickListener {
             onClick()
@@ -114,10 +140,7 @@ class FragmentWorkoutStart2 : Fragment() {
             onClick()
         }
         binding.exerciseInformationBtn.setOnClickListener {
-            val bundle = Bundle().apply {
-                putString("exercise_id", _sharedViewModel.getCurrentExercise().id)
-            }
-            findNavController().navigate(R.id.action_fragmentWorkoutStart2_to_workoutDetail2, bundle)
+            viewInformation()
         }
         binding.backgroundAnimationView.setFailureListener {
             binding.backgroundImageview.visibility = View.VISIBLE
@@ -125,18 +148,36 @@ class FragmentWorkoutStart2 : Fragment() {
         }
     }
 
+    private fun navigateToCamera()
+    {
+        findNavController().navigate(R.id.action_fragmentWorkoutStart2_to_AI)
+    }
+
+    private fun navigateToPreviousExercise()
+    {
+        _sharedViewModel.decreaseCurrentExerciseIndex()
+        findNavController().navigate(R.id.action_fragmentWorkoutStart2_to_fragmentWorkoutRest, arguments)
+    }
+
+    private fun viewInformation()
+    {
+        val bundle = Bundle().apply {
+            putString("exercise_id", _sharedViewModel.getCurrentExercise().id)
+        }
+        findNavController().navigate(R.id.action_fragmentWorkoutStart2_to_workoutDetail2, bundle)
+    }
+
     private fun onClick()
     {
+        val sec = (SystemClock.elapsedRealtime() - timer.base) / 1000
+        val MET = _sharedViewModel.getCurrentExercise().MET
+        val ID = _sharedViewModel.setTakenID
         if(_sharedViewModel.increaseCurrentExerciseIndex()){
-            _sharedViewModel.calculateKcal((SystemClock.elapsedRealtime() - timer.base) / 1000)
+            viewModel.calculateKcal(sec, MET)
             findNavController().navigate(R.id.action_fragmentWorkoutStart2_to_fragmentWorkoutRest, arguments)
         }
         else{
-            val bundle = Bundle()
-            bundle.putString("set_taken_id", _sharedViewModel.setTakenID)
-            bundle.putBoolean("isSystemSet", requireArguments().getBoolean("isSystemSet"))
-            _sharedViewModel.calculateAndUpdate((SystemClock.elapsedRealtime() - timer.base) / 1000)
-            findNavController().navigate(R.id.action_fragmentWorkoutStart2_to_fragmentWorkoutDone, bundle)
+            viewModel.calculateAndUpdate(sec, MET, ID)
         }
     }
 

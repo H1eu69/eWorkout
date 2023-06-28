@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.eworkout.R
 import com.example.eworkout.databinding.FragmentReportBinding
+import com.example.eworkout.report.`interface`.UpdateBMIDialogOnClick
 import com.example.eworkout.report.model.ReportState
 import com.example.eworkout.report.viewmodel.ReportViewModel
 import com.github.mikephil.charting.components.XAxis
@@ -82,33 +83,17 @@ class ReportFragment : Fragment() {
     }
 
     private fun showdialog() {
-        val dialog = Dialog(requireContext())
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setCancelable(false)
-        dialog.setContentView(R.layout.update_bmi_dialog)
-        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialog.window?.setLayout(1000,1000)
 
-
-        val btnSave : TextView = dialog.findViewById(R.id.SAVE)
-        val btnCancel : TextView = dialog.findViewById(R.id.CANCEL)
-
-        btnSave.setOnClickListener {
-            if(dialog.findViewById<EditText>(R.id.editTextWEIGHT).text.isNotEmpty() && dialog.findViewById<EditText>(R.id.editTextHEIGHT).text.isNotEmpty())
-            {
-                val current_weight : Float = dialog.findViewById<EditText>(R.id.editTextWEIGHT).text.toString().toFloat()
-                val current_height : Float = dialog.findViewById<EditText>(R.id.editTextHEIGHT).text.toString().toFloat()
-
-                _viewModel.update_weight_height(current_weight,current_height)
+        val listener = object : UpdateBMIDialogOnClick
+        {
+            override fun onClick(weight: Double, height: Double) {
+                _viewModel.update_weight_height(weight.toFloat(), height.toFloat())
                 _viewModel.change_state()
-                dialog.dismiss()
             }
-        }
 
-        btnCancel.setOnClickListener{
-            dialog.dismiss()
         }
-        dialog.show()
+        val dialog = UpdateBMIDialog(listener, _viewModel.current_weight, _viewModel.current_height)
+        dialog.show(parentFragmentManager, "Report Fragment")
     }
 
     private fun observeViewModel()
@@ -133,7 +118,7 @@ class ReportFragment : Fragment() {
             "LOADED" -> {
                 binding.TotalKcalReport.text = _viewModel.num.toString()
                 binding.TotalTimeReport.text = _viewModel.min.toString()
-                binding.TotalExercisesReport.text = _viewModel.exercises.toString()
+                binding.TotalExercisesReport.text = _viewModel.exercises.toInt().toString()
                 binding.txtCurrentWeight.text = _viewModel.current_weight.toString() + " kg"
                 binding.txtHeaviestWeight.text = _viewModel.heviest_weight.toString() + " kg"
                 binding.txtLightestWeight.text = _viewModel.lightest_weight.toString() + " kg"
@@ -182,7 +167,7 @@ class ReportFragment : Fragment() {
         binding.lineChart.legend.isEnabled = false
         binding.lineChart.description = null
         binding.lineChart.setDrawGridBackground(false)
-        binding.lineChart.setBackgroundColor(resources.getColor(R.color.white))
+        binding.lineChart.setBackgroundColor(Color.WHITE)
 
         binding.lineChart.axisLeft.axisMaximum = _viewModel.heviest_weight.toFloat() + 5f
         binding.lineChart.axisLeft.axisMinimum = _viewModel.lightest_weight.toFloat() - 5f
@@ -237,5 +222,10 @@ class ReportFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _viewModel.changeStateTo(ReportState.LOADING)
     }
 }
