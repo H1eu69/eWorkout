@@ -7,15 +7,19 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1036376215736:android:b5882762b4bc2bedbf244d",
+        "mobilesdk_app_id": "1:1036376215736:android:524756a400ea8923bf244d",
         "android_client_info": {
           "package_name": "com.seuit.eworkout"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1036376215736-ggcmdlq6dsljtloacv5163coh9n80sjb.apps.googleusercontent.com",
-          "client_type": 3
+          "client_id": "1036376215736-8698ah335ro9cruc1f0otrv0o1al1hjl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.seuit.eworkout",
+            "certificate_hash": "ead23e3862e42b073ca5011b437ea468f0140a42"
+          }
         }
       ],
       "api_key": [
