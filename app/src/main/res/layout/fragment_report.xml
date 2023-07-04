@@ -11,6 +11,18 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottieLoading"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/loading" />
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/report_data_layout"
             android:layout_width="0dp"
@@ -74,7 +86,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_semibold"
                             android:textSize="25sp"
-                            android:text="0"
+                            android:textByNumber="@{viewModel.totalExercises}"
                             app:layout_constraintEnd_toEndOf="@+id/textViewExercises"
                             app:layout_constraintStart_toStartOf="@+id/textViewExercises"
                             app:layout_constraintTop_toBottomOf="@+id/textViewExercises" />
@@ -98,7 +110,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_semibold"
                             android:textSize="25sp"
-                            android:text="0"
+                            android:textByNumber="@{viewModel.totalKcal}"
                             app:layout_constraintEnd_toEndOf="@+id/textViewKcal"
                             app:layout_constraintStart_toStartOf="@+id/textViewKcal"
                             app:layout_constraintTop_toBottomOf="@+id/textViewKcal" />
@@ -123,7 +135,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_semibold"
                             android:textSize="25sp"
-                            android:text="0"
+                            android:textByNumber="@{viewModel.totalTime}"
                             app:layout_constraintEnd_toEndOf="@+id/textViewTime"
                             app:layout_constraintStart_toStartOf="@+id/textViewTime"
                             app:layout_constraintTop_toBottomOf="@+id/textViewTime" />
@@ -242,6 +254,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="16dp"
+                            android:textWeightByNumber="@{viewModel.currentWeight}"
                             app:layout_constraintBottom_toBottomOf="@+id/txtCurrent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="@+id/txtCurrent"
@@ -252,6 +265,7 @@
                             style="@style/TextView15"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textWeightByNumber="@{viewModel.heaviestWeight}"
                             app:layout_constraintBottom_toBottomOf="@+id/txtHeaviest"
                             app:layout_constraintEnd_toEndOf="@+id/txtCurrentWeight"
                             app:layout_constraintTop_toTopOf="@+id/txtHeaviest"
@@ -262,6 +276,7 @@
                             style="@style/TextView15"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textWeightByNumber="@{viewModel.lightestWeight}"
                             app:layout_constraintBottom_toBottomOf="@+id/txtLightest"
                             app:layout_constraintEnd_toEndOf="@+id/txtHeaviestWeight"
                             app:layout_constraintTop_toTopOf="@+id/txtLightest"
@@ -286,6 +301,7 @@
                             app:layout_constraintStart_toEndOf="@+id/BMI"
                             app:layout_constraintTop_toTopOf="@+id/BMI"
                             android:layout_marginStart="10dp"
+                            android:textByNumber="@{viewModel.currentBmi}"
                             tools:text="23.4"
                             android:fontFamily="@font/montserrat_medium"
                             android:textColor="@color/black"
@@ -301,6 +317,9 @@
                             android:layout_marginTop="20dp"
                             android:layout_marginStart="20dp"
                             android:layout_marginEnd="20dp"
+                            android:min="15"
+                            android:max="40"
+                            android:progressByDouble="@{viewModel.currentBmi}"
                             android:orientation="horizontal"
                             android:clickable="false"
                             android:thumb="@drawable/thumb"/>
@@ -349,6 +368,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="16dp"
+                            android:textByBMI="@{viewModel.currentBmi}"
                             tools:text="Healthy"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"

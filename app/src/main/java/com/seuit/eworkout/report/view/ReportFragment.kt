@@ -1,21 +1,10 @@
 package com.seuit.eworkout.report.view
 
-import android.app.Dialog
 import android.graphics.Color
-import android.graphics.LinearGradient
-import android.graphics.Shader
-import android.graphics.drawable.ColorDrawable
-import android.graphics.drawable.PaintDrawable
-import android.graphics.drawable.ShapeDrawable.ShaderFactory
-import android.graphics.drawable.shapes.RectShape
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.Window
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -26,14 +15,11 @@ import com.seuit.eworkout.report.model.ReportState
 import com.seuit.eworkout.report.util.MathRounder
 import com.seuit.eworkout.report.viewmodel.ReportViewModel
 import com.github.mikephil.charting.components.Legend
-import com.github.mikephil.charting.components.LegendEntry
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.data.LineDataSet.Mode.CUBIC_BEZIER
-import com.github.mikephil.charting.highlight.Highlight
-import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -52,7 +38,7 @@ class ReportFragment : Fragment() {
     private var param2: String? = null
     private var _binding: FragmentReportBinding? = null
     val binding get() = _binding!!
-    private lateinit var _viewModel: ReportViewModel
+    private val _viewModel: ReportViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,10 +54,8 @@ class ReportFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         _binding = FragmentReportBinding.inflate(inflater,container,false)
-        val viewModel: ReportViewModel by viewModels()
-        _viewModel = viewModel
-        binding.viewModel = viewModel
-        binding.lifecycleOwner = this@ReportFragment
+        binding.viewModel = _viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
     }
 
@@ -84,21 +68,21 @@ class ReportFragment : Fragment() {
 
     private fun onClick() {
         binding.openDialog.setOnClickListener{
-            showdialog()
+            showDialog()
         }
     }
 
-    private fun showdialog() {
+    private fun showDialog() {
 
         val listener = object : UpdateBMIDialogOnClick
         {
             override fun onClick(weight: Double, height: Double) {
-                _viewModel.update_weight_height(weight.toFloat(), height.toFloat())
-                _viewModel.change_state()
+                _viewModel.updateWeightHeight(weight.toFloat(), height.toFloat())
+                _viewModel.changeStateTo(ReportState.CHART_LOADING)
             }
 
         }
-        val dialog = UpdateBMIDialog(listener, _viewModel.current_weight, _viewModel.current_height)
+        val dialog = UpdateBMIDialog(listener, _viewModel.currentWeight.value!!, _viewModel.currentHeight.value!!)
         dialog.show(parentFragmentManager, "Report Fragment")
     }
 
@@ -112,42 +96,35 @@ class ReportFragment : Fragment() {
     private fun handleState(state: ReportState) {
         when (state.name) {
             "LOADING" -> {
-                _viewModel.watching()
-                _viewModel.get_weight_data()
+                _viewModel.getReportData()
                 showLoading()
             }
-
-            "CHART_LOADING" -> {
-                _viewModel.get_weight_data()
-            }
-
             "LOADED" -> {
-                binding.TotalKcalReport.text = _viewModel.num.toString()
-                binding.TotalTimeReport.text = _viewModel.min.toString()
-                binding.TotalExercisesReport.text = _viewModel.exercises.toInt().toString()
-                binding.txtCurrentWeight.text = MathRounder.round(_viewModel.current_weight).toString() + " kg"
-                binding.txtHeaviestWeight.text = MathRounder.round(_viewModel.heviest_weight).toString() + " kg"
-                binding.txtLightestWeight.text = MathRounder.round(_viewModel.lightest_weight).toString() + " kg"
-                setLineChartData()
-                BMIProgress()
                 hideLoading()
+                setupChart()
+                BMIProgress()
+            }
+            "CHART_LOADING" -> {
+                setupChart()
             }
         }
     }
 
     private fun hideLoading() {
         binding.reportDataLayout.visibility = View.VISIBLE
+        binding.lottieLoading.visibility = View.GONE
     }
 
     private fun showLoading() {
-        binding.reportDataLayout.visibility = View.INVISIBLE
+        binding.reportDataLayout.visibility = View.GONE
+        binding.lottieLoading.visibility = View.VISIBLE
     }
 
-    fun setLineChartData(){
+    private fun setupChart(){
 
         val lineEntry = ArrayList<Entry>()
         var xValue = 1f
-        for(data in _viewModel.point_list) {
+        for(data in _viewModel.pointList) {
             data?.let {
                 lineEntry.add(Entry(xValue, it.toFloat()))
                 xValue += 1
@@ -197,7 +174,7 @@ class ReportFragment : Fragment() {
         binding.lineChart.setBackgroundColor(Color.WHITE)
 
         //binding.lineChart.axisLeft.axisMaximum = _viewModel.heviest_weight.toFloat() + 5f
-        binding.lineChart.axisLeft.axisMinimum = _viewModel.lightest_weight.toFloat() - 5f
+        binding.lineChart.axisLeft.axisMinimum = _viewModel.lightestWeight.value!!.toFloat() - 5f
         binding.lineChart.axisRight.isEnabled = false
 
         binding.lineChart.xAxis.position = XAxis.XAxisPosition.BOTTOM
@@ -212,19 +189,7 @@ class ReportFragment : Fragment() {
     }
 
     fun BMIProgress(){
-        binding.seekBar.max = 40
-        binding.seekBar.min = 15
-        binding.seekBar.progress = _viewModel.current_bmi.toInt()
         binding.seekBar.isEnabled = false
-        binding.currentBMI.text = _viewModel.current_bmi.toString()
-        if(_viewModel.current_bmi <= 18.5)
-            binding.BMIText.text = "Under Weight"
-        if(_viewModel.current_bmi <= 25 && _viewModel.current_bmi > 18.5)
-            binding.BMIText.text = "Normal"
-        if(_viewModel.current_bmi <= 30 && _viewModel.current_bmi > 25)
-            binding.BMIText.text = "Over Weight"
-        if(_viewModel.current_bmi > 30)
-            binding.BMIText.text = "Obesity"
     }
 
     companion object {
